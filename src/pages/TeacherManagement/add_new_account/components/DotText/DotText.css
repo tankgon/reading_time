@@ -1,0 +1,17 @@
+.dot-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.dot-text {
+  margin-right: 8px;
+}
+
+.red{
+  color: red;
+}
+
+.text {
+  font-size: 16px; /* Cỡ chữ của text */
+  margin: auto;
+}

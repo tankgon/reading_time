@@ -1,21 +1,18 @@
-import classNames from 'classnames/bind';
-import Nav from '~/layouts/components/Header/nav';
-import styles from './DefaultLayout.module.scss';
-import { Outlet } from 'react-router-dom';
-import SellPro from '~/layouts/components/SellPro';
-const cx = classNames.bind(styles);
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import Nav from "~/layouts/components/Header/nav";
+import Logo from "../components/Logo";
 
 function DefaultLayout() {
-    return (
-        <div className={cx('main-page')}>
-            <SellPro/>
-            <Nav/>  
-            <div className={cx('content')}>
-                <Outlet />
-            </div> 
-        </div>
-    )
-    
+  return (
+    <Box sx={{ fontSize: "16px", fontFamily: "Calibri" }}>
+      <Logo />
+      <Nav />
+      <Box sx={{mb:"10%"}}>
+        <Outlet />
+      </Box>
+    </Box>
+  );
 }
 
 export default DefaultLayout;
