@@ -22,7 +22,7 @@ import UserReport from "./pages/admin/Reports/User";
 import RoleAccountList from "./pages/admin/RoleManagement/account_list/AccountList";
 import RoleAddNewAccount from "./pages/admin/RoleManagement/add_new_account";
 import HolidayManagment from "./pages/admin/Setting/holiday";
-import MenuPermission from "./pages/admin/Setting/menu/MenuPermission";
+import MenuPermission from "./pages/admin/Setting/menu";
 import PaymentRefund from "./pages/admin/Setting/terms/PaymentRefund";
 import PrivacyPolicy from "./pages/admin/Setting/terms/PrivacyPolicy";
 import PromotionTerms from "./pages/admin/Setting/terms/PromotionTerms";

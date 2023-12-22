@@ -7,15 +7,23 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
-import { ContentState, convertFromHTML, convertToRaw } from "draft-js";
+import {
+  ContentState,
+  convertFromHTML,
+  convertToRaw,
+  EditorState,
+} from "draft-js";
 import React from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
+import ButtonComponent from "../../../../components/buttonComponent";
 import TextBox from "../../../../components/textBox";
 
+import draftToHtml from "draftjs-to-html";
 //data
 import { useState } from "react";
+import web from "../../../../../services/api/admin/settings/web";
 import data from "./data";
 
 const Item = styled("div")(({ theme }) => ({
@@ -27,38 +35,77 @@ const Item = styled("div")(({ theme }) => ({
 }));
 
 const editorStyle = {
-  height: "200px",
+  height: "300px",
   border: "1px solid #C0C0C0",
   padding: "0 20px",
 };
 
 function MailSetting() {
   const { DatalistMailSetting: listMailSetting } = data();
+  const [file, setFile] = useState("");
 
-  // console.log(listMailSetting);
+  console.log(file);
 
-  const [sending, setSending] = useState(listMailSetting.Email_Sending_Address);
-  const [receiving, setReceiving] = useState(
-    listMailSetting.Email_Receiving_Address
-  );
-  const [host, setHost] = useState(listMailSetting.SMTP_Host);
-  const [port, setPort] = useState(listMailSetting.SMTP_Port);
-  const [security, setSecurity] = useState(listMailSetting.SMTP_Security);
-  const [authentication, setAuthentication] = useState("");
-  const [editer, setEditer] = useState("");
+  const [sending, setSending] = useState();
+  const [receiving, setReceiving] = useState();
+  const [host, setHost] = useState();
+  const [port, setPort] = useState();
+  const [security, setSecurity] = useState();
+  const [authentication, setAuthentication] = useState();
+  const [editer, setEditer] = useState();
+  const [userId, setUserId] = useState();
+  const [password, setPassword] = useState();
 
-  console.log(
-    listMailSetting?._Content == undefined ? null : listMailSetting?._Content
-  );
+  const Update = async () => {
+    try {
+      // setLoading(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "reading-time-storyboard");
+      data.append("cloud_name", "df2s6srdu");
+      data.append("folder", "reading-time-storyboard");
 
-  const [userId, setUserId] = useState(listMailSetting.SMTP_User_Id);
-  const [password, setPassword] = useState(listMailSetting.SMTP_User_Password);
+      const cloudinaryResponse = await fetch(
+        `https://api.cloudinary.com/v1_1/df2s6srdu/upload`,
+        {
+          method: "post",
+          body: data,
+        }
+      );
+      const cloudinaryData = await cloudinaryResponse.json();
+      const imageUrl = await cloudinaryData.url;
+      console.log(imageUrl);
 
-  const initialContent = convertFromHTML(
-    listMailSetting?._Content !== undefined
-      ? `${listMailSetting?._Content}`
-      : ""
-  );
+      await web.actionMailSetting({
+        Action: "PUT",
+        Id: 1,
+        Email_Sending_Address: sending
+          ? sending
+          : listMailSetting.Email_Sending_Address,
+        Email_Receiving_Address: receiving
+          ? receiving
+          : listMailSetting.Email_Receiving_Address,
+        SMTP_Host: host ? host : listMailSetting.SMTP_Host,
+        SMTP_Port: port ? port : listMailSetting.SMTP_Port,
+        SMTP_Security: security ? security : listMailSetting.SMTP_Security,
+        SMPT_Authentication_Required: authentication
+          ? authentication
+          : listMailSetting.SMPT_Authentication_Required,
+        SMTP_User_Id: userId ? userId : listMailSetting.SMTP_User_Id,
+        SMTP_User_Password: password
+          ? password
+          : listMailSetting.SMTP_User_Password,
+        _Content: editer ? editer : listMailSetting._Content,
+        Upload_Email_Template: imageUrl
+          ? imageUrl
+          : listMailSetting.Upload_Email_Template,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const initialContent = convertFromHTML(`<p>asdasd</P>`);
   const contentState = ContentState.createFromBlockArray(
     initialContent.contentBlocks,
     initialContent.entityMap
@@ -67,23 +114,14 @@ function MailSetting() {
   // Chuyển đổi ContentState thành raw content
   const initialContentState = convertToRaw(contentState);
 
-  const [editorContent, setEditorContent] = useState(null);
-
-  // Chuyển đổi ContentState thành HTML
-  const convertContentToHTML = (contentState) => {
-    const rawContentState = convertToRaw(contentState);
-    const contentHTML = rawContentState.blocks
-      .map((block) => `<p>${block.text}</p>`)
-      .join("");
-    return contentHTML;
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const onEditorStateChange = (newEditorState) => {
+    setEditorState(newEditorState);
+    setEditer(draftToHtml(convertToRaw(editorState.getCurrentContent())));
   };
 
-  const handleContentStateChange = (contentState) => {
-    setEditorContent(contentState);
-    const contentHTML = convertContentToHTML(contentState);
-    // Bạn có thể sử dụng contentHTML theo ý muốn của mình
-    console.log(contentHTML);
-  };
+  console.log(editer);
+
   return (
     <MDBox>
       <Grid
@@ -248,6 +286,7 @@ function MailSetting() {
                         }}>
                         <RadioGroup
                           onChange={(e) => setAuthentication(e.target.value)}
+                          value={listMailSetting.SMTP_Authentication_Required}
                           row
                           name="row-radio-buttons-group">
                           <FormControlLabel
@@ -306,13 +345,14 @@ function MailSetting() {
                     border: "1px solid #C0C0C0",
                     p: "20px",
                   }}>
-                  <Box sx={{ height: "300px" }}>
+                  <Box sx={{ height: "400px" }}>
                     <Editor
                       wrapperClassName="demo-wrapper"
                       editorClassName="demo-editor"
                       editorStyle={editorStyle}
                       initialContentState={initialContentState}
-                      onContentStateChange={handleContentStateChange}
+                      editorState={editorState}
+                      onEditorStateChange={onEditorStateChange}
                     />
                   </Box>
                   Upload Email Template
@@ -328,11 +368,30 @@ function MailSetting() {
                       width: "50px",
                       height: "50px", // Tùy chỉnh chiều cao nếu cần thiết
                     }}>
-                    <InsertDriveFileIcon />
+                    <label
+                      htmlFor="file_input"
+                      id="fileLabel"
+                      className="w-[40px] content-center">
+                      <InsertDriveFileIcon />
+                    </label>
+                    <input
+                      className="hidden w-20 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      id="file_input"
+                      type="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
                   </Box>
                 </Box>
               </Grid>
             </Grid>
+          </Box>
+
+          <Box sx={{ m: "20px 0" }}>
+            <ButtonComponent
+              title={"Save"}
+              pading={"8px 40px"}
+              onClick={Update}
+            />
           </Box>
         </Grid>
       </Grid>

@@ -3,95 +3,69 @@
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-
-const isFirstColumn = (params) => {
-  var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
-  return thisIsFirstColumn;
-};
+import React, { useMemo, useRef, useState } from "react";
+//data
+import moment from "moment";
+import BtnCellRenderer from "./BtnCellRenderer";
+import data from "./index";
+// DatalistRole
 
 const AccountListTable = () => {
+  const { DatalistRole: datalistRole } = data();
+
   const gridRef = useRef();
   const gridStyle = useMemo(() => ({ height: "140px", width: "100%" }), []);
-  const [rowData, setRowData] = useState();
   const [columnDefs, setColumnDefs] = useState([
-    { field: "No" },
-    { field: "Approval" },
-    { field: "Role" },
-    { field: "Country" },
-    { field: "ID" },
-    { field: "Name" },
-    { field: "Email" },
-    { field: "Registration" },
-    { field: "Management" },
+    {
+      headerName: "No",
+      field: "Id",
+      headerCheckboxSelection: true,
+      checkboxSelection: true,
+    },
+    { headerName: "Approval", field: "Approval" },
+    { headerName: "Role", field: "_Role" },
+    { headerName: "Country", field: "Country" },
+    { headerName: "ID", field: "Id" },
+    { headerName: "Name", field: "_Name" },
+    { headerName: "Email", field: "Email" },
+    {
+      headerName: "Registration",
+      field: "Registration_Date",
+      valueFormatter: (params) => formatDate(params.value),
+    },
+    {
+      headerName: "Management",
+      cellRenderer: BtnCellRenderer,
+      cellRendererParams: {
+        clicked: function (field) {
+          alert(`${field} was clicked`);
+        },
+      },
+    },
   ]);
+
+  const formatDate = (date) => {
+    return moment(date).format("YYYY-MM-DD");
+  };
+
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      minWidth: 100,
+      // minWidth: 100,
       resizable: true,
-      headerCheckboxSelection: isFirstColumn,
-      checkboxSelection: isFirstColumn,
     };
   }, []);
 
-  const onGridReady = useCallback((params) => {
-    const data = [
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-    ];
-    setRowData(data);
-  }, []);
-
-  const onQuickFilterChanged = useCallback(() => {
-    gridRef.current.api.setQuickFilter(
-      document.getElementById("quickFilter").value
-    );
-  }, []);
-
   return (
-    <div className="example-wrapper">
-      {/* <div style={{ marginBottom: "5px" }}>
-        <input
-          type="text"
-          onInput={onQuickFilterChanged}
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-      </div> */}
-
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          suppressRowClickSelection={true}
-          rowSelection={"multiple"}
-          onGridReady={onGridReady}
-        />
-      </div>
+    <div style={gridStyle} className="ag-theme-alpine">
+      <AgGridReact
+        ref={gridRef}
+        rowData={datalistRole}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        suppressRowClickSelection={true}
+        rowSelection={"multiple"}
+      />
     </div>
   );
 };

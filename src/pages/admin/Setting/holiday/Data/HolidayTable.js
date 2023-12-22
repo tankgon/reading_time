@@ -16,13 +16,12 @@ function GridExample() {
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      minWidth: 50,
-      filter: true,
+      resizable: true,
     };
   }, []);
 
   const [columnDefs, setColumnDefs] = useState([
-    { headerName: "", field: "Id", width: 50 },
+    { headerName: "", field: "Id", width: 850 },
     {
       headerName: "Name",
       field: "_Name",
@@ -58,6 +57,7 @@ function GridExample() {
           rowData={listHoliday}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          getRowId={(value) => value.data.Id}
         />
       </div>
     </div>

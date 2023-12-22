@@ -25,6 +25,6 @@ export default function useData() {
   };
 
   return {
-    DatalistMailSetting: listMailSetting ? listMailSetting : [],
+    DatalistMailSetting: listMailSetting,
   };
 }

@@ -1,13 +1,15 @@
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
-import React from "react";
+import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 import SelectsBox from "../../../../components/selectsBox";
 import TextBox from "../../../../components/textBox";
 //data
+import web from "../../../../../services/api/admin/settings/web";
+import ButtonComponent from "../../../../components/buttonComponent";
 import data from "./data";
 const Item = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
@@ -17,8 +19,41 @@ const Item = styled("div")(({ theme }) => ({
   color: "black",
 }));
 
+const sms = [
+  {
+    title: "Xin lỗi quý khách hệ thống chúng tôi đang bảo trì",
+  },
+  {
+    title: "Xin lỗi quý khách chúng tôi không thể kết nối",
+  },
+];
+
 function SMSSetting() {
   const { DatalistSMSSetting: listSMSSetting } = data();
+
+  const [key, setKey] = useState("");
+  const [secret, setSecret] = useState("");
+  const [number, setNumber] = useState("");
+  const [id, setId] = useState("");
+  const [SMS, setSMS] = useState("");
+
+  console.log({ key, secret, number, id, SMS });
+
+  const Update = async () => {
+    try {
+      await web.actionSMSSetting({
+        Action: "PUT",
+        Id: 1,
+        API_Key: key ? key : listSMSSetting.API_Key,
+        API_Secret: secret ? secret : listSMSSetting.API_Secret,
+        Sender_Number: number ? number : listSMSSetting.Sender_Number,
+        Sender_Id: id ? id : listSMSSetting.Sender_Id,
+        Send_SMS_Failure: SMS ? SMS : listSMSSetting.Send_SMS_Failure,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <MDBox>
@@ -128,17 +163,26 @@ function SMSSetting() {
                     <Grid container spacing={4}>
                       <Grid item xs={12} lg={12}>
                         <strong>API KEY</strong>
-                        <TextBox value={listSMSSetting.API_Key} />
+                        <TextBox
+                          onChange={(e) => setKey(e.target.value)}
+                          value={key ? key : listSMSSetting.API_Key}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         <strong>API SECRET</strong>
-                        <TextBox value={listSMSSetting.API_Secret} />
+                        <TextBox
+                          onChange={(e) => setSecret(e.target.value)}
+                          value={secret ? secret : listSMSSetting.API_Secret}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         Sender Number
-                        <TextBox value={listSMSSetting.Sender_Number} />
+                        <TextBox
+                          onChange={(e) => setNumber(e.target.value)}
+                          value={number ? number : listSMSSetting.Sender_Number}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
@@ -147,14 +191,39 @@ function SMSSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Sender ID
-                        <SelectsBox />
+                        <TextBox
+                          onChange={(e) => setId(e.target.value)}
+                          value={id ? id : listSMSSetting.Sender_Id}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         Send SMS to customer in case of failure
-                        <TextBox value={listSMSSetting.Sender_Id} />
+                        <SelectsBox
+                          size={"small"}
+                          fullWidth={"fullWidth"}
+                          value={SMS}
+                          children={sms.map((item, index) => {
+                            return (
+                              <MenuItem
+                                onClick={() => setSMS(item.title)}
+                                key={index}
+                                value={item.title}>
+                                {item.title}
+                              </MenuItem>
+                            );
+                          })}
+                        />
                       </Grid>
                     </Grid>
+                  </Box>
+
+                  <Box sx={{ m: "20px 0" }}>
+                    <ButtonComponent
+                      title={"Save"}
+                      pading={"8px 40px"}
+                      onClick={Update}
+                    />
                   </Box>
                 </Grid>
               </Grid>

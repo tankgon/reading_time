@@ -9,6 +9,7 @@ import Box from "@mui/system/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ButtonComponent from "../../../../components/buttonComponent";
 import AccountListTable from "./Data/AccountListTable";
+import { Link } from "react-router-dom";
 
 function AccountList() {
   return (
@@ -37,7 +38,9 @@ function AccountList() {
               <Grid
                 container
                 sx={{ display: "flex", justifyContent: "space-between" }}>
-                <ButtonComponent title={"Add"} />
+                  <Link to={"/role/addnewaccount"}>
+                    <ButtonComponent title={"Add"} />
+                  </Link>
                 <div>
                   <FormControl size="small" variant="outlined">
                     <OutlinedInput

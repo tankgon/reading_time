@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import ButtonComponent from "../../../../components/buttonComponent";
+import ButtonComponent from "../../../components/buttonComponent";
 import MenuPermissiconTable8 from "./Data/MenuPermissiconTable8";
 import MenuPermissionTable from "./Data/MenuPermissionTable";
 

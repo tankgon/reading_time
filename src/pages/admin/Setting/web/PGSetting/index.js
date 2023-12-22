@@ -2,13 +2,14 @@ import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
-import React from "react";
+import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
-import SelectsBox from "../../../../components/selectsBox";
 import TextBox from "../../../../components/textBox";
 
 //data
+import web from "../../../../../services/api/admin/settings/web";
+import ButtonComponent from "../../../../components/buttonComponent";
 import data from "./data";
 const Item = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
@@ -20,6 +21,34 @@ const Item = styled("div")(({ theme }) => ({
 
 function PGSetting() {
   const { DatalistPGSetting: listPGSetting } = data();
+
+  const [merchant, setMerchant] = useState("");
+  const [key, setKey] = useState("");
+  const [secret, setSecret] = useState("");
+  const [id, setID] = useState("");
+  const [pg, setPG] = useState("");
+  const [url, setURL] = useState("");
+
+  const Update = async () => {
+    try {
+      await web.actionPGSetting({
+        Action: "PUT",
+        Id: 1,
+        Merchant_Indentification_Code: merchant
+          ? merchant
+          : listPGSetting.Merchant_Indentification_Code,
+        API_Key: key ? key : listPGSetting.API_Key,
+        API_Secret: secret ? secret : listPGSetting.API_Secret,
+        Regular_Payment_Merchant_Id: id
+          ? id
+          : listPGSetting.Regular_Payment_Merchant_Id,
+        PG_Provider: pg ? pg : listPGSetting.PG_Provider,
+        Webhook_Url: url ? url : listPGSetting.Webhook_Url,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <MDBox>
@@ -128,36 +157,68 @@ function PGSetting() {
                     }}>
                     <Grid item xs={12} lg={12}>
                       Merchant Identification Code
-                      <TextBox value={listPGSetting.Merchant_Indentification_Code} />
+                      <TextBox
+                        onChange={(e) => setMerchant(e.target.value)}
+                        value={
+                          merchant
+                            ? merchant
+                            : listPGSetting.Merchant_Indentification_Code
+                        }
+                      />
                     </Grid>
                     <Grid container spacing={4}>
                       <Grid item xs={12} lg={12}>
                         <strong>API KEY</strong>
-                        <TextBox value={listPGSetting.API_Key} />
+                        <TextBox
+                          onChange={(e) => setKey(e.target.value)}
+                          value={key ? key : listPGSetting.API_Key}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         <strong>API SECRET</strong>
-                        <TextBox value={listPGSetting.API_Secret} />
+                        <TextBox
+                          onChange={(e) => setSecret(e.target.value)}
+                          value={secret ? secret : listPGSetting.API_Secret}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         Regular Payment Merchant ID
-                        <TextBox value={listPGSetting.Regular_Payment_Merchant_Id} />
+                        <TextBox
+                          onChange={(e) => setID(e.target.value)}
+                          value={
+                            id ? id : listPGSetting.Regular_Payment_Merchant_Id
+                          }
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         PG Provider
-                        <TextBox value={listPGSetting.PG_Provider} />
+                        <TextBox
+                          onChange={(e) => setPG(e.target.value)}
+                          value={pg ? pg : listPGSetting.PG_Provider}
+                        />
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
                         Webhook URL
-                        <TextBox value={listPGSetting.Webhook_Url} />
+                        <TextBox
+                          onChange={(e) => setURL(e.target.value)}
+                          value={url ? url : listPGSetting.Webhook_Url}
+                        />
                         Note: *Please reflect the above address in the Iamport
                         webhook URL.
                       </Grid>
                     </Grid>
+                  </Box>
+
+                  <Box sx={{ m: "20px 0" }}>
+                    <ButtonComponent
+                      title={"Save"}
+                      pading={"8px 40px"}
+                      onClick={Update}
+                    />
                   </Box>
                 </Grid>
               </Grid>
