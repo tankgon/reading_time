@@ -1,10 +1,7 @@
-import { Box } from "@mui/material";
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
 import * as React from "react";
-import { Link } from "react-router-dom";
-import Image from "../../../components/Image";
-import ButtonComponent from "../../../pages/components/buttonComponent";
+import Image from "../../../../components/Image";
 const Item = styled("span")(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
@@ -27,7 +24,7 @@ function Logo(className) {
         />
       </Grid>
 
-      <Grid item xs={12} lg={12}>
+      {/* <Grid item xs={12} lg={12}>
         <Box style={{ textAlign: "right" }}>
           Welcome
           <Link to={"#"}>
@@ -35,7 +32,7 @@ function Logo(className) {
           </Link>
           <ButtonComponent title={"Logout"} />
         </Box>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

@@ -51,7 +51,7 @@ import Coupon from "./pages/admin/WebsiteManagement/Coupon";
 
 const admin = [
   {
-    router: "setting/webSetting",
+    router: "/setting/webSetting",
     content: <WebSetting />,
   },
   {
@@ -83,7 +83,6 @@ const admin = [
     router: "/setting/paymentRefund",
     content: <PaymentRefund />,
   },
-
   {
     router: "/setting/promotionTerms",
     content: <PromotionTerms />,
@@ -231,6 +230,7 @@ function App() {
       <div className="App">
         <ToastContainer />
         <Routes>
+          
           <Route path="" element={<AdminLayout />}>
             {admin.map((item) => {
               return (

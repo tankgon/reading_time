@@ -14,7 +14,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import logo from "../../../../components/Image/login-content.jpg";
 import ButtonComponent from "../../../components/buttonComponent";
 import TextBox from "../../../components/textBox";
-import DotText from "./DotText/DotText";
+import DotText from "../../../components/DotText";
 //data
 import roles from "../../../../services/api/admin/roles";
 import AutocompleteComponent from "../../../components/AutocompleteComponent";

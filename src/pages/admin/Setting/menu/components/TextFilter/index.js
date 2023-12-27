@@ -5,15 +5,16 @@ const TextFilter = ({ text, children, itemButton }) => {
   return (
     <Grid
       container
+      spacing={2}
       sx={{
         justifyContent: "center",
         alignItems: "center",
         p: "8px 0",
       }}>
-      <Grid item xs={12} lg={2}>
+      <Grid item xs={2} lg={2}>
         <div style={{ color: "#7F7F7F" }}>{text}</div>
       </Grid>
-      <Grid item xs={12} lg={10}>
+      <Grid item xs={10} lg={10}>
         {children}
       </Grid>
     </Grid>

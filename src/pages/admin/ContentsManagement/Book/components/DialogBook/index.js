@@ -1,4 +1,3 @@
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -13,6 +12,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
+import MinHeightTextarea from "../../../../../components/MinHeightTextarea";
 import ButtonComponent from "../../../../../components/buttonComponent";
 import TextFilter from "../TextFilter";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -34,7 +34,6 @@ export default function DialogBook() {
 
   return (
     <React.Fragment>
-
       <ButtonComponent
         onClick={handleClickOpen}
         title={"Book"}
@@ -89,24 +88,12 @@ export default function DialogBook() {
             />
 
             <TextFilter
-              children={
-                <TextareaAutosize
-                  maxRows="8"
-                  minRows="8"
-                  style={{ width: "100%" }}
-                />
-              }
+              children={<MinHeightTextarea minRows={8} />}
               text="Summary synopsis"
             />
 
             <TextFilter
-              children={
-                <TextareaAutosize
-                  maxRows="8"
-                  minRows="8"
-                  style={{ width: "100%" }}
-                />
-              }
+              children={<MinHeightTextarea minRows={8} />}
               text="Class Goal"
             />
 
@@ -234,7 +221,7 @@ export default function DialogBook() {
             <TextFilter
               children={
                 <Grid container spacing={4}>
-                  <Grid item xs={6} lg={12}>
+                  <Grid item xs={12} lg={12}>
                     <FormControl>
                       <RadioGroup
                         row

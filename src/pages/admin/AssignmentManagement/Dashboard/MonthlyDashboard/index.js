@@ -1,8 +1,8 @@
 import { Box, Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import MonthlyDashboard from "./AccountList/Data/AccountListTable";
 import DateCalendarViews from "./components/DateCalendarView";
+import MonthlyDashboard from "../MonthlyDashboard";
 
 function PointPenalty() {
   return (

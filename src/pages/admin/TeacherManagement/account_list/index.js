@@ -6,9 +6,10 @@ import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ButtonComponent from "../../../components/buttonComponent";
-import AccountListTable from "./AccountList/Data/AccountListTable";
+import AccountListTable from "./Data/AccountListTable";
 import TextFilter from "./components/TextFilter/TextFilter";
 
 function AccountList() {
@@ -37,13 +38,13 @@ function AccountList() {
                 <strong style={{ color: "#7F7F7F" }}>Filter List</strong>
               </Grid>
               <Grid item xs={12} lg={9}>
-                <Grid container>
+                <Grid container spacing={1} alignItems={"center"}>
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
                         <TextField
+                          fullWidth
                           size="small"
-                          sx={{ p: "8px" }}
                           id="outlined-basic"
                           variant="outlined"
                         />
@@ -55,8 +56,8 @@ function AccountList() {
                     <TextFilter
                       children={
                         <TextField
+                          fullWidth
                           size="small"
-                          sx={{ p: "8px" }}
                           id="outlined-basic"
                           variant="outlined"
                         />
@@ -68,8 +69,8 @@ function AccountList() {
                     <TextFilter
                       children={
                         <TextField
+                          fullWidth
                           size="small"
-                          sx={{ p: "8px" }}
                           id="outlined-basic"
                           variant="outlined"
                         />
@@ -77,24 +78,27 @@ function AccountList() {
                       text="Tag"
                     />
                   </Grid>
-                </Grid>
 
-                <Grid container>
                   <Grid item xs={12} lg={8}>
                     <TextFilter
                       children={
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer
+                            components={["DatePicker", "DatePicker"]}>
                             <DatePicker
+                              label="From date"
+                              // defaultValue={tuNgay}
+                              // onChange={(day) => setTuNgay(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                             <DatePicker
+                              label="To date"
+                              // defaultValue={denNgay}
+                              // onChange={(day) => setDenNgay(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
-                          </LocalizationProvider>
-                        </Box>
+                          </DemoContainer>
+                        </LocalizationProvider>
                       }
                       text="Start Date"
                     />
@@ -109,14 +113,12 @@ function AccountList() {
                           }}>
                           <TextField
                             size="small"
-                            sx={{ p: "6px", width: "107px" }}
                             id="outlined-basic"
                             variant="outlined"
                           />
                           <Box sx={{ margin: "0 8px" }}>~</Box>
                           <TextField
                             size="small"
-                            sx={{ p: "6px", width: "107px" }}
                             id="outlined-basic"
                             variant="outlined"
                           />
@@ -125,23 +127,27 @@ function AccountList() {
                       text="Point"
                     />
                   </Grid>
-                </Grid>
-                <Grid container>
+
                   <Grid item xs={12} lg={8}>
                     <TextFilter
                       children={
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer
+                            components={["DatePicker", "DatePicker"]}>
                             <DatePicker
+                              label="From date"
+                              // defaultValue={tuNgay}
+                              // onChange={(day) => setTuNgay(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                             <DatePicker
+                              label="To date"
+                              // defaultValue={denNgay}
+                              // onChange={(day) => setDenNgay(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
-                          </LocalizationProvider>
-                        </Box>
+                          </DemoContainer>
+                        </LocalizationProvider>
                       }
                       text="Recent Login"
                     />
@@ -156,14 +162,12 @@ function AccountList() {
                           }}>
                           <TextField
                             size="small"
-                            sx={{ p: "6px", width: "107px" }}
                             id="outlined-basic"
                             variant="outlined"
                           />
                           <Box sx={{ margin: "0 8px" }}>~</Box>
                           <TextField
                             size="small"
-                            sx={{ p: "6px", width: "107px" }}
                             id="outlined-basic"
                             variant="outlined"
                           />

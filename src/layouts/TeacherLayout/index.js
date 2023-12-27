@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Logo from "../components/Logo";
+import Logo from "../AdminLayout/components/Logo";
 import Nav from "./components/Header/nav";
 
 function TeacherLayout() {
@@ -10,7 +10,6 @@ function TeacherLayout() {
       <Nav />
       <Box sx={{ mb: "10%", p: "0px 20px" }}>
         <Outlet />
-        asdf
       </Box>
     </Box>
   );

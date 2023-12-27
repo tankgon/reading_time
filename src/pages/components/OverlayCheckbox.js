@@ -3,7 +3,7 @@ import Checkbox from "@mui/joy/Checkbox";
 import Sheet from "@mui/joy/Sheet";
 import * as React from "react";
 
-export default function OverlayCheckbox({ label }) {
+export default function OverlayCheckbox({ label, onChange, name, checked }) {
   return (
     <Box
       sx={{
@@ -13,7 +13,13 @@ export default function OverlayCheckbox({ label }) {
         "& > div": { p: 2, borderRadius: "md", display: "flex" },
       }}>
       <Sheet variant="outlined">
-        <Checkbox overlay label={label} />
+        <Checkbox
+          onChange={onChange}
+          overlay
+          label={label}
+          name={name}
+          checked={checked}
+        />
       </Sheet>
     </Box>
   );

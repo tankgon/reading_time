@@ -4,8 +4,9 @@ import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useCallback, useMemo, useRef, useState } from "react";
+import ExcelLoader from "../../../../../components/ExcelLoader";
 import LinkContact from "../components/LinkContact";
-import data from "./index";
+import data from "../Data";
 
 const AccountListTable = () => {
   const { DatalistMenu: listMenu } = data();
@@ -87,12 +88,12 @@ const AccountListTable = () => {
 
   return (
     <div style={gridStyle} className="ag-theme-alpine">
-      <button
-        onClick={onBtExport}
-        style={{ margin: "5px 0px", fontWeight: "bold" }}>
-        xcvxcv
-      </button>
+      <div>
+        <h1>Ứng dụng React</h1>
+        <ExcelLoader />
+      </div>
       <AgGridReact
+        id="myTable"
         rowData={listMenu}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

@@ -5,6 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ButtonComponent from "../../../components/buttonComponent";
 import MenuPermissiconTable8 from "./Data/MenuPermissiconTable8";
 import MenuPermissionTable from "./Data/MenuPermissionTable";
+import AddRoleDialog from "./components/AddRoleDialog";
 
 function MenuPermission() {
   return (
@@ -30,7 +31,7 @@ function MenuPermission() {
         <Grid container spacing={2}>
           <Grid item xs={12} lg={4}>
             <Box sx={{ flexGrow: 1 }}>
-              <ButtonComponent title={"Add"} />
+              <AddRoleDialog />
               <Box sx={{ p: "20px 0px" }}>
                 <MenuPermissionTable />
               </Box>
