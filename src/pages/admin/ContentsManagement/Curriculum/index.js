@@ -1,15 +1,14 @@
 import { Grid } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import MDBox from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
-import DialogBook from "./components/DialogCurriculum";
-import TextForm from "./components/TextForm";
-import TextFilter from "./components/TextFilter";
+import TextBox from "../../../components/TextBox";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import AccountListTable from "./AccountList/Data/AccountListTable";
+import DialogCurri from "./components/DialogCurriculum";
 function Book() {
   return (
     <MDBox>
@@ -32,9 +31,8 @@ function Book() {
                 justifyContent: "center",
                 alignItems: "center",
               }}>
-              <Grid item xs={12} lg={2}>
-
-                <DialogBook />
+              <Grid item xs={12} lg={6} display={"flex"}>
+                <DialogCurri />
                 <ButtonComponent
                   title={"Excel Upload"}
                   pading={"10px 0"}
@@ -50,32 +48,20 @@ function Book() {
 
                 {/* <DialogAddPoint /> */}
               </Grid>
-              <Grid item xs={12} lg={10}>
+              {/* <Grid item xs={12} lg={10}>
                 <Grid container>
                   <Grid item xs={12} lg={12}>
-                    <Grid container spacing={8}>
+                    <Grid container spacing={2}>
                       <Grid item xs={12} lg={4}>
                         <TextFilter
                           children={
-                            <TextField
-                              fullWidth
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Curriculum Title"
                         />
                         <TextFilter
                           children={
-                            <TextField
-                              fullWidth
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Subtitle"
                         />
@@ -84,8 +70,8 @@ function Book() {
                         <TextFilter
                           children={
                             <Autocomplete
+                              sx={{ p: "8px 0" }}
                               size="small"
-                              sx={{ p: "8px", width: "100%" }}
                               id="controllable-states-demo"
                               options={["options", "afasdf"]}
                               renderInput={(params) => (
@@ -98,8 +84,8 @@ function Book() {
                         <TextFilter
                           children={
                             <Autocomplete
+                              sx={{ p: "8px 0" }}
                               size="small"
-                              sx={{ p: "8px", width: "100%" }}
                               id="controllable-states-demo"
                               options={["options", "afasdf"]}
                               renderInput={(params) => (
@@ -113,7 +99,7 @@ function Book() {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
           <AccountListTable />

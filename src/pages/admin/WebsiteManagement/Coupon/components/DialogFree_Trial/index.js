@@ -15,6 +15,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import React, { useState } from "react";
+import ButtonComponent from "../../../../../components/buttonComponent";
 import TextFilter from "../TextFilter";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -57,14 +58,14 @@ export default function DialogCoupon() {
 
   return (
     <React.Fragment>
-      <Button
+      <ButtonComponent
+        pading={"10px 0"}
+        margin={"8px 12px"}
+        width={"90%"}
         onClick={handleClickOpen}
-        sx={{
-          textTransform: "capitalize",
-        }}
-        variant="contained">
-        <strong>Coupon</strong>
-      </Button>
+        title={"Coupon"}
+      />
+
       <Dialog fullWidth maxWidth={"xl"} open={open} onClose={handleClose}>
         <DialogContent>
           <DialogContentText>

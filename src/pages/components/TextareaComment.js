@@ -51,16 +51,16 @@ export default function TextareaComment({ onChange }) {
               {["200", "normal", "bold"].map((weight) => (
                 <MenuItem
                   key={weight}
-                  selected={fontWeight === weight}
+                  selected={fontWeight == weight}
                   onClick={() => {
                     setFontWeight(weight);
                     setAnchorEl(null);
                   }}
                   sx={{ fontWeight: weight }}>
                   <ListItemDecorator>
-                    {fontWeight === weight && <Check fontSize="sm" />}
+                    {fontWeight == weight && <Check fontSize="sm" />}
                   </ListItemDecorator>
-                  {weight === "200" ? "lighter" : weight}
+                  {weight == "200" ? "lighter" : weight}
                 </MenuItem>
               ))}
             </Menu>

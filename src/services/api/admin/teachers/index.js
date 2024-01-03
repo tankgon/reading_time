@@ -20,10 +20,15 @@ const actionPayment = (body) => {
   return axios.post(`/workingHours`, body);
 };
 
+const actionFeedback = (body) => {
+  return axios.post(`/classFeedback`, body);
+};
+
 export default {
   actionTeacher,
   actionVacationAndResignationManagement,
   actionWorkingHours,
   actionPointAndPenaltyManagement,
   actionPayment,
+  actionFeedback,
 };

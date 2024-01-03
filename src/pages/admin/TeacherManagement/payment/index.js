@@ -9,7 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import AccountListTable from "./AccountList/Data/AccountListTable";
 import TableCheck from "./components/TableCheck";
-import TextFilter from "./components/TextFilter";
+import TextFilter from "../../WebsiteManagement/Coupon/components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 
 function Payment() {

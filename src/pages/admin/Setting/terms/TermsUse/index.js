@@ -32,6 +32,7 @@ function TermsUse() {
         <Grid item xs={12} lg={8}>
           <Box
             sx={{
+              borderRadius: "8px",
               flexGrow: 1,
               backgroundColor: "rgba(192, 192, 192, 0.2)",
               p: "20px",
@@ -54,6 +55,7 @@ function TermsUse() {
               <Grid
                 xs={2}
                 sx={{
+                  // borderRadius: "8px 8px 0 0",
                   borderTop: "1px solid #C0C0C0",
                   borderLeft: "1px solid #C0C0C0",
                   borderRight: "1px solid #C0C0C0",
@@ -140,6 +142,7 @@ function TermsUse() {
                   <Grid
                     xs={2}
                     sx={{
+                      borderRadius: "8px 0 0 8px",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderBottom: "1px solid #C0C0C0",
@@ -161,6 +164,7 @@ function TermsUse() {
                   <Grid xs={10}>
                     <Box
                       sx={{
+                        borderRadius: "0 8px 0 0",
                         borderTop: "1px solid #C0C0C0",
                         borderLeft: "1px solid #C0C0C0",
                         borderRight: "1px solid #C0C0C0",
@@ -169,6 +173,7 @@ function TermsUse() {
                     />
                     <Box
                       sx={{
+                        borderRadius: "0 0 8px 0",
                         border: "1px solid #C0C0C0",
                         p: "20px",
                       }}>
@@ -176,7 +181,7 @@ function TermsUse() {
                         <Editor
                           wrapperClassName="demo-wrapper"
                           editorClassName="demo-editor"
-                          style={{ lineHeight: "2" }} // Đổi giá trị này theo ý muốn của cậu
+                          style={{ lineHeight: "2" }}
                         />
                       </Box>
                     </Box>

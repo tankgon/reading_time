@@ -15,10 +15,8 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await web.actionMailSetting({
-        Action: "GET",
-      });
-      setListMailSetting(res[0]);
+      const res = await web.actionMailSetting();
+      setListMailSetting(res.data[0]);
     } catch (err) {
       console.log(err);
     }

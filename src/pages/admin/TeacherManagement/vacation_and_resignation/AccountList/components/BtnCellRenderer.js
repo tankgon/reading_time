@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { Component } from "react";
+import DialogVacation from "../../components/DialogVacation";
 class BtnCellRenderer extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ class BtnCellRenderer extends Component {
               textTransform: "capitalize",
             }}
             variant="contained">
-            <strong>View</strong>
+            <DialogVacation/>
           </Button>
         </Grid>
       </Grid>

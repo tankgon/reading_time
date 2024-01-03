@@ -1,36 +1,76 @@
 import { Grid } from "@mui/material";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import Slide from "@mui/material/Slide";
-import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
+import FilePickVideo from "../../../../../components/FilePickVideo";
 import MinHeightTextarea from "../../../../../components/MinHeightTextarea";
+import TextBox from "../../../../../components/TextBox";
+import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
-import TextFilter from "../TextFilter";
+import CheckBox2Opstion from "../../../../../components/checkBox";
+
+//data
+import contents from "../../../../../../services/api/admin/contents";
+import Clound from "../../../../../../services/clound";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function DialogBook() {
-  const [open, setOpen] = useState(false);
+  const [book, setBook] = useState();
+  const [subtitle, setSubtitle] = useState();
+  const [brief, setBrief] = useState();
+  const [Summary, setSummary] = useState();
+  const [Class, setClass] = useState();
+  const [genre, setGenre] = useState();
+  const [level, setLevel] = useState();
+  const [page, setPage] = useState();
+  const [vocabulary, setVocabulary] = useState();
+  const [grade, setGrade] = useState();
+  const [Lexile, setLexile] = useState();
+  const [imageCover, setImageCover] = useState();
+  const [attachments, setAttachments] = useState();
+  const [toUse, setToUse] = useState();
 
+  console.log(Summary);
+
+  const CreateBook = async () => {
+    const imageCloundURL = await Clound(imageCover);
+    const attachmentsURL = await Clound(attachments);
+    try {
+      await contents.actionBookContents({
+        Action: "POST",
+        Book_Title: book,
+        Subtitle: subtitle,
+        Genre: genre,
+        Grade: grade,
+        Lexile: Lexile,
+        _Page: page,
+        Vocabulary: vocabulary,
+        Whether_To_Use: toUse,
+        Brief_Description: brief,
+        Summary_Synopsis: Summary,
+        Class_Goal: Class,
+        Level: level,
+        Cover_Image: imageCloundURL,
+        Attachments: attachmentsURL,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
-  const options = ["Search teacher name", "Option 2"];
 
   return (
     <React.Fragment>
@@ -53,11 +93,9 @@ export default function DialogBook() {
           <DialogContentText id="alert-dialog-slide-description">
             <TextFilter
               children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
+                <TextBox
+                  value={book}
+                  onChange={(e) => setBook(e.target.value)}
                 />
               }
               text="Book Title"
@@ -65,11 +103,9 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
+                <TextBox
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
                 />
               }
               text="Subtitle"
@@ -77,44 +113,50 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <TextField
-                  fullWidth
-                  size="medium"
-                  id="outlined-basic"
-                  variant="outlined"
+                <TextBox
+                  value={brief}
+                  onChange={(e) => setBrief(e.target.value)}
                 />
               }
               text="Brief description"
             />
 
             <TextFilter
-              children={<MinHeightTextarea minRows={8} />}
+              children={
+                <MinHeightTextarea
+                  minRows={4}
+                  value={Summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                />
+              }
               text="Summary synopsis"
             />
 
             <TextFilter
-              children={<MinHeightTextarea minRows={8} />}
+              children={
+                <MinHeightTextarea
+                  minRows={4}
+                  value={Class}
+                  onChange={(e) => setClass(e.target.value)}
+                />
+              }
               text="Class Goal"
             />
 
             <TextFilter
               children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
+                <TextBox
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
                 />
               }
               text="Genre"
             />
             <TextFilter
               children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
+                <TextBox
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value)}
                 />
               }
               text="Level"
@@ -124,20 +166,16 @@ export default function DialogBook() {
               children={
                 <Grid container spacing={4}>
                   <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
+                    <TextBox
+                      value={page}
+                      onChange={(e) => setPage(e.target.value)}
                     />
                   </Grid>
 
                   <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
+                    <TextBox
+                      value={vocabulary}
+                      onChange={(e) => setVocabulary(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -149,20 +187,16 @@ export default function DialogBook() {
               children={
                 <Grid container spacing={4}>
                   <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
+                    <TextBox
+                      value={grade}
+                      onChange={(e) => setGrade(e.target.value)}
                     />
                   </Grid>
 
                   <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
+                    <TextBox
+                      value={Lexile}
+                      onChange={(e) => setLexile(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -172,48 +206,22 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <Grid container spacing={4}>
-                  <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} lg={6}>
-                    <Button
-                      sx={{ textTransform: "capitalize" }}
-                      variant="contained">
-                      Upload
-                    </Button>
-                  </Grid>
-                </Grid>
+                <FilePickVideo
+                  inputProps={{ accept: "image/*" }}
+                  onChange={(e) => setImageCover(e)}
+                  value={imageCover}
+                />
               }
               text="Cover image"
             />
 
             <TextFilter
               children={
-                <Grid container spacing={4}>
-                  <Grid item xs={12} lg={6}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      id="outlined-basic"
-                      variant="outlined"
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} lg={6}>
-                    <Button
-                      sx={{ textTransform: "capitalize" }}
-                      variant="contained">
-                      Upload
-                    </Button>
-                  </Grid>
-                </Grid>
+                <FilePickVideo
+                  inputProps={{ accept: "audio/*, .pdf" }}
+                  onChange={(e) => setAttachments(e)}
+                  value={attachments}
+                />
               }
               text="Attachments"
             />
@@ -222,23 +230,13 @@ export default function DialogBook() {
               children={
                 <Grid container spacing={4}>
                   <Grid item xs={12} lg={12}>
-                    <FormControl>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group">
-                        <FormControlLabel
-                          value="female"
-                          control={<Radio />}
-                          label="Use"
-                        />
-                        <FormControlLabel
-                          value="male"
-                          control={<Radio />}
-                          label="No Useale"
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                    <CheckBox2Opstion
+                      onChange={(e) => setToUse(e.target.value)}
+                      title1={"Use"}
+                      value1={true}
+                      title2={"No Useale"}
+                      value2={false}
+                    />
                   </Grid>
                 </Grid>
               }
@@ -247,12 +245,12 @@ export default function DialogBook() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button sx={{ textTransform: "capitalize" }} variant="contained">
-            Save
-          </Button>
-          <Button sx={{ textTransform: "capitalize" }} variant="contained">
-            Cancel
-          </Button>
+          <ButtonComponent
+            onClick={CreateBook}
+            title={"Save"}></ButtonComponent>
+          <ButtonComponent
+            onClick={handleClose}
+            title={"Cancel"}></ButtonComponent>
         </DialogActions>
       </Dialog>
     </React.Fragment>

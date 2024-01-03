@@ -35,7 +35,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "setting" ? `8px solid #0077cc` : null,
+                    result == "setting" ? `8px solid #0077cc` : null,
                 }}>
                 Setting
               </Item>
@@ -45,7 +45,7 @@ function Nav(className) {
             <Link to={"/role/accountlist"} style={{ textDecoration: "none" }}>
               <Item
                 sx={{
-                  borderBottom: result === "role" ? `8px solid #0077cc` : null,
+                  borderBottom: result == "role" ? `8px solid #0077cc` : null,
                 }}>
                 Role Management
               </Item>
@@ -55,7 +55,7 @@ function Nav(className) {
             <Link to={"/user/accountlist"} style={{ textDecoration: "none" }}>
               <Item
                 sx={{
-                  borderBottom: result === "user" ? `8px solid #0077cc` : null,
+                  borderBottom: result == "user" ? `8px solid #0077cc` : null,
                 }}>
                 User Management
               </Item>
@@ -68,7 +68,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "teacher" ? `8px solid #0077cc` : null,
+                    result == "teacher" ? `8px solid #0077cc` : null,
                 }}>
                 Teacher Management
               </Item>
@@ -79,7 +79,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "contents" ? `8px solid #0077cc` : null,
+                    result == "contents" ? `8px solid #0077cc` : null,
                 }}>
                 Contents Management
               </Item>
@@ -90,7 +90,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "product" ? `8px solid #0077cc` : null,
+                    result == "product" ? `8px solid #0077cc` : null,
                 }}>
                 Product Management
               </Item>
@@ -103,7 +103,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "payment" ? `8px solid #0077cc` : null,
+                    result == "payment" ? `8px solid #0077cc` : null,
                 }}>
                 Payment Management
               </Item>
@@ -116,7 +116,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "assignment" ? `8px solid #0077cc` : null,
+                    result == "assignment" ? `8px solid #0077cc` : null,
                 }}>
                 Assignment Management
               </Item>
@@ -126,7 +126,7 @@ function Nav(className) {
             <Link to={"/class/classregular"} style={{ textDecoration: "none" }}>
               <Item
                 sx={{
-                  borderBottom: result === "class" ? `8px solid #0077cc` : null,
+                  borderBottom: result == "class" ? `8px solid #0077cc` : null,
                 }}>
                 Class Management
               </Item>
@@ -137,7 +137,7 @@ function Nav(className) {
               <Item
                 sx={{
                   borderBottom:
-                    result === "website" ? `8px solid #0077cc` : null,
+                    result == "website" ? `8px solid #0077cc` : null,
                 }}>
                 Website Management
               </Item>
@@ -147,8 +147,7 @@ function Nav(className) {
             <Link to={"/report/usereport"} style={{ textDecoration: "none" }}>
               <Item
                 sx={{
-                  borderBottom:
-                    result === "report" ? `8px solid #0077cc` : null,
+                  borderBottom: result == "report" ? `8px solid #0077cc` : null,
                 }}>
                 Reports
               </Item>

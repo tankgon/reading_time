@@ -11,9 +11,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Slide from "@mui/material/Slide";
-import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
-import TextFilter from "../TextFilter";
+import TextBox from "../../../../../components/TextBox";
+import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -38,6 +38,7 @@ export default function DialogCurri() {
   return (
     <React.Fragment>
       <ButtonComponent
+        onClick={handleClickOpen}
         title={"Curriculum"}
         pading={"10px 0"}
         margin={"8px 12px"}
@@ -53,29 +54,9 @@ export default function DialogCurri() {
         <DialogTitle>{"Curriculum add"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <TextFilter
-              children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
-                />
-              }
-              text="Curriculum  Title"
-            />
+            <TextFilter children={<TextBox />} text="Curriculum  Title" />
 
-            <TextFilter
-              children={
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="outlined-basic"
-                  variant="outlined"
-                />
-              }
-              text="Subtitle"
-            />
+            <TextFilter children={<TextBox />} text="Subtitle" />
 
             <TextFilter
               children={

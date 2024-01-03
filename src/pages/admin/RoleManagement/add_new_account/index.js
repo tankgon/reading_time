@@ -1,26 +1,27 @@
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Grid, MenuItem } from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
+import { AspectRatio } from "@mui/joy";
+import { Card, Grid, MenuItem, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import logo from "../../../../components/Image/login-content.jpg";
-import ButtonComponent from "../../../components/buttonComponent";
-import TextBox from "../../../components/textBox";
 import DotText from "../../../components/DotText";
+import TextBox from "../../../components/TextBox";
+import ButtonComponent from "../../../components/buttonComponent";
+import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 //data
+import { toast } from "react-toastify";
 import roles from "../../../../services/api/admin/roles";
 import AutocompleteComponent from "../../../components/AutocompleteComponent";
 import SelectBox from "../../../components/selectsBox";
 import data from "./Data";
-
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -35,11 +36,11 @@ const VisuallyHiddenInput = styled("input")({
 
 const genderA = [
   {
-    title: "Nam",
+    title: "Male",
     value: true,
   },
   {
-    title: "Nữ",
+    title: "Female",
     value: false,
   },
 ];
@@ -67,6 +68,19 @@ function AddNewAccount() {
   const [resignation, setResignation] = useState("");
   const [authority, setAuthority] = useState("");
 
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const Detail = async (idName) => {
     try {
       const res = await roles.actionRoleManagement({
@@ -90,6 +104,7 @@ function AddNewAccount() {
   };
 
   const Approve = async () => {
+    // const imageCloundURL = await Clound(imageURL);
     try {
       await roles.actionRoleManagement({
         Action: "POST",
@@ -110,6 +125,7 @@ function AddNewAccount() {
         _Start_Date: dayjs(start.$d).format("YYYY-MM-DD"),
         Authority_Type: authority,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -125,46 +141,55 @@ function AddNewAccount() {
             alignItems: "center",
           }}>
           <Grid item xs={12} lg={8}>
-            <Box
-              sx={{
-                flexGrow: 1,
-                backgroundColor: "rgba(192, 192, 192, 0.2)",
-                p: "20px",
-                mb: "20px",
-              }}>
-              Menu Permission Management
-            </Box>
             <Grid container spacing={4}>
               <Grid
                 item
                 xs={12}
                 lg={4}
                 sx={{ textAlign: "center", alignItems: "center" }}>
-                <div className="flex justify-center">
-                  <img
-                    src={logo}
-                    alt="description_of_your_image"
-                    style={{
-                      width: "280px",
-                      height: "280px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <Box sx={{ p: "20px 0", width: "100%" }}>
-                  <ButtonComponent
-                    icon={<CloudUploadIcon />}
-                    title={"Select file"}
-                    fileUpload={<VisuallyHiddenInput type="file" />}
-                  />
-                </Box>
+                <Card variant="outlined" sx={{ p: "8px", borderRadius: "8px" }}>
+                  <AspectRatio>
+                    {imageSrc ? (
+                      <img
+                        src={imageSrc}
+                        alt="Uploaded"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <div>
+                        <ImageIcon sx={{ fontSize: "3rem", opacity: 0.2 }} />
+                      </div>
+                    )}
+                  </AspectRatio>
+                  <Box
+                    sx={{
+                      p: "20px 0 0 0",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}>
+                    <Typography level="title-md"></Typography>
+                    <ButtonUpLoadFile
+                      accept="image/*"
+                      title="Add New Picture"
+                      id="input1"
+                      onChange={(e) => {
+                        setImageURL(e.target.files[0]);
+                        handleImageChange(e);
+                      }}
+                    />
+                  </Box>
+                </Card>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <strong>GENERAL</strong>
                 <DotText
                   children={
                     <AutocompleteComponent
-                      sx={{ width: "224px", m: "8px 0" }}
+                      sx={{ p: "8px 0" }}
                       size={"small"}
                       onChange={(event, value) => {
                         Detail(value);
@@ -180,8 +205,6 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <TextBox
-                      size="small"
-                      sx={{ p: "8px" }}
                       value={nickname}
                       onChange={(e) => setNickname(e.target.value)}
                     />
@@ -192,8 +215,6 @@ function AddNewAccount() {
                   // itemButton={<ButtonComponent title={"Check"} />}
                   children={
                     <TextBox
-                      size="small"
-                      sx={{ p: "8px" }}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -204,8 +225,6 @@ function AddNewAccount() {
                   itemButton={<ButtonComponent title={"Reset"} />}
                   children={
                     <TextBox
-                      size="small"
-                      sx={{ p: "8px" }}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -215,7 +234,8 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <SelectBox
-                      sx={{ width: "224px", m: "8px 0" }}
+                      sx={{ m: "8px 0" }}
+                      fullWidth={"fullWidth"}
                       size={"small"}
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
@@ -233,14 +253,13 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        value={birth}
-                        onChange={(date) => setBirth(date)}
-                        sx={{ p: "8px 0px", width: "224px" }}
-                        renderInput={(params) => <TextField {...params} />}
-                        format="DD/MM/YYYY"
-                        fullWidth
-                      />
+                      <DemoContainer components={["DatePicker", "DatePicker"]}>
+                        <DatePicker
+                          value={birth}
+                          onChange={(day) => setBirth(day)}
+                          format="DD-MM-YYYY"
+                        />
+                      </DemoContainer>
                     </LocalizationProvider>
                   }
                   text="Date of Birth"
@@ -248,7 +267,8 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <SelectBox
-                      sx={{ width: "224px", m: "8px 0" }}
+                      sx={{ m: "8px 0" }}
+                      fullWidth={"fullWidth"}
                       size={"small"}
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
@@ -266,8 +286,6 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <TextBox
-                      size="small"
-                      sx={{ p: "8px" }}
                       value={type}
                       onChange={(e) => setType(e.target.value)}
                     />
@@ -285,8 +303,6 @@ function AddNewAccount() {
                   }
                   children={
                     <TextBox
-                      size="small"
-                      sx={{ p: "8px" }}
                       value={contract}
                       onChange={(e) => setContract(e.target.value)}
                     />
@@ -296,14 +312,13 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        value={start}
-                        onChange={(date) => setStart(date)}
-                        sx={{ p: "8px 0px", width: "224px" }}
-                        renderInput={(params) => <TextField {...params} />}
-                        format="DD/MM/YYYY"
-                        fullWidth
-                      />
+                      <DemoContainer components={["DatePicker", "DatePicker"]}>
+                        <DatePicker
+                          value={start}
+                          onChange={(day) => setStart(day)}
+                          format="DD-MM-YYYY"
+                        />
+                      </DemoContainer>
                     </LocalizationProvider>
                   }
                   text="Start Date"
@@ -311,14 +326,13 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        value={resignation}
-                        onChange={(date) => setResignation(date)}
-                        sx={{ p: "8px 0px", width: "224px" }}
-                        renderInput={(params) => <TextField {...params} />}
-                        format="DD/MM/YYYY"
-                        fullWidth
-                      />
+                      <DemoContainer components={["DatePicker", "DatePicker"]}>
+                        <DatePicker
+                          value={resignation}
+                          onChange={(day) => setResignation(day)}
+                          format="DD-MM-YYYY"
+                        />
+                      </DemoContainer>
                     </LocalizationProvider>
                   }
                   text="Resignation Date"
@@ -326,7 +340,8 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <SelectBox
-                      sx={{ width: "224px", m: "8px 0" }}
+                      sx={{ m: "8px 0" }}
+                      fullWidth={"fullWidth"}
                       size={"small"}
                       value={authority}
                       onChange={(e) => setAuthority(e.target.value)}

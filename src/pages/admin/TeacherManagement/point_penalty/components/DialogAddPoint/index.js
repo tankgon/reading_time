@@ -6,7 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+// import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Slide from "@mui/material/Slide";
@@ -15,6 +15,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import ButtonComponent from "../../../../../components/buttonComponent";
 import TextareaComment from "../TextareaComment";
+import TextFilter from "../../../../../components/TextFilter";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -38,7 +39,11 @@ export default function DialogAddPoint() {
 
   return (
     <React.Fragment>
-      <ButtonComponent title={"+ Point / Penalty"} pading={"12px 60px"} />
+      <ButtonComponent
+        onClick={handleClickOpen}
+        title={"+ Point / Penalty"}
+        pading={"12px 60px"}
+      />
       <Dialog
         fullWidth
         open={open}
@@ -46,16 +51,13 @@ export default function DialogAddPoint() {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>
-          {
-            <Button
-              onClick={handleClickOpen}
-              sx={{ textTransform: "capitalize", p: "12px 60px" }}
-              variant="contained">
-              <strong>+ Point / Penalty</strong>
-            </Button>
-          }
-        </DialogTitle>
+        {/* <DialogTitle>
+          <Button
+            sx={{ textTransform: "capitalize", p: "12px 60px" }}
+            variant="contained">
+            <strong>+ Point / Penalty</strong>
+          </Button>
+        </DialogTitle> */}
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <Box

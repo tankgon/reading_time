@@ -49,6 +49,9 @@ import TitleNotice from "./pages/admin/WebsiteManagement/Board/Notice/title";
 import Support from "./pages/admin/WebsiteManagement/Board/Support";
 import Coupon from "./pages/admin/WebsiteManagement/Coupon";
 
+//authen
+import SignIn from "./pages/authentication/signin";
+
 const admin = [
   {
     router: "/setting/webSetting",
@@ -74,7 +77,6 @@ const admin = [
     router: "/setting/terms",
     content: <TermsUse />,
   },
-
   {
     router: "/setting/privacyPolicy",
     content: <PrivacyPolicy />,
@@ -224,13 +226,15 @@ const admin = [
     content: <CurriculumComposition />,
   },
 ];
+
+
 function App() {
   return (
     <Router>
       <div className="App">
         <ToastContainer />
         <Routes>
-          
+          <Route path="/" element={<SignIn />} />
           <Route path="" element={<AdminLayout />}>
             {admin.map((item) => {
               return (
@@ -242,10 +246,7 @@ function App() {
               );
             })}
           </Route>
-
-          <Route path="" element={<TeacherLayout />}>
-            {/* <Route path="/dashboard" element={<TeacherDashboard />} /> */}
-          </Route>
+          <Route path="" element={<TeacherLayout />}></Route>
         </Routes>
       </div>
     </Router>

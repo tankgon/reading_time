@@ -1,15 +1,31 @@
 import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Pagination from "@mui/material/Pagination";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
+import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
-import TextFilter from "./components/TextFilter/TextFilter";
+import teachers from "../../../../services/api/admin/teachers";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import AccountListTable from "./AccountList/Data/AccountListTable";
 
 function AccountList() {
+  const [search, setSearch] = useState("");
+
+  const [listMenu, setListMenu] = useState([]);
+
+  const getList = async () => {
+    try {
+      const res2 = await teachers.actionWorkingHours({
+        Action: "SEARCH",
+        Teacher: search,
+      });
+      setListMenu(res2);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(listMenu);
   return (
     <MDBox>
       <Grid
@@ -36,35 +52,37 @@ function AccountList() {
               </Grid>
               <Grid item xs={12} lg={9}>
                 <Grid container>
-                  <Grid item xs={12} lg={4}>
+                  <Grid item xs={12} lg={5}>
                     <TextFilter
                       children={
                         <TextField
+                          fullWidth
                           size="small"
-                          sx={{ p: "8px" }}
                           id="outlined-basic"
                           variant="outlined"
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
                         />
                       }
                       text="Teacher name (Nickname)"
                     />
                   </Grid>
                 </Grid>
-                <ButtonComponent title={"Add Filter"}/>
+                <ButtonComponent onClick={getList} title={"Add Filter"} />
               </Grid>
             </Grid>
           </Box>
-          <AccountListTable />
-          <Box sx={{ margin: "40px 0" }}>
+
+          <AccountListTable newRowData={search == "" ? [] : listMenu} />
+
+          {/* <Box sx={{ margin: "40px 0" }}>
             <Pagination
               count={10}
               showFirstButton
               showLastButton
               sx={{ justifyContent: "center", display: "flex" }}
             />
-          </Box>
-
-
+          </Box> */}
         </Grid>
       </Grid>
     </MDBox>

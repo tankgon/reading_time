@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import React, { Component } from "react";
-import DialogPayment from "../../components/DialogPayment";
+import DialogPayment from "../../DialogPayment";
 class LinkContact extends Component {
   constructor(props) {
     super(props);

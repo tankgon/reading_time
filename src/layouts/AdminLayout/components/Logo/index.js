@@ -23,16 +23,6 @@ function Logo(className) {
           }}
         />
       </Grid>
-
-      {/* <Grid item xs={12} lg={12}>
-        <Box style={{ textAlign: "right" }}>
-          Welcome
-          <Link to={"#"}>
-            <Item>Admin</Item>
-          </Link>
-          <ButtonComponent title={"Logout"} />
-        </Box>
-      </Grid> */}
     </Grid>
   );
 }

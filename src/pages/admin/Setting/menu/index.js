@@ -16,17 +16,6 @@ function MenuPermission() {
           justifyContent: "center",
           alignItems: "center",
         }}>
-        <Grid item xs={12} lg={12}>
-          <Box
-            sx={{
-              flexGrow: 1,
-              backgroundColor: "rgba(192, 192, 192, 0.2)",
-              p: "20px",
-              mb: "20px",
-            }}>
-            Menu Permission Management
-          </Box>
-        </Grid>
 
         <Grid container spacing={2}>
           <Grid item xs={12} lg={4}>

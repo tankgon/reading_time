@@ -22,7 +22,7 @@ export default function Character() {
     (key) => checkedValues[key]
   );
   // console.log(selectedcheckedValues);
-  console.log(selectedcheckedValues.join(";"));
+  // console.log(selectedcheckedValues.join(";"));
 
   useEffect(() => {
     Storage.setCHARACTER({

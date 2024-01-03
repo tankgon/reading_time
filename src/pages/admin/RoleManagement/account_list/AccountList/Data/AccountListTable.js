@@ -1,7 +1,7 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useMemo, useRef, useState } from "react";
 //data
@@ -10,11 +10,11 @@ import BtnCellRenderer from "./BtnCellRenderer";
 import data from "./index";
 // DatalistRole
 
-const AccountListTable = () => {
+const AccountListTable = ({ newRowData }) => {
   const { DatalistRole: datalistRole } = data();
 
   const gridRef = useRef();
-  const gridStyle = useMemo(() => ({ height: "140px", width: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [columnDefs, setColumnDefs] = useState([
     {
       headerName: "No",
@@ -33,15 +33,13 @@ const AccountListTable = () => {
       field: "Registration_Date",
       valueFormatter: (params) => formatDate(params.value),
     },
-    {
-      headerName: "Management",
-      cellRenderer: BtnCellRenderer,
-      cellRendererParams: {
-        clicked: function (field) {
-          alert(`${field} was clicked`);
-        },
-      },
-    },
+    // {
+    //   headerName: "Management",
+    //   cellRenderer: BtnCellRenderer,
+    //   cellRendererParams: (rowData) => {
+    //     console.log(`Button clicked for row with ID: ${rowData.Id}`);
+    //   },
+    // },
   ]);
 
   const formatDate = (date) => {
@@ -51,20 +49,25 @@ const AccountListTable = () => {
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      // minWidth: 100,
+      minWidth: 100,
       resizable: true,
     };
   }, []);
 
   return (
-    <div style={gridStyle} className="ag-theme-alpine">
+    <div style={gridStyle} className="ag-theme-quartz">
       <AgGridReact
         ref={gridRef}
-        rowData={datalistRole}
+        rowData={newRowData.length != 0 ? newRowData : datalistRole}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         suppressRowClickSelection={true}
+        onCellClicked={(params) => {
+          console.log(params.data);
+        }}
         rowSelection={"multiple"}
+        paginationAutoPageSize={true}
+        pagination={true}
       />
     </div>
   );

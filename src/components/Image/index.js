@@ -12,7 +12,7 @@ const Image = forwardRef(
     ref
   ) => {
     const [url, setUrl] = useState(src);
-    // if (typeof url === "object" || typeof url === "undefined") {
+    // if (typeof url == "object" || typeof url == "undefined") {
     //   setUrl(defaultAvt);
     // }
     return (

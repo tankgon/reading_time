@@ -4,14 +4,32 @@ import MDBox from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import Pagination from "@mui/material/Pagination";
 import Box from "@mui/system/Box";
+import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Link } from "react-router-dom";
 import ButtonComponent from "../../../../components/buttonComponent";
 import AccountListTable from "./Data/AccountListTable";
-import { Link } from "react-router-dom";
+//data
+import roles from "../../../../../services/api/admin/roles";
 
 function AccountList() {
+  const [search, setSearch] = useState("");
+
+  const [listMenu, setListMenu] = useState([]);
+
+  const getList = async () => {
+    try {
+      const res2 = await roles.actionRoleManagement({
+        Action: "SEARCH",
+        _Name: search,
+      });
+      setListMenu(res2);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(listMenu);
   return (
     <MDBox>
       <Grid
@@ -20,17 +38,6 @@ function AccountList() {
           justifyContent: "center",
           alignItems: "center",
         }}>
-        <Grid item xs={12} lg={12}>
-          <Box
-            sx={{
-              flexGrow: 1,
-              backgroundColor: "rgba(192, 192, 192, 0.2)",
-              p: "20px",
-              mb: "20px",
-            }}>
-            Menu Permission Management
-          </Box>
-        </Grid>
 
         <Grid container spacing={2}>
           <Grid item xs={12} lg={12}>
@@ -38,23 +45,24 @@ function AccountList() {
               <Grid
                 container
                 sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <Link to={"/role/addnewaccount"}>
-                    <ButtonComponent title={"Add"} />
-                  </Link>
+                <Link to={"/role/addnewaccount"}>
+                  <ButtonComponent title={"Add"} />
+                </Link>
                 <div>
                   <FormControl size="small" variant="outlined">
                     <OutlinedInput
-                    sx={{mr: "8px"}}
+                      sx={{ mr: "8px" }}
                       id="outlined-adornment-weight"
                       endAdornment={
                         <InputAdornment position="end">
-                          <SearchIcon />
+                          <SearchIcon onClick={getList} />
                         </InputAdornment>
                       }
                       aria-describedby="outlined-weight-helper-text"
                       inputProps={{
                         "aria-label": "weight",
                       }}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </FormControl>
                   <ButtonComponent title={"Excel Export"} />
@@ -64,15 +72,17 @@ function AccountList() {
           </Grid>
 
           <Grid item xs={12} lg={12}>
-            <AccountListTable />
-            <Box sx={{ marginTop: "20px" }}>
+            <AccountListTable
+              newRowData={search == "" ? [] : listMenu}
+            />
+            {/* <Box sx={{ marginTop: "20px" }}>
               <Pagination
                 count={10}
                 showFirstButton
                 showLastButton
                 sx={{ justifyContent: "center", display: "flex" }}
               />
-            </Box>
+            </Box> */}
           </Grid>
         </Grid>
       </Grid>

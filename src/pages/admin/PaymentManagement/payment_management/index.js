@@ -8,9 +8,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
-import TextFilter from "./components/TextFilter/TextFilter";
+import TextBox from "../../../components/TextBox";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import AccountListTable from "./AccountList/Data/AccountListTable";
 function AccountList() {
   return (
     <MDBox>
@@ -45,11 +46,9 @@ function AccountList() {
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                             <DatePicker
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                           </LocalizationProvider>
                         </Box>
@@ -121,15 +120,7 @@ function AccountList() {
                   </Grid>
                   <Grid item xs={12} lg={6}>
                     <TextFilter
-                      children={
-                        <TextField
-                          fullWidth
-                          size="small"
-                          sx={{ p: "6px" }}
-                          id="outlined-basic"
-                          variant="outlined"
-                        />
-                      }
+                      children={<TextBox />}
                       text="Student Name(email)"
                     />
                   </Grid>
@@ -143,14 +134,6 @@ function AccountList() {
 
           <AccountListTable />
 
-          <Box sx={{ marginTop: "20px" }}>
-            <Pagination
-              count={10}
-              showFirstButton
-              showLastButton
-              sx={{ justifyContent: "center", display: "flex" }}
-            />
-          </Box>
         </Grid>
       </Grid>
     </MDBox>

@@ -1,13 +1,13 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
 const isFirstColumn = (params) => {
   var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
+  var thisIsFirstColumn = displayedColumns[0] == params.column;
   return thisIsFirstColumn;
 };
 
@@ -109,7 +109,7 @@ const BannerTableList = () => {
         />
       </div> */}
 
-      <div style={gridStyle} className="ag-theme-alpine">
+      <div style={gridStyle} className="ag-theme-quartz">
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
@@ -117,7 +117,8 @@ const BannerTableList = () => {
           defaultColDef={defaultColDef}
           suppressRowClickSelection={true}
           rowSelection={"multiple"}
-          onGridReady={onGridReady}
+          paginationAutoPageSize={true}
+          pagination={true}
         />
       </div>
     </div>

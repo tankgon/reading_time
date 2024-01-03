@@ -1,4 +1,6 @@
-import { Grid, MenuItem } from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
+import AspectRatio from "@mui/joy/AspectRatio";
+import { Card, Grid, MenuItem, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,30 +9,30 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import teachers from "../../../../services/api/admin/teachers/index.js";
+import teachers from "../../../../services/api/admin/teachers";
 import Clound from "../../../../services/clound/index.js";
 import Storage from "../../../../services/local";
 import DotText from "../../../components/DotText";
 import FilePickVideo from "../../../components/FilePickVideo";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
+import TextBox from "../../../components/TextBox";
+import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
 import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 import SelectBox from "../../../components/selectsBox";
-import TextBox from "../../../components/textBox";
 import data from "./Data";
 import Character from "./components/ComboCheck/Character";
 import LessonStyle from "./components/ComboCheck/LessonStyle ";
 import Comment from "./components/ListComments/Comment.js";
 import Todo from "./components/ListComments/StudentReview.js";
-import TextCheckBox from "./components/TextCheckBox";
 const genderA = [
   {
-    title: "Nam",
+    title: "Male",
     value: true,
   },
   {
-    title: "Nữ",
+    title: "Female",
     value: false,
   },
 ];
@@ -43,10 +45,24 @@ function AddNewAccount() {
 
   const { DatalistCountry: listCountry } = data();
 
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [teacherName, setTeacherName] = useState();
   const [nickname, setNickname] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
   const [gender, setGender] = useState();
   const [birth, setBirth] = useState();
   const [country, setCountry] = useState();
@@ -57,6 +73,18 @@ function AddNewAccount() {
   const [resignationDay, setResignationDay] = useState();
   const [career, setCareer] = useState();
   const [using_The_Editor, setUsing_The_Editor] = useState();
+
+  const [certificateFile, setCertificateFile] = useState([]);
+  const addCertificateFile = (newCertificate) => {
+    const newCertificateName = newCertificate.target.files[0];
+    if (!certificateFile.includes(newCertificateName)) {
+      setCertificateFile((prevCertificates) => [
+        ...prevCertificates,
+        newCertificateName,
+      ]);
+    }
+  };
+
   const [certificate, setCertificate] = useState([]);
   const addCertificate = (newCertificate) => {
     const newCertificateName = newCertificate.target.files[0].name;
@@ -69,7 +97,6 @@ function AddNewAccount() {
       console.log(`Certificate "${newCertificateName}" already exists.`);
     }
   };
-  // const formattedCertificate = certificate.join(";");
 
   const [resume, setResume] = useState();
 
@@ -132,9 +159,15 @@ function AddNewAccount() {
   );
   const [video, setVideo] = useState();
 
-  console.log(contract);
-
   const CreateTeacher = async () => {
+    const certificateFileURLPromises = certificateFile.map(async (item) => {
+      return await Clound(item);
+    });
+    const certificateFileURLs = await Promise.all(certificateFileURLPromises);
+    const formattedUrls = certificateFileURLs.map((url) => `${url}`).join(";");
+    const contractURL = await Clound(contract);
+    const resumeURL = await Clound(resume);
+    const videoURL = await Clound(video);
     try {
       await teachers.actionTeacher({
         Action: "POST",
@@ -144,16 +177,16 @@ function AddNewAccount() {
         Password: password,
         Gender: gender,
         Birth: birth,
-        Country: "Korea",
+        Country: country,
         Timezone: "UTC-5",
         Contract_Type: contractType,
-        Contract: contract,
+        Contract: contractURL,
         Start_Date: startDate,
         Resignation_Day: resignationDay,
         Career: career,
         Using_The_Editor: using_The_Editor,
-        Certificate: certificate.join(";"),
-        Resume: resume,
+        Certificate: formattedUrls,
+        Resume: resumeURL,
         Status: selectedStatus.join(";"),
         Level: selectedLevel.join(";"),
         Special_Feature: selectedSpecialfeature.join(";"),
@@ -162,9 +195,12 @@ function AddNewAccount() {
         Recommended_Level: selectedRecommendedlevel.join(";"),
         Character: character.character,
         Lesson_Style: lesson.lesson,
-        Video: video,
+        Video: videoURL,
+
         Student_Review: student_review.student_review,
         Comment: comment.comment,
+
+        Phone: phone,
         Image: "link_to_image",
         Team: "Team A",
         Working_Hours: "Monday-Friday, 9 AM - 5 PM",
@@ -185,44 +221,42 @@ function AddNewAccount() {
         <Grid item xs={12} lg={12}>
           <Grid container spacing={4}>
             <Grid item xs={12} lg={4} sx={{ textAlign: "center" }}>
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  p: "20px",
-                  color: "#7F7F7F",
-                }}>
-                {/* <div class="mb-4">Add New Teacher</div> */}
-                <div class="flex items-center justify-center w-full">
-                  <label
-                    for="dropzone-file"
-                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg
-                        class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16">
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span class="font-semibold">Click to upload</span> or
-                        drag and drop
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">
-                        SVG, PNG, JPG or GIF (MAX. 800x400px)
-                      </p>
+              <Card variant="outlined" sx={{ p: "8px" }}>
+                <AspectRatio>
+                  {imageSrc ? (
+                    <img
+                      src={imageSrc}
+                      alt="Uploaded"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    <div>
+                      <ImageIcon sx={{ fontSize: "3rem", opacity: 0.2 }} />
                     </div>
-                    <input id="dropzone-file" type="file" class="hidden" />
-                  </label>
-                </div>
-              </Box>
+                  )}
+                </AspectRatio>
+                <Box
+                  sx={{
+                    p: "20px 0 0 0",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}>
+                  <Typography level="title-md"></Typography>
+                  <ButtonUpLoadFile
+                    accept="image/*"
+                    title="Add New Picture"
+                    id="input1"
+                    onChange={(e) => {
+                      setImageURL(e.target.files[0]);
+                      handleImageChange(e);
+                    }}
+                  />
+                </Box>
+              </Card>
             </Grid>
 
             <Grid item xs={12} lg={8}>
@@ -272,6 +306,17 @@ function AddNewAccount() {
                       />
                     }
                     text="Password"
+                  />
+                  <DotText
+                    classColor={"red"}
+                    children={
+                      <TextBox
+                        size="small"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    }
+                    text="Phone"
                   />
                   <DotText
                     children={
@@ -413,8 +458,13 @@ function AddNewAccount() {
                   <DotText
                     itemButton={
                       <ButtonUpLoadFile
+                        title={"File"}
+                        accept={".txt, .pdf"}
                         id={"input1"}
-                        onChange={(e) => addCertificate(e)}
+                        onChange={(e) => {
+                          addCertificateFile(e);
+                          addCertificate(e);
+                        }}
                       />
                     }
                     children={
@@ -666,11 +716,7 @@ function AddNewAccount() {
                   title={"Create Teacher"}
                   marginRight={"8px"}
                 />
-                <ButtonComponent
-                  // onClick={Clound(contract)}
-                  title={"Save"}
-                  marginRight={"8px"}
-                />
+                <ButtonComponent title={"Save"} marginRight={"8px"} />
                 <ButtonComponent title={"Cancel"} marginRight={"8px"} />
               </Grid>
             </Grid>

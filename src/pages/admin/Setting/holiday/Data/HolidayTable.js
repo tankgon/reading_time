@@ -1,7 +1,7 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useMemo, useState } from "react";
 
@@ -12,7 +12,14 @@ import data from "./index";
 function GridExample() {
   const { DatalistHoliday: listHoliday } = data();
   console.log(listHoliday);
-  const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
+  const gridStyle = useMemo(
+    () => ({
+      height: "100%",
+      width: "100%",
+      borderRadius: "80px", // Rounded corners for the container
+    }),
+    []
+  );
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
@@ -43,23 +50,21 @@ function GridExample() {
       field: "Registration_Date",
       valueFormatter: (params) => formatDate(params.value),
     },
-    { headerName: "", field: "data.width" },
+    // { headerName: "", field: "" },
   ]);
 
   const formatDate = (date) => {
-    return moment(date).format("YYYY-MM-DD");
+    return moment(date).format("DD-MM-YYYY");
   };
 
   return (
-    <div className="ag-theme-alpine" style={{ height: "500px", width: "100%" }}>
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          rowData={listHoliday}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          getRowId={(value) => value.data.Id}
-        />
-      </div>
+    <div style={gridStyle} className="ag-theme-quartz">
+      <AgGridReact
+        rowData={listHoliday}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        getRowId={(value) => value.data.Id}
+      />
     </div>
   );
 }

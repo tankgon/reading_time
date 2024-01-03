@@ -4,9 +4,10 @@ import Card from "@mui/joy/Card";
 import Typography from "@mui/joy/Typography";
 import { Box } from "@mui/system";
 import * as React from "react";
-import ButtonComponent from "../../../../../components/buttonComponent";
+import ButtonUpLoadFile from "../../../../../components/buttonUpLoadFile";
 
-export default function PlaceholderAspectRatio() {
+export default function PlaceholderAspectRatio({ onChange }) {
+  console.log(onChange);
   return (
     <Card variant="outlined">
       <AspectRatio>
@@ -16,7 +17,12 @@ export default function PlaceholderAspectRatio() {
       </AspectRatio>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography level="title-md"></Typography>
-        <ButtonComponent title={"Add New Picture"} />
+        <ButtonUpLoadFile
+        accept={"image/*"}
+          title={"Add New Picture"}
+          id={"input1"}
+          onChange={onChange}
+        />
       </Box>
     </Card>
   );

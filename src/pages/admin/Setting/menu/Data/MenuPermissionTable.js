@@ -1,7 +1,7 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useMemo, useState } from "react";
 // import React, { Component } from 'react';
@@ -42,8 +42,8 @@ function MenuPermissionTable() {
   ]);
 
   return (
-    <div className="ag-theme-alpine" style={{ height: "300px", width: "100%" }}>
-      <div style={gridStyle} className="ag-theme-alpine">
+    <div className="ag-theme-quartz" style={{ height: "300px", width: "100%" }}>
+      <div style={gridStyle} className="ag-theme-quartz">
         <AgGridReact
           rowData={listMenu}
           columnDefs={columnDefs}

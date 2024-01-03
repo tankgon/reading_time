@@ -13,14 +13,14 @@ import {
   convertToRaw,
   EditorState,
 } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import React from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import ButtonComponent from "../../../../components/buttonComponent";
-import TextBox from "../../../../components/textBox";
-
-import draftToHtml from "draftjs-to-html";
+import TextBox from "../../../../components/TextBox";
 //data
 import { useState } from "react";
 import web from "../../../../../services/api/admin/settings/web";
@@ -100,6 +100,7 @@ function MailSetting() {
           ? imageUrl
           : listMailSetting.Upload_Email_Template,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -211,6 +212,7 @@ function MailSetting() {
               <Grid xs={12}>
                 <Box
                   sx={{
+                    borderRadius: "8px 8px 0 0",
                     borderTop: "1px solid #C0C0C0",
                     borderLeft: "1px solid #C0C0C0",
                     borderRight: "1px solid #C0C0C0",
@@ -222,6 +224,7 @@ function MailSetting() {
                 </Box>
                 <Box
                   sx={{
+                    borderRadius: " 0 0 8px 8px",
                     border: "1px solid #C0C0C0",
                     p: "20px",
                   }}>
@@ -286,7 +289,11 @@ function MailSetting() {
                         }}>
                         <RadioGroup
                           onChange={(e) => setAuthentication(e.target.value)}
-                          value={listMailSetting.SMTP_Authentication_Required}
+                          value={
+                            listMailSetting.SMTP_Authentication_Required
+                              ? listMailSetting.SMTP_Authentication_Required
+                              : null
+                          }
                           row
                           name="row-radio-buttons-group">
                           <FormControlLabel
@@ -331,6 +338,7 @@ function MailSetting() {
               <Grid xs={12}>
                 <Box
                   sx={{
+                    borderRadius: "8px 8px 0 0",
                     borderTop: "1px solid #C0C0C0",
                     borderLeft: "1px solid #C0C0C0",
                     borderRight: "1px solid #C0C0C0",
@@ -342,6 +350,7 @@ function MailSetting() {
                 </Box>
                 <Box
                   sx={{
+                    borderRadius: " 0 0 8px 8px",
                     border: "1px solid #C0C0C0",
                     p: "20px",
                   }}>

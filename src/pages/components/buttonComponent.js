@@ -17,9 +17,13 @@ function ButtonComponent({
   fileUpload,
   onClick,
   width,
+  fullWidth,
+  type,
 }) {
   return (
     <CustomButton
+      type={type}
+      fullWidth={fullWidth}
       onClick={onClick}
       component="label"
       variant="contained"

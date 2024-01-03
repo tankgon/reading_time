@@ -5,8 +5,8 @@ import styled from "@mui/system/styled";
 import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
-import TextBox from "../../../../components/textBox";
-
+import { toast } from "react-toastify";
+import TextBox from "../../../../components/TextBox";
 //data
 import web from "../../../../../services/api/admin/settings/web";
 import ButtonComponent from "../../../../components/buttonComponent";
@@ -45,6 +45,7 @@ function PGSetting() {
         PG_Provider: pg ? pg : listPGSetting.PG_Provider,
         Webhook_Url: url ? url : listPGSetting.Webhook_Url,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -141,6 +142,7 @@ function PGSetting() {
                 <Grid xs={12}>
                   <Box
                     sx={{
+                      borderRadius: "8px 8px 0 0",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderRight: "1px solid #C0C0C0",
@@ -152,6 +154,7 @@ function PGSetting() {
                   </Box>
                   <Box
                     sx={{
+                      borderRadius: " 0 0 8px 8px",
                       border: "1px solid #C0C0C0",
                       p: "20px",
                     }}>

@@ -1,48 +1,121 @@
-import { Grid } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
+import ImageIcon from "@mui/icons-material/Image";
+import AspectRatio from "@mui/joy/AspectRatio";
+import { Card, Grid, MenuItem, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { MuiChipsInput } from "mui-chips-input";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DotText from "../../../components/DotText";
+import OverlayCheckbox from "../../../components/OverlayCheckbox";
+import TextBox from "../../../components/TextBox";
+import TextCheckBox from "../../../components/TextCheckBox";
+import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
+import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
+import SelectBox from "../../../components/selectsBox";
 import Billing from "./AddNewAccountList/Data/Billing";
 import Course from "./AddNewAccountList/Data/Course";
-import PlaceholderAspectRatio from "./components/CartImage";
-import OverlayCheckbox from "./components/CheckBox";
-import ChoiceChipCheckbox from "./components/ChoiceChipText";
-import TextAdditional from "./components/TextAdditional";
-import TextCheckBox from "./components/TextCheckBox";
-import TextareaComment from "./components/TextareaComment";
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
-const options = ["Option 1", "Option 2"];
+//data
+import users from "../../../../services/api/admin/users";
+import Clound from "../../../../services/clound";
+import data from "../add_new_account/AddNewAccountList/Data";
+const genderA = [
+  {
+    title: "Male",
+    value: true,
+  },
+  {
+    title: "Female",
+    value: false,
+  },
+];
 
 function AddNewAccount() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const handleFileSelect = (file) => {
-    // Xử lý khi tệp được chọn
-    console.log("Selected file:", file);
-    setSelectedFile(file);
+  const { DatalistCountry: listCountry } = data();
+
+  const [userName, setUserName] = useState();
+  const [userEngLishName, setUserEngLishName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
+  const [gender, setGender] = useState();
+  const [birth, setBirth] = useState();
+  const [country, setCountry] = useState();
+  const [using_The_Editor, setUsing_The_Editor] = useState();
+
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageURL, setImageURL] = useState(null);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const [value, setValue] = useState(options[0]);
-  const [inputValue, setInputValue] = useState("");
+  const [admission, setAdmission] = useState({});
+  const handleChange = (event) => {
+    setAdmission((e) => ({
+      ...e,
+      [event.target.name]: event.target.checked,
+    }));
+  };
+  const { InUse, Paused, Withdrawn } = admission;
+  const selectedAdmission = Object.keys(admission).filter(
+    (key) => admission[key]
+  );
+  const [chips, setChips] = useState([]);
+  console.log(chips.join(";"));
+
+  const [englishwing, setEnglishwing] = useState({});
+  const handleChange1 = (event) => {
+    setEnglishwing((e) => ({
+      ...e,
+      [event.target.name]: event.target.checked,
+    }));
+  };
+  const { Lucete, Select, ESL, IELTS } = englishwing;
+  const selectedEnglishwing = Object.keys(englishwing).filter(
+    (key) => englishwing[key]
+  );
+
+  const [referral, setReferral] = useState();
+  const [signup, setSignup] = useState();
+
+  const CreateUser = async () => {
+    const imageCloundURL = await Clound(imageURL);
+    try {
+      await users.actionUser({
+        Action: "POST",
+        _User_English_Name: userEngLishName,
+        _User_Name: userName,
+        Email: email,
+        Password: password,
+        _Member: selectedEnglishwing.join(";"),
+        Country: country,
+        Birth: birth,
+        Gender: gender,
+        Phone: phone,
+        _Description: using_The_Editor,
+        _Image: imageCloundURL,
+        Admission: selectedAdmission.join(";"),
+        Tags: chips.join(";"),
+        Referral_Code: referral,
+        Signup_path: signup,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MDBox>
       <Grid
@@ -72,11 +145,12 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
                       />
                     }
                     text="User Name"
@@ -84,24 +158,26 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={userEngLishName}
+                        onChange={(e) => setUserEngLishName(e.target.value)}
                       />
                     }
                     text="User English Name"
                   />
                   <DotText
                     classColor={"red"}
-                    itemButton={<ButtonComponent title={"Check"} />}
+                    // itemButton={<ButtonComponent title={"Check"} />}
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     }
                     text="E-mail Address(Log-in)"
@@ -110,31 +186,42 @@ function AddNewAccount() {
                     classColor={"red"}
                     itemButton={<ButtonComponent title={"Reset"} />}
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     }
                     text="Password"
                   />
                   <DotText
+                    classColor={"red"}
                     children={
-                      <Autocomplete
+                      <TextBox
                         size="small"
-                        value={value}
-                        onChange={(event, newValue) => {
-                          setValue(newValue);
-                        }}
-                        inputValue={inputValue}
-                        onInputChange={(event, newInputValue) => {
-                          setInputValue(newInputValue);
-                        }}
-                        id="controllable-states-demo"
-                        sx={{ p: "8px", width: "240px" }}
-                        options={options}
-                        renderInput={(params) => <TextField {...params} />}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    }
+                    text="Phone"
+                  />
+                  <DotText
+                    children={
+                      <SelectBox
+                        fullWidth={"fullWidth"}
+                        sx={{ m: " 8px 0" }}
+                        size={"small"}
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        children={genderA.map((item, index) => {
+                          return (
+                            <MenuItem key={index} value={item.value}>
+                              {item.title}
+                            </MenuItem>
+                          );
+                        })}
                       />
                     }
                     text="Gender"
@@ -142,45 +229,84 @@ function AddNewAccount() {
                   <DotText
                     children={
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          sx={{ p: "8px", width: "240px" }}
-                          renderInput={(params) => <TextField {...params} />}
-                          format="DD/MM/YYYY"
-                          fullWidth
-                        />
+                        <DemoContainer
+                          components={["DatePicker", "DatePicker"]}>
+                          <DatePicker
+                            value={birth}
+                            onChange={(day) => setBirth(day)}
+                            format="DD-MM-YYYY"
+                          />
+                        </DemoContainer>
                       </LocalizationProvider>
                     }
                     text="Date of Birth"
                   />
                   <DotText
                     children={
-                      <Autocomplete
-                        size="small"
-                        value={value}
-                        onChange={(event, newValue) => {
-                          setValue(newValue);
-                        }}
-                        inputValue={inputValue}
-                        onInputChange={(event, newInputValue) => {
-                          setInputValue(newInputValue);
-                        }}
-                        id="controllable-states-demo"
-                        sx={{ p: "8px", width: "240px" }}
-                        options={options}
-                        renderInput={(params) => <TextField {...params} />}
+                      <SelectBox
+                        fullWidth={"fullWidth"}
+                        sx={{ m: " 8px 0" }}
+                        size={"small"}
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        children={listCountry.map((item, index) => {
+                          return (
+                            <MenuItem key={index} value={item.Name}>
+                              {item.Name}
+                            </MenuItem>
+                          );
+                        })}
                       />
                     }
                     text="Select a country"
                   />
                   <Grid item xs={12} lg={8}>
                     <Box sx={{ m: "20px 0" }}>
-                      <TextareaComment />
+                      <TextareaComment
+                        onChange={(e) => setUsing_The_Editor(e.target.value)}
+                      />
                     </Box>
                   </Grid>
+
                   <Grid item xs={12} lg={8}>
-                    <Box sx={{ m: "20px 0" }}>
-                      <PlaceholderAspectRatio />
-                    </Box>
+                    <Card variant="outlined" sx={{ p: "8px" }}>
+                      <AspectRatio>
+                        {imageSrc ? (
+                          <img
+                            src={imageSrc}
+                            alt="Uploaded"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <div>
+                            <ImageIcon
+                              sx={{ fontSize: "3rem", opacity: 0.2 }}
+                            />
+                          </div>
+                        )}
+                      </AspectRatio>
+                      <Box
+                        sx={{
+                          p: "20px 0 0 0",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}>
+                        <Typography level="title-md"></Typography>
+                        <ButtonUpLoadFile
+                          accept="image/*"
+                          title="Add New Picture"
+                          id="input1"
+                          onChange={(e) => {
+                            setImageURL(e.target.files[0]);
+                            handleImageChange(e);
+                          }}
+                        />
+                      </Box>
+                    </Card>
                   </Grid>
                 </Grid>
 
@@ -189,98 +315,147 @@ function AddNewAccount() {
                   <TextCheckBox
                     children={
                       <Grid container spacing={4}>
-                        <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"In use"} />
+                        <Grid item xs={12} lg={4}>
+                          <OverlayCheckbox
+                            label={"In use"}
+                            checked={InUse}
+                            onChange={handleChange}
+                            name="In use"
+                          />
                         </Grid>
-                        <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"Paused"} />
+                        <Grid item xs={12} lg={4}>
+                          <OverlayCheckbox
+                            label={"Paused"}
+                            checked={Paused}
+                            onChange={handleChange}
+                            name="Paused"
+                          />
                         </Grid>
-                        <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"Withdrawn"} />
+                        <Grid item xs={12} lg={4}>
+                          <OverlayCheckbox
+                            label={"Withdrawn"}
+                            checked={Withdrawn}
+                            onChange={handleChange}
+                            name="Withdrawn"
+                          />
                         </Grid>
                       </Grid>
                     }
                     text="Admission"
                   />
                   <TextCheckBox
-                    children={<ChoiceChipCheckbox />}
+                    children={
+                      <MuiChipsInput
+                        fullWidth
+                        placeholder={"List of Tags"}
+                        value={chips}
+                        onChange={(e) => setChips(e)}
+                      />
+                    }
                     text="List of Tags"
                   />
                   <TextCheckBox
                     children={
                       <Grid container spacing={4}>
                         <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"Lucete"} />
+                          <OverlayCheckbox
+                            label={"Lucete"}
+                            checked={Lucete}
+                            onChange={handleChange1}
+                            name="Lucete"
+                          />
                         </Grid>
                         <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"Select the campus"} />
+                          <OverlayCheckbox
+                            label={"Select the campus"}
+                            checked={Select}
+                            onChange={handleChange1}
+                            name="Select"
+                          />
                         </Grid>
                         <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"ESL"} />
+                          <OverlayCheckbox
+                            label={"ESL"}
+                            checked={ESL}
+                            onChange={handleChange1}
+                            name="ESL"
+                          />
                         </Grid>
                         <Grid item xs={12} lg={3}>
-                          <OverlayCheckbox label={"IELTS"} />
+                          <OverlayCheckbox
+                            label={"IELTS"}
+                            checked={IELTS}
+                            onChange={handleChange1}
+                            name="IELTS"
+                          />
                         </Grid>
                       </Grid>
                     }
                     text="Englishwing Member"
                   />
-                  <TextAdditional
+                  <TextCheckBox
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={referral}
+                        onChange={(e) => setReferral(e.target.value)}
                       />
                     }
                     text="Referral code"
                   />
-                  <TextAdditional
+                  <TextCheckBox
                     children={
-                      <TextField
+                      <TextBox
                         size="small"
-                        sx={{ p: "8px" }}
                         id="outlined-basic"
                         variant="outlined"
+                        value={signup}
+                        onChange={(e) => setSignup(e.target.value)}
                       />
                     }
                     text="Signup path"
                   />
-                </Grid>
 
-                <Grid item xs={12} lg={12}>
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      mb: "20px",
-                    }}>
-                    <strong>Course</strong>
-                  </Box>
-                  <Course />
-                </Grid>
-                <Grid item xs={12} lg={12}>
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      mb: "20px",
-                    }}>
-                    <strong>Billing</strong>
-                  </Box>
-                  <Billing />
+                  <div className="w-full hidden">
+                    <Grid item xs={12} lg={12}>
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                          mb: "20px",
+                        }}>
+                        <strong>Course</strong>
+                      </Box>
+                      <Course />
+                    </Grid>
+                    <Grid item xs={12} lg={12}>
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                          mb: "20px",
+                        }}>
+                        <strong>Billing</strong>
+                      </Box>
+                      <Billing />
+                    </Grid>
+                  </div>
+
+                  <Grid container spacing={2} sx={{ p: "20px 0px" }}>
+                    <Grid item xs={6} lg={2}>
+                      <ButtonComponent
+                        onClick={CreateUser}
+                        width={"100%"}
+                        title={"Create User"}
+                      />
+                    </Grid>
+
+                    <Grid item xs={6} lg={2}>
+                      <ButtonComponent width={"100%"} title={"Cancel"} />
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
-
-              <ButtonComponent
-                margin={"40px 0px"}
-                pading={"12px 52px"}
-                title={"Create User"}
-              />
-              <ButtonComponent
-                margin={"40px 20px"}
-                pading={"12px 52px"}
-                title={"Cancel"}
-              />
             </Grid>
           </Grid>
         </Grid>

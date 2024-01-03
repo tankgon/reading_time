@@ -9,9 +9,11 @@ function SelectBox({
   sx,
   size,
   children,
+  multiline,
 }) {
   return (
     <Select
+      multiline
       fullWidth={fullWidth}
       value={value}
       size={size}

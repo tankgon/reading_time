@@ -10,7 +10,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ButtonComponent from "../../../components/buttonComponent";
 import AccountListTable from "./Data/AccountListTable";
-import TextFilter from "./components/TextFilter/TextFilter";
+import TextFilter from "../../../components/TextFilter";
 
 function AccountList() {
   return (
@@ -34,7 +34,7 @@ function AccountList() {
                 justifyContent: "center",
                 alignItems: "center",
               }}>
-              <Grid item xs={12} lg={1}>
+              {/* <Grid item xs={12} lg={1}>
                 <strong style={{ color: "#7F7F7F" }}>Filter List</strong>
               </Grid>
               <Grid item xs={12} lg={9}>
@@ -177,21 +177,13 @@ function AccountList() {
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12} lg={2} style={{ textAlign: "right" }}>
+              </Grid> */}
+              <Grid item xs={12} lg={12} style={{ textAlign: "right" }}>
                 <ButtonComponent title={"Excel Export"} />
               </Grid>
             </Grid>
           </Box>
           <AccountListTable />
-          <Box sx={{ marginTop: "20px" }}>
-            <Pagination
-              count={10}
-              showFirstButton
-              showLastButton
-              sx={{ justifyContent: "center", display: "flex" }}
-            />
-          </Box>
         </Grid>
       </Grid>
     </MDBox>

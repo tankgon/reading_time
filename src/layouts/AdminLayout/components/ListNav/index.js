@@ -16,16 +16,12 @@ function ListNav({ icon, title, list, url }) {
   return (
     <div>
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          {/* <InboxIcon /> */}
-          {icon}
-        </ListItemIcon>
+        <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={title} />
         {list ? open ? <ExpandLess /> : <ExpandMore /> : null}
       </ListItemButton>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {/* {list} */}
         {list
           ? list.map((item, index) => (
               <Link to={item.url}>

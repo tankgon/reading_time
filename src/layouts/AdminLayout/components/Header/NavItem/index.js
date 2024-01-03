@@ -160,6 +160,8 @@ function Nav({ children }) {
   const location = useLocation();
   var result = location.pathname.split("/")[1];
 
+  console.log(location.pathname.split("/")[2]);
+
   useEffect(() => {
     if (result == "setting") setPathNameState(setting);
     if (result == "role") setPathNameState(role);
@@ -182,10 +184,12 @@ function Nav({ children }) {
         backgroundColor: "#ad9fcd",
         borderTop: `1px solid #f4a5c7`,
         padding: "12px 0",
+        alignItems: "center",
       }}>
       <Grid xs={12}>
         <ButtonGroup variant="text">
           {pathNameState.map((item, index) => {
+            console.log(item.url?.split("/")[2]);
             return (
               <Link
                 key={index}
@@ -195,6 +199,10 @@ function Nav({ children }) {
                   sx={{
                     fontSize: "12px",
                     textTransform: "capitalize",
+                    background:
+                      location.pathname.split("/")[2] == item.url.split("/")[2]
+                        ? "#f4a5c7"
+                        : "transparent",
                     color: "white",
                   }}>
                   {item.title}

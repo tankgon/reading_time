@@ -3,41 +3,14 @@
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import "../Data/style.css";
+import React, { useMemo, useRef, useState } from "react";
+import "./style.css";
 
-const isFirstColumn = (params) => {
-  var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
-  return thisIsFirstColumn;
-};
-
-const rowSpan = (params) => {
-  var athlete = params.data ? params.data.athlete : undefined;
-  if (athlete === "Aleksey Nemov") {
-    // have all Russia age columns width 2
-    return 2;
-  } else if (athlete === "Ryan Lochte") {
-    // have all United States column width 4
-    return 4;
-  } else {
-    // all other rows should be just normal
-    return 1;
-  }
-};
 const MonthlyDashboard = () => {
   const gridRef = useRef();
   const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [rowData, setRowData] = useState();
   const [columnDefs, setColumnDefs] = useState([
-    // {
-    //   field: "athlete",
-    //   rowSpan: rowSpan,
-    //   cellClassRules: {
-    //     "cell-span": "value==='Aleksey Nemov' || value==='Ryan Lochte'",
-    //   },
-    //   width: 200,
-    // },
     { field: "Team", minWidth: 80, headerClass: "resizable-header" },
     { field: "Teacher", minWidth: 90, headerClass: "resizable-header" },
     { field: "1", headerClass: "resizable-header" },
@@ -80,172 +53,16 @@ const MonthlyDashboard = () => {
     };
   }, []);
 
-  // set background colour on every row, this is probably bad, should be using CSS classes
-  const rowStyle = { background: "#EDEDED" };
+  const rowStyle = { background: "#F5F5F5" };
 
-  // set background colour on even rows again, this looks bad, should be using CSS classes
   const getRowStyle = (params) => {
-    if (params.node.rowIndex % 2 === 0) {
-      return { background: "#D6DCE5" };
+    if (params.node.rowIndex % 2 == 0) {
+      return { background: "#fff" };
     }
   };
 
-  const onGridReady = useCallback((params) => {
-    const data = [
-      {
-        No: 10,
-        athlete: "Aleksey Nemov",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        athlete: "Aleksey Nemov",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        1: "0",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        1: "5",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-    ];
-    setRowData(data);
-  }, []);
-
-  const onQuickFilterChanged = useCallback(() => {
-    gridRef.current.api.setQuickFilter(
-      document.getElementById("quickFilter").value
-    );
-  }, []);
-
   return (
     <div className="example-wrapper">
-      {/* <div style={{ marginBottom: "5px" }}>
-        <input
-          type="text"
-          onInput={onQuickFilterChanged}
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-      </div> */}
-
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
           ref={gridRef}
@@ -254,7 +71,8 @@ const MonthlyDashboard = () => {
           defaultColDef={defaultColDef}
           suppressRowClickSelection={true}
           rowSelection={"multiple"}
-          onGridReady={onGridReady}
+          paginationAutoPageSize={true}
+          pagination={true}
           rowStyle={rowStyle}
           getRowStyle={getRowStyle}
         />

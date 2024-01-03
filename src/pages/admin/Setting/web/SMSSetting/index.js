@@ -5,9 +5,10 @@ import styled from "@mui/system/styled";
 import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
+import TextBox from "../../../../components/TextBox";
 import SelectsBox from "../../../../components/selectsBox";
-import TextBox from "../../../../components/textBox";
 //data
+import { toast } from "react-toastify";
 import web from "../../../../../services/api/admin/settings/web";
 import ButtonComponent from "../../../../components/buttonComponent";
 import data from "./data";
@@ -37,7 +38,7 @@ function SMSSetting() {
   const [id, setId] = useState("");
   const [SMS, setSMS] = useState("");
 
-  console.log({ key, secret, number, id, SMS });
+  console.log(listSMSSetting);
 
   const Update = async () => {
     try {
@@ -50,6 +51,7 @@ function SMSSetting() {
         Sender_Id: id ? id : listSMSSetting.Sender_Id,
         Send_SMS_Failure: SMS ? SMS : listSMSSetting.Send_SMS_Failure,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -146,6 +148,7 @@ function SMSSetting() {
                 <Grid xs={12}>
                   <Box
                     sx={{
+                      borderRadius: "8px 8px 0 0",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderRight: "1px solid #C0C0C0",
@@ -157,6 +160,7 @@ function SMSSetting() {
                   </Box>
                   <Box
                     sx={{
+                      borderRadius: " 0 0 8px 8px",
                       border: "1px solid #C0C0C0",
                       p: "20px",
                     }}>
@@ -202,7 +206,13 @@ function SMSSetting() {
                         <SelectsBox
                           size={"small"}
                           fullWidth={"fullWidth"}
-                          value={SMS}
+                          value={
+                            SMS
+                              ? SMS
+                              : listSMSSetting.Send_SMS_Failure
+                              ? listSMSSetting.Send_SMS_Failure
+                              : null
+                          }
                           children={sms.map((item, index) => {
                             return (
                               <MenuItem

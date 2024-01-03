@@ -1,47 +1,28 @@
 import { Grid } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 import MDBox from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/system/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
-import DialogFree_Trial from "./components/DialogFree_Trial";
-import TextFilter from "./components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import AccountListTable from "./AccountList/Data/AccountListTable";
+import DialogFree_Trial from "./DialogFree_Trial";
 function Book() {
   return (
     <MDBox>
-      <Grid
-        container
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-        <Grid item xs={12} lg={12}>
-          <Box
-            sx={{
-              flexGrow: 1,
-              mb: "20px",
-              p: "20px",
-            }}>
-            <Grid
-              container
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}>
-              <Grid item xs={12} lg={2}>
-                <DialogFree_Trial />
-                <ButtonComponent
-                  title={"Excel Export"}
-                  pading={"10px 0"}
-                  margin={"8px 12px"}
-                  width={"90%"}
-                />
-
-                {/* <DialogAddPoint /> */}
-              </Grid>
-              <Grid item xs={12} lg={10}>
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          lg={4}
+          display={"flex"}
+          justifyContent={"space-between"}>
+          <DialogFree_Trial />
+          <ButtonComponent
+            title={"Excel Export"}
+            pading={"10px 0"}
+            margin={"12px"}
+            width={"90%"}
+          />
+        </Grid>
+        {/* <Grid item xs={12} lg={10}>
                 <Grid container>
                   <Grid item xs={12} lg={12}>
                     <Grid container spacing={8}>
@@ -58,7 +39,7 @@ function Book() {
                               )}
                             />
                           }
-                          text="Country of sale"
+                          text="Country"
                         />
                         <TextFilter
                           children={
@@ -106,11 +87,9 @@ function Book() {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
-          </Box>
-          <AccountListTable />
-        </Grid>
+              </Grid> */}
+
+        <AccountListTable />
       </Grid>
     </MDBox>
   );

@@ -1,12 +1,13 @@
-import { Grid, MenuItem } from "@mui/material";
+import { Checkbox, Grid, MenuItem, Select } from "@mui/material";
 import MDBox from "@mui/material/Box";
+import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import React from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
-import SelectsBox from "../../../../components/selectsBox";
-import TextBox from "../../../../components/textBox";
+import { toast } from "react-toastify";
+import TextBox from "../../../../components/TextBox";
 //data
 import { useState } from "react";
 import web from "../../../../../services/api/admin/settings/web";
@@ -22,18 +23,6 @@ const Item = styled("div")(({ theme }) => ({
   color: "black",
 }));
 
-const mainPC = [
-  {
-    title: "Main Menu(PC)",
-  },
-];
-
-const mainMB = [
-  {
-    title: "Main Menu(Mobile)",
-  },
-];
-
 const mainPP = [
   {
     title: "Raz-Kids",
@@ -41,12 +30,16 @@ const mainPP = [
 ];
 
 function AdminSetting() {
-  const { DatalistAdminSetting: listAdminSetting } = data();
+  const {
+    DatalistAdminSetting: listAdminSetting,
+    DataListMenuPC: mainPC,
+    DataListMenuMB: mainMB,
+    DataListService: mainPP,
+  } = data();
 
-  const [mainmenumobile, setMain_Menu_Mobile] = useState("");
-  const [mainmenupC, setMain_Menu_PC] = useState("");
-  const [mainpageproduct, setMain_Page_Product] = useState("");
-
+  const [mainmenumobile, setMain_Menu_Mobile] = useState([]);
+  const [mainmenupC, setMain_Menu_PC] = useState([]);
+  const [mainpageproduct, setMain_Page_Product] = useState([]);
   const [account, setAccount] = useState("");
   const [client_Id, setClient_Id] = useState("");
   const [freetrialproduct, setFree_Trial_Product] = useState("");
@@ -57,6 +50,13 @@ function AdminSetting() {
   const [webHookurl, setWebHook_Url] = useState("");
   const [zoomapikey, setZoom_Api_Key] = useState("");
   const [zoomapisecret, setZoom_Api_Secret] = useState("");
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMain_Menu_PC(typeof value == "string" ? value.split(",") : value);
+  };
 
   const Update = async () => {
     try {
@@ -92,6 +92,7 @@ function AdminSetting() {
           ? zoomapisecret
           : listAdminSetting.Zoom_Api_Secret,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -188,6 +189,7 @@ function AdminSetting() {
                 <Grid xs={12}>
                   <Box
                     sx={{
+                      borderRadius: "8px 8px 0 0",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderRight: "1px solid #C0C0C0",
@@ -195,10 +197,11 @@ function AdminSetting() {
                       p: "20px",
                       backgroundColor: "rgba(192, 192, 192, 0.2)",
                     }}>
-                    Mail Setting
+                    Admin Setting
                   </Box>
                   <Box
                     sx={{
+                      borderRadius: " 0 0 8px 8px",
                       border: "1px solid #C0C0C0",
                       p: "20px",
                     }}>
@@ -208,41 +211,81 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Main Menu(PC)
-                        <SelectsBox
-                          size={"small"}
-                          fullWidth={"fullWidth"}
-                          defaultValue={listAdminSetting.Main_Menu_PC}
-                          value={mainmenupC}
-                          children={mainPC.map((item, index) => {
-                            return (
-                              <MenuItem
-                                onClick={() => setMain_Menu_PC(item.title)}
-                                key={index}
-                                value={item.title}>
-                                {item.title}
-                              </MenuItem>
+                        <Select
+                          fullWidth
+                          size="small"
+                          multiple
+                          value={
+                            mainmenupC
+                              ? mainmenupC
+                              : listAdminSetting.MainMenu_PC_Name
+                              ? listAdminSetting.MainMenu_PC_Name
+                              : null
+                          }
+                          onChange={(event) => {
+                            const {
+                              target: { value },
+                            } = event;
+                            setMain_Menu_PC(
+                              typeof value == "string"
+                                ? value.split(",")
+                                : value
                             );
-                          })}
-                        />
+                          }}
+                          renderValue={(selected) => selected.join(", ")}>
+                          {mainPC.map((item, index) => (
+                            <MenuItem key={index} value={item.MainMenu_PC_Name}>
+                              <Checkbox
+                                checked={
+                                  mainmenupC.indexOf(item.MainMenu_PC_Name) > -1
+                                }
+                              />
+                              <ListItemText primary={item.MainMenu_PC_Name} />
+                            </MenuItem>
+                          ))}
+                        </Select>
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Main Menu (Mobile)
-                        <SelectsBox
-                          size={"small"}
-                          fullWidth={"fullWidth"}
-                          defaultValue={listAdminSetting.Main_Menu_Mobile}
-                          value={mainmenumobile}
-                          children={mainMB.map((item, index) => {
-                            return (
-                              <MenuItem
-                                onClick={() => setMain_Menu_Mobile(item.title)}
-                                key={index}
-                                value={item.title}>
-                                {item.title}
-                              </MenuItem>
+                        <Select
+                          fullWidth
+                          size="small"
+                          multiple
+                          value={
+                            mainmenumobile
+                              ? mainmenumobile
+                              : listAdminSetting.MainMenu_Mobile_Name
+                              ? listAdminSetting.MainMenu_Mobile_Name
+                              : null
+                          }
+                          onChange={(event) => {
+                            const {
+                              target: { value },
+                            } = event;
+                            setMain_Menu_Mobile(
+                              typeof value == "string"
+                                ? value.split(",")
+                                : value
                             );
-                          })}
-                        />
+                          }}
+                          renderValue={(selected) => selected.join(", ")}>
+                          {mainMB.map((item, index) => (
+                            <MenuItem
+                              key={index}
+                              value={item.MainMenu_Mobile_Name}>
+                              <Checkbox
+                                checked={
+                                  mainmenumobile.indexOf(
+                                    item.MainMenu_Mobile_Name
+                                  ) > -1
+                                }
+                              />
+                              <ListItemText
+                                primary={item.MainMenu_Mobile_Name}
+                              />
+                            </MenuItem>
+                          ))}
+                        </Select>
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
@@ -250,10 +293,16 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Main Page Product
-                        <SelectsBox
+                        {/* <SelectsBox
                           size={"small"}
                           fullWidth={"fullWidth"}
-                          value={mainpageproduct}
+                          value={
+                            mainpageproduct
+                              ? mainpageproduct
+                              : listAdminSetting.Main_Page_Product
+                              ? listAdminSetting.Main_Page_Product
+                              : null
+                          }
                           defaultValue={listAdminSetting.Main_Page_Product}
                           children={mainPP.map((item, index) => {
                             return (
@@ -265,7 +314,46 @@ function AdminSetting() {
                               </MenuItem>
                             );
                           })}
-                        />
+                        /> */}
+                        <Select
+                          fullWidth
+                          size="small"
+                          multiple
+                          value={
+                            mainpageproduct
+                              ? mainpageproduct
+                              : listAdminSetting.MainPage_Product_Mobile_Name
+                              ? listAdminSetting.MainPage_Product_Mobile_Name
+                              : null
+                          }
+                          onChange={(event) => {
+                            const {
+                              target: { value },
+                            } = event;
+                            setMain_Page_Product(
+                              typeof value == "string"
+                                ? value.split(",")
+                                : value
+                            );
+                          }}
+                          renderValue={(selected) => selected.join(", ")}>
+                          {mainPP.map((item, index) => (
+                            <MenuItem
+                              key={index}
+                              value={item.MainPage_Product_Mobile_Name}>
+                              <Checkbox
+                                checked={
+                                  mainpageproduct.indexOf(
+                                    item.MainPage_Product_Mobile_Name
+                                  ) > -1
+                                }
+                              />
+                              <ListItemText
+                                primary={item.MainPage_Product_Mobile_Name}
+                              />
+                            </MenuItem>
+                          ))}
+                        </Select>
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
@@ -307,7 +395,7 @@ function AdminSetting() {
                           value={
                             publishablekey
                               ? publishablekey
-                              : listAdminSetting.Publishable_Key
+                              : listAdminSetting.Stripe_Publishable_Key
                           }
                         />
                       </Grid>
@@ -316,7 +404,9 @@ function AdminSetting() {
                         <TextBox
                           onChange={(e) => setSecret_Key(e.target.value)}
                           value={
-                            secretkey ? secretkey : listAdminSetting.Secret_Key
+                            secretkey
+                              ? secretkey
+                              : listAdminSetting.Stripe_Secret_Key
                           }
                         />
                       </Grid>
@@ -328,7 +418,7 @@ function AdminSetting() {
                           value={
                             webHookurl
                               ? webHookurl
-                              : listAdminSetting.WebHook_Url
+                              : listAdminSetting.Stripe_Webhook_Url
                           }
                         />
                         * Note: The above URL must be set in the Stripe webhook
@@ -338,13 +428,15 @@ function AdminSetting() {
                       </Grid>
 
                       <Grid item xs={12} lg={12}>
-                        <strong>Payple</strong>
+                        <strong>paypal</strong>
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Account
                         <TextBox
                           onChange={(e) => setAccount(e.target.value)}
-                          value={account ? account : listAdminSetting.Account}
+                          value={
+                            account ? account : listAdminSetting.Paypal_Account
+                          }
                         />
                       </Grid>
 
@@ -353,7 +445,19 @@ function AdminSetting() {
                         <TextBox
                           onChange={(e) => setClient_Id(e.target.value)}
                           value={
-                            client_Id ? client_Id : listAdminSetting.Client_Id
+                            client_Id
+                              ? client_Id
+                              : listAdminSetting.Paypal_Client_Id
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} lg={12}>
+                        Secret
+                        <TextBox
+                          onChange={(e) => setSecret(e.target.value)}
+                          value={
+                            secret ? secret : listAdminSetting.Paypal_Secret
                           }
                         />
                       </Grid>

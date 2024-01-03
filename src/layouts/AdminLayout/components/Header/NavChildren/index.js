@@ -74,6 +74,7 @@ function NavChildren() {
                     sx={{
                       fontSize: "12px",
                       textTransform: "capitalize",
+                      background: location.pathname == item.url ? "#f4a5c7" : "transparent",
                       color: "white",
                     }}>
                     {item.title}

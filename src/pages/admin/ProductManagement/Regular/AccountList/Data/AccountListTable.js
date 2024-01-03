@@ -1,33 +1,45 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import LinkContact from "../components/LinkContact";
-
-const isFirstColumn = (params) => {
-  var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
-  return thisIsFirstColumn;
-};
+//data
+import moment from "moment";
+import data from "../Data";
 
 const AccountListTable = () => {
-  const gridRef = useRef();
-  const gridStyle = useMemo(() => ({ height: "300px", width: "100%" }), []);
-  const [rowData, setRowData] = useState();
+  const { DatalistMenu: listMenu } = data();
+  const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [columnDefs, setColumnDefs] = useState([
-    { field: "No" },
-    { field: "Product Name" },
-    { field: "Product Division" },
-    { field: "Country" },
-    { field: "Currency" },
-    { field: "Price" },
-    { field: "Class Days(Total)" },
-    { field: "Class Days(Per Week)" },
-    { field: "Registration date" },
-    { field: "Whether to use" },
-    { field: "Expiration date" },
+    { field: "Id", headerName: "No" },
+    {
+      field: "Product_Name",
+      headerName: "Product Name",
+      filter: "agTextColumnFilter",
+    },
+    { field: "Product_Division", headerName: "Product Division" },
+    {
+      field: "Country_Sale",
+      headerName: "Country",
+      filter: "agTextColumnFilter",
+    },
+    { field: "Currency", headerName: "Currency", filter: "agTextColumnFilter" },
+    { field: "Price", headerName: "Price" },
+    { field: "Class_Total", headerName: "Class Days(Total)" },
+    { field: "Class_Week", headerName: "Class Days(Per Week)" },
+    {
+      field: "Registration_Date",
+      headerName: "Registration date",
+      valueFormatter: (params) => formatDate(params.value),
+    },
+    {
+      field: "Whether_To_Use",
+      headerName: "Whether to use",
+      filter: "agTextColumnFilter",
+    },
+    { field: "Expiration_Date", headerName: "Expiration date" },
     {
       field: "Edit",
       cellRenderer: LinkContact,
@@ -36,73 +48,32 @@ const AccountListTable = () => {
           alert(`${field} was clicked`);
         },
       },
-      minWidth: 100,
     },
   ]);
+
+  const formatDate = (date) => {
+    return moment(date).format("DD-MM-YYYY");
+  };
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      minWidth: 100,
+      minWidth: 150,
       resizable: true,
+      floatingFilter: true,
     };
   }, []);
 
-  const onGridReady = useCallback((params) => {
-    const data = [
-      {
-        No: 1,
-        Approval: "213",
-        Role: "213",
-        Country: "213",
-        ID: "213",
-        Name: "231",
-        Email: "13",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 2,
-        Approval: "",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-    ];
-    setRowData(data);
-  }, []);
-
-  const onQuickFilterChanged = useCallback(() => {
-    gridRef.current.api.setQuickFilter(
-      document.getElementById("quickFilter").value
-    );
-  }, []);
-
   return (
-    <div className="example-wrapper">
-      {/* <div style={{ marginBottom: "5px" }}>
-        <input
-          type="text"
-          onInput={onQuickFilterChanged}
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-      </div> */}
-
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          suppressRowClickSelection={true}
-          rowSelection={"multiple"}
-          onGridReady={onGridReady}
-        />
-      </div>
+    <div style={gridStyle} className="ag-theme-quartz">
+      <AgGridReact
+        rowData={listMenu}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        suppressRowClickSelection={true}
+        rowSelection={"multiple"}
+        paginationAutoPageSize={true}
+        pagination={true}
+      />
     </div>
   );
 };

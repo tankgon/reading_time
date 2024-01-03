@@ -1,7 +1,5 @@
 import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -11,7 +9,8 @@ import ButtonComponent from "../../../components/buttonComponent";
 import DateCalendarViews from "./components/DateCalendarView";
 import DialogAddPoint from "./components/DialogAddPoint";
 import Spreadheet from "./components/Spreadsheet";
-import TextFilter from "./components/TextFilter/TextFilter";
+import TextFilter from "../../../components/TextFilter";
+import TextBox from "../../../components/TextBox";
 
 function PointPenalty() {
   return (
@@ -43,14 +42,12 @@ function PointPenalty() {
                   <Grid item xs={12} lg={12}>
                     <TextFilter
                       children={
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <TextField
+                          <TextBox
                             size="small"
                             sx={{ p: "8px" }}
                             id="outlined-basic"
                             variant="outlined"
                           />
-                        </Box>
                       }
                       text="Start Date"
                     />
@@ -71,7 +68,7 @@ function PointPenalty() {
                       }
                       text="Start Date"
                     />
-                    <ButtonComponent title={"Add Filter"}/>
+                    <ButtonComponent title={"Add Filter"} />
                   </Grid>
                 </Grid>
               </Grid>

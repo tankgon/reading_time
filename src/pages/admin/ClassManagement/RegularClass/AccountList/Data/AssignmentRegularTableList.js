@@ -1,36 +1,34 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useMemo, useRef, useState } from "react";
 import DialogAssignmentFreeTrial from "../../components/DialogAssignmentFreeTrial";
-const isFirstColumn = (params) => {
-  var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
-  return thisIsFirstColumn;
-};
-
+import moment from "moment";
 const AssignmentFreeTrialTableList = () => {
   const gridRef = useRef();
-  const gridStyle = useMemo(() => ({ height: "140px", width: "100%" }), []);
-  const [rowData, setRowData] = useState();
+  const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [columnDefs, setColumnDefs] = useState([
-    { field: "No" },
-    { field: "Date" },
+    { field: "No", minWidth: 80 },
+    {
+      field: "Date",
+      valueFormatter: (params) => formatDate(params.value),
+      filter: "agDateColumnFilter",
+      minWidth: 200,
+    },
     { field: "Day of the week" },
     { field: "Time" },
     { field: "Product" },
     { field: "Count/Total" },
     { field: "Book Title" },
-    { field: "Team" },
-    { field: "Teacher(E-mail)" },
+    { field: "Team", filter: "agTextColumnFilter" },
+    { field: "Teacher(E-mail)", filter: "agTextColumnFilter" },
     { field: "Substitute teacher" },
-    { field: "Student(E-mail)" },
-    { field: "Class Status" },
+    { field: "Student(E-mail)", filter: "agTextColumnFilter" },
+    { field: "Class Status", filter: "agTextColumnFilter" },
     { field: "Details of Class Status" },
-    { field: "Complaint" },
+    { field: "Complaint", filter: "agTextColumnFilter" },
     {
       field: "Detail",
       cellRenderer: DialogAssignmentFreeTrial,
@@ -42,78 +40,32 @@ const AssignmentFreeTrialTableList = () => {
       minWidth: 200,
     },
   ]);
+
+  const formatDate = (date) => {
+    return moment(date).format("MM/DD/YYYY");
+  };
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
-      minWidth: 100,
+      minWidth: 150,
       resizable: true,
-      headerCheckboxSelection: isFirstColumn,
-      checkboxSelection: isFirstColumn,
+      floatingFilter: true,
     };
   }, []);
 
-  const onRowClicked = (event) => {
-    console.log(event.data);
-  };
-
-  const onGridReady = useCallback((params) => {
-    const data = [
-      {
-        No: 10,
-        Bill: "213213",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Bill: <Link>sdfasdfas</Link>,
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-    ];
-    setRowData(data);
-  }, []);
-
-  const onQuickFilterChanged = useCallback(() => {
-    gridRef.current.api.setQuickFilter(
-      document.getElementById("quickFilter").value
-    );
-  }, []);
-
   return (
-    <div className="example-wrapper">
-      {/* <div style={{ marginBottom: "5px" }}>
-        <input
-          type="text"
-          onInput={onQuickFilterChanged}
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-      </div> */}
-
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          onRowClicked={onRowClicked}
-          onCellClicked={(uw) => console.log(uw.data)}
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          suppressRowClickSelection={true}
-          rowSelection={"multiple"}
-          onGridReady={onGridReady}
-        />
-      </div>
+    <div style={gridStyle} className="ag-theme-quartz">
+      <AgGridReact
+        onCellClicked={(uw) => console.log(uw.data)}
+        ref={gridRef}
+        rowData={[1, 2]}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        suppressRowClickSelection={true}
+        rowSelection={"multiple"}
+        paginationAutoPageSize={true}
+        pagination={true}
+      />
     </div>
   );
 };

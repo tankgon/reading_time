@@ -29,6 +29,7 @@ const Item = styled("div")(({ theme }) => ({
   justifyContent: "center",
   height: "60px",
   paddingBottom: "8px",
+  borderRadius: "8px 8px 0 0", // Thêm dòng này để bo góc bên trên
 }));
 
 const listRouter = [
@@ -226,8 +227,8 @@ function Nav() {
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type == "keydown" &&
+      (event.key == "Tab" || event.key == "Shift")
     ) {
       return;
     }
@@ -236,7 +237,7 @@ function Nav() {
 
   const mobile = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor == "top" || anchor == "bottom" ? "auto" : 250 }}
       role="presentation">
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -314,7 +315,10 @@ function Nav() {
               to="#">
               Admin
             </Link>
-            <ButtonComponent title={"Logout"} />
+
+            <Link to={"/"}>
+              <ButtonComponent title={"Logout"} />
+            </Link>
           </Box>
         </Grid>
 
@@ -328,7 +332,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "setting" ? `8px solid #f4a5c7` : null,
+                        result == "setting" ? `8px solid #f4a5c7` : null,
                     }}>
                     Setting
                   </Item>
@@ -341,7 +345,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "role" ? `8px solid #f4a5c7` : null,
+                        result == "role" ? `8px solid #f4a5c7` : null,
                     }}>
                     Role Management
                   </Item>
@@ -354,7 +358,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "user" ? `8px solid #f4a5c7` : null,
+                        result == "user" ? `8px solid #f4a5c7` : null,
                     }}>
                     User Management
                   </Item>
@@ -367,7 +371,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "teacher" ? `8px solid #f4a5c7` : null,
+                        result == "teacher" ? `8px solid #f4a5c7` : null,
                     }}>
                     Teacher Management
                   </Item>
@@ -378,7 +382,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "contents" ? `8px solid #f4a5c7` : null,
+                        result == "contents" ? `8px solid #f4a5c7` : null,
                     }}>
                     Contents Management
                   </Item>
@@ -391,7 +395,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "product" ? `8px solid #f4a5c7` : null,
+                        result == "product" ? `8px solid #f4a5c7` : null,
                     }}>
                     Product Management
                   </Item>
@@ -404,7 +408,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "payment" ? `8px solid #f4a5c7` : null,
+                        result == "payment" ? `8px solid #f4a5c7` : null,
                     }}>
                     Payment Management
                   </Item>
@@ -417,7 +421,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "assignment" ? `8px solid #f4a5c7` : null,
+                        result == "assignment" ? `8px solid #f4a5c7` : null,
                     }}>
                     Assignment Management
                   </Item>
@@ -430,7 +434,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "class" ? `8px solid #f4a5c7` : null,
+                        result == "class" ? `8px solid #f4a5c7` : null,
                     }}>
                     Class Management
                   </Item>
@@ -441,7 +445,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "website" ? `8px solid #f4a5c7` : null,
+                        result == "website" ? `8px solid #f4a5c7` : null,
                     }}>
                     Website Management
                   </Item>
@@ -454,7 +458,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result === "report" ? `8px solid #f4a5c7` : null,
+                        result == "report" ? `8px solid #f4a5c7` : null,
                     }}>
                     Reports
                   </Item>

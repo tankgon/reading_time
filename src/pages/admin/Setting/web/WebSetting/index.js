@@ -3,13 +3,13 @@ import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import { Link } from "react-router-dom";
+import TextBox from "../../../../components/TextBox";
 import ButtonContainer from "../../../../components/buttonComponent";
-import TextBox from "../../../../components/textBox";
 //data
-import { useEffect, useState } from "react";
-import data from "./data";
-
+import { useState } from "react";
+import { toast } from "react-toastify";
 import web from "../../../../../services/api/admin/settings/web";
+import data from "./data";
 
 const Item = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
@@ -33,6 +33,7 @@ function SellQuickly() {
         Title: title ? title : listWebSetting.Title,
         Tagline: tagline ? tagline : listWebSetting.Tagline,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -46,6 +47,7 @@ function SellQuickly() {
       });
       setTitle("");
       setTagline("");
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -142,6 +144,7 @@ function SellQuickly() {
                 <Grid xs={12}>
                   <Box
                     sx={{
+                      borderRadius: "8px 8px 0 0",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderRight: "1px solid #C0C0C0",
@@ -154,6 +157,7 @@ function SellQuickly() {
                   <Box
                     sx={{
                       border: "1px solid #C0C0C0",
+                      borderRadius: " 0 0 8px 8px",
                       p: "20px",
                     }}>
                     <Box sx={{ mb: "40px" }}>

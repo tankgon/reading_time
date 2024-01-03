@@ -10,10 +10,8 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await web.actionWebSetting({
-        Action: "GET",
-      });
-      setListWebSetting(res[0]);
+      const res = await web.actionWebSetting();
+      setListWebSetting(res.data[0]);
     } catch (err) {
       console.log(err);
     }

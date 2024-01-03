@@ -1,38 +1,26 @@
 import { Grid } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 import MDBox from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AssignmentRegularTableList from "./AccountList/Data/AssignmentRegularTableList";
-import TextFilter from "./components/TextFilter/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import AssignmentRegularTableList from "./AccountList/Data/AssignmentRegularTableList";
 function ClassRegular() {
   return (
     <MDBox>
-      <Grid
-        container
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-        <Grid item xs={12} lg={12}>
-          <Box
+      <Grid item xs={12} lg={12}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            mb: "20px",
+            p: "8px 0",
+          }}>
+          <Grid
+            container
             sx={{
-              flexGrow: 1,
-              mb: "20px",
-              p: "8px 0",
+              justifyContent: "center",
+              alignItems: "center",
             }}>
-            <Grid
-              container
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}>
-              <Grid item xs={12} lg={1}>
+            {/* <Grid item xs={12} lg={1}>
                 <strong style={{ color: "#7F7F7F" }}>Filter List</strong>
               </Grid>
               <Grid item xs={12} lg={9}>
@@ -134,14 +122,13 @@ function ClassRegular() {
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12} lg={2} style={{ textAlign: "right" }}>
-                <ButtonComponent title={"Excel Export"} />
-              </Grid>
+              </Grid> */}
+            <Grid item xs={12} lg={12} style={{ textAlign: "right" }}>
+              <ButtonComponent title={"Excel Export"} />
             </Grid>
-          </Box>
-          <AssignmentRegularTableList />
-        </Grid>
+          </Grid>
+        </Box>
+        <AssignmentRegularTableList />
       </Grid>
     </MDBox>
   );

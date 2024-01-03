@@ -1,30 +1,32 @@
 "use strict";
 
 import "@ag-grid-community/styles/ag-grid.css";
-import "@ag-grid-community/styles/ag-theme-alpine.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useMemo, useState } from "react";
 import DialogAssignmentRegular from "../../components/DialogAssignmentRegular";
-const isFirstColumn = (params) => {
-  var displayedColumns = params.columnApi.getAllDisplayedColumns();
-  var thisIsFirstColumn = displayedColumns[0] === params.column;
-  return thisIsFirstColumn;
-};
+
+//data
+import moment from "moment";
+// import data from "../Data";
 
 const AssignmentRegularTableList = () => {
-  const gridRef = useRef();
-  const gridStyle = useMemo(() => ({ height: "140px", width: "100%" }), []);
-  const [rowData, setRowData] = useState();
+  const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
+  const [rowData, setRowData] = useState([1, 2]);
   const [columnDefs, setColumnDefs] = useState([
     { field: "No" },
-    { field: "Student Name" },
+    { field: "Student Name", filter: "agTextColumnFilter" },
     { field: "English Name" },
-    { field: "Product Name" },
+    { field: "Product Name", filter: "agTextColumnFilter" },
     { field: "Start" },
     { field: "End" },
     { field: "Class per week(Day)" },
-    { field: "Class start date" },
+    {
+      field: "Class start date",
+      valueFormatter: (params) => formatDate(params.value),
+      filter: "agDateColumnFilter",
+      minWidth: 200,
+    },
     { field: "Count/Total" },
     {
       field: "",
@@ -37,13 +39,16 @@ const AssignmentRegularTableList = () => {
       minWidth: 200,
     },
   ]);
+
+  const formatDate = (date) => {
+    return moment(date).format("DD-MM-YYYY");
+  };
   const defaultColDef = useMemo(() => {
     return {
       flex: 1,
       minWidth: 100,
       resizable: true,
-      headerCheckboxSelection: isFirstColumn,
-      checkboxSelection: isFirstColumn,
+      floatingFilter: true,
     };
   }, []);
 
@@ -51,64 +56,18 @@ const AssignmentRegularTableList = () => {
     console.log(event.data);
   };
 
-  const onGridReady = useCallback((params) => {
-    const data = [
-      {
-        No: 10,
-        Bill: "213213",
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-      {
-        No: 10,
-        Bill: <Link>sdfasdfas</Link>,
-        Role: "",
-        Country: "",
-        ID: "",
-        Name: "",
-        Email: "",
-        Registration: "",
-        Management: "",
-      },
-    ];
-    setRowData(data);
-  }, []);
-
-  const onQuickFilterChanged = useCallback(() => {
-    gridRef.current.api.setQuickFilter(
-      document.getElementById("quickFilter").value
-    );
-  }, []);
-
   return (
-    <div className="example-wrapper">
-      {/* <div style={{ marginBottom: "5px" }}>
-        <input
-          type="text"
-          onInput={onQuickFilterChanged}
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-      </div> */}
-
-      <div style={gridStyle} className="ag-theme-alpine">
-        <AgGridReact
-          onRowClicked={onRowClicked}
-          onCellClicked={(uw) => console.log(uw.data)}
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          suppressRowClickSelection={true}
-          rowSelection={"multiple"}
-          onGridReady={onGridReady}
-        />
-      </div>
+    <div style={gridStyle} className="ag-theme-quartz">
+      <AgGridReact
+        onRowClicked={onRowClicked}
+        rowData={rowData}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        suppressRowClickSelection={true}
+        rowSelection={"multiple"}
+        paginationAutoPageSize={true}
+        pagination={true}
+      />
     </div>
   );
 };

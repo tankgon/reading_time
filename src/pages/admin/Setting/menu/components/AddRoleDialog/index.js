@@ -12,7 +12,7 @@ import TextFilter from "../../../../WebsiteManagement/Coupon/components/TextFilt
 
 //data
 import menu from "../../../../../../services/api/admin/settings/menu";
-import TextBox from "../../../../../components/textBox";
+import TextBox from "../../../../../components/TextBox";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

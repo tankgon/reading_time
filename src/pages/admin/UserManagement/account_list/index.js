@@ -1,19 +1,66 @@
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import MDBox from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Pagination from "@mui/material/Pagination";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
-import TextFilter from "./components/TextFilter/TextFilter";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import React, { useState } from "react";
+import TextBox from "../../../components/TextBox";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
+import SelectBox from "../../../components/selectsBox";
+import AccountListTable from "./Data/AccountListTable";
+//data
+import users from "../../../../services/api/admin/users";
+import data from "./Data";
+const statusArray = [
+  {
+    title: "On",
+    value: 1,
+  },
+  {
+    title: "Off",
+    value: 0,
+  },
+];
 
 function AccountList() {
+  const { DatalistCountry: listCountry } = data();
+
+  const [status, setStatus] = useState();
+  const [student, setStudent] = useState();
+  const [membership, setMembership] = useState();
+  const [country, setCountry] = useState();
+  const [mobile, setMobile] = useState();
+  const [tag, setTag] = useState();
+  const [registrationFrom, setRegistrationFrom] = useState();
+  const [registrationTo, setRegistrationTo] = useState();
+  const [recentFrom, setRecentFrom] = useState();
+  const [recentTo, setRecentTo] = useState();
+
+  const [listMenu, setListMenu] = useState([]);
+
+  const Search = async () => {
+    try {
+      const res = await users.actionUser({
+        Action: "SEARCH",
+        Country: country,
+        _Member: membership,
+        _User_Name: student,
+        Phone: mobile,
+        Tags: tag,
+        Start_Date_Regis: registrationFrom?.format("YYYY-MM-DD"),
+        End_Date_Regis: registrationTo?.format("YYYY-MM-DD"),
+        Start_Date_Login: recentFrom?.format("YYYY-MM-DD"),
+        End_Date_Login: recentTo?.format("YYYY-MM-DD"),
+      });
+      setListMenu(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MDBox>
       <Grid
@@ -35,19 +82,27 @@ function AccountList() {
                 justifyContent: "center",
                 alignItems: "center",
               }}>
-              <Grid item xs={12} lg={1}>
+              {/* <Grid item xs={12} lg={1}>
                 <strong style={{ color: "#7F7F7F" }}>Filter List</strong>
               </Grid>
               <Grid item xs={12} lg={9}>
-                <Grid container>
+                <Grid container spacing={2}>
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <SelectBox
+                          sx={{ m: "8px 0" }}
+                          fullWidth={"fullWidth"}
+                          size={"small"}
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                          children={statusArray.map((item, index) => {
+                            return (
+                              <MenuItem key={index} value={item.value}>
+                                {item.title}
+                              </MenuItem>
+                            );
+                          })}
                         />
                       }
                       text="Status"
@@ -56,11 +111,9 @@ function AccountList() {
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <TextBox
+                          value={student}
+                          onChange={(e) => setStudent(e.target.value)}
                         />
                       }
                       text="Student Name"
@@ -69,26 +122,30 @@ function AccountList() {
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <TextBox
+                          value={membership}
+                          onChange={(e) => setMembership(e.target.value)}
                         />
                       }
                       text="English Wing Membership"
                     />
                   </Grid>
-                </Grid>
-                <Grid container>
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <SelectBox
+                          sx={{ m: "8px 0" }}
+                          fullWidth={"fullWidth"}
+                          size={"small"}
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          children={listCountry.map((item, index) => {
+                            return (
+                              <MenuItem key={index} value={item.Name}>
+                                {item.Name}
+                              </MenuItem>
+                            );
+                          })}
                         />
                       }
                       text="Country"
@@ -97,11 +154,9 @@ function AccountList() {
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <TextBox
+                          value={mobile}
+                          onChange={(e) => setMobile(e.target.mobile)}
                         />
                       }
                       text="Mobile Phone"
@@ -110,11 +165,9 @@ function AccountList() {
                   <Grid item xs={12} lg={4}>
                     <TextFilter
                       children={
-                        <TextField
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
+                        <TextBox
+                          value={tag}
+                          onChange={(e) => setTag(e.target.mobile)}
                         />
                       }
                       text="Tag"
@@ -122,60 +175,64 @@ function AccountList() {
                   </Grid>
                 </Grid>
                 <Grid container>
-                  <Grid item xs={12} lg={12}>
+                  <Grid item xs={12} lg={8}>
                     <TextFilter
                       children={
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer
+                            components={["DatePicker", "DatePicker"]}>
                             <DatePicker
+                              label="From date"
+                              // defaultValue={tuNgay}
+                              onChange={(day) => setRegistrationFrom(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                             <DatePicker
+                              label="To date"
+                              // defaultValue={denNgay}
+                              onChange={(day) => setRegistrationTo(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
-                          </LocalizationProvider>
-                        </Box>
+                          </DemoContainer>
+                        </LocalizationProvider>
                       }
                       text="Registration Date"
                     />
                   </Grid>
-                  <Grid item xs={12} lg={12}>
+                  <Grid item xs={12} lg={8}>
                     <TextFilter
                       children={
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer
+                            components={["DatePicker", "DatePicker"]}>
                             <DatePicker
+                              label="From date"
+                              // defaultValue={tuNgay}
+                              onChange={(day) => setRecentFrom(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
                             <DatePicker
+                              label="To date"
+                              // defaultValue={denNgay}
+                              onChange={(day) => setRecentTo(day)}
                               format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
                             />
-                          </LocalizationProvider>
-                        </Box>
+                          </DemoContainer>
+                        </LocalizationProvider>
                       }
                       text="Recent Login"
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12} lg={2} style={{ textAlign: "right" }}>
-                <ButtonComponent title={"Excel Export"}/>
+
+                <ButtonComponent onClick={Search} title={"Add Filter"} />
+              </Grid> */}
+              <Grid item xs={12} lg={12} style={{ textAlign: "right" }}>
+                <ButtonComponent title={"Excel Export"} />
               </Grid>
             </Grid>
           </Box>
-          <AccountListTable />
-          <Box sx={{ marginTop: "20px" }}>
-            <Pagination
-              count={10}
-              showFirstButton
-              showLastButton
-              sx={{ justifyContent: "center", display: "flex" }}
-            />
-          </Box>
+          <AccountListTable newRowData={listMenu} />
         </Grid>
       </Grid>
     </MDBox>

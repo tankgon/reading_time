@@ -15,7 +15,6 @@ const Clound = async (file) => {
   const cloudinaryData = await cloudinaryResponse.json();
   const imageUrl = await cloudinaryData.url;
 
-  console.log(imageUrl);
   return imageUrl;
 };
 

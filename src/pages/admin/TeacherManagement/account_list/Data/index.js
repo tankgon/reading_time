@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import teachers from "../../../../../services/api/admin/teachers";
+import teachers from "../../../../../services/api/admin/teachers"
 
 export default function useData() {
   const [listMenu, setListMenu] = useState([]);

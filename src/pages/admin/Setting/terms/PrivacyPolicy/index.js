@@ -36,6 +36,7 @@ function PrivacyPolicy() {
         <Grid item xs={12} lg={8}>
           <Box
             sx={{
+              borderRadius: "8px",
               flexGrow: 1,
               backgroundColor: "rgba(192, 192, 192, 0.2)",
               p: "20px",

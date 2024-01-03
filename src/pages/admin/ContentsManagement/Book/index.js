@@ -4,10 +4,11 @@ import MDBox from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TextBox from "../../../components/TextBox";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 import AccountListTable from "./AccountList/Data/AccountListTable";
 import DialogBook from "./components/DialogBook";
-import TextForm from "./components/TextForm";
 function Book() {
   return (
     <MDBox>
@@ -30,7 +31,7 @@ function Book() {
                 justifyContent: "center",
                 alignItems: "center",
               }}>
-              <Grid item xs={12} lg={2}>
+              <Grid item xs={12} lg={6} display={"flex"}>
                 <DialogBook />
                 <ButtonComponent
                   title={"Excel Upload"}
@@ -47,110 +48,69 @@ function Book() {
 
                 {/* <DialogAddPoint /> */}
               </Grid>
-              <Grid item xs={12} lg={10}>
+              {/* <Grid item xs={12} lg={10}>
                 <Grid container>
                   <Grid item xs={12} lg={12}>
-                    <Grid container>
+                    <Grid container spacing={2}>
                       <Grid item xs={12} lg={4}>
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Division"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Subtitle"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Genre"
                         />
                       </Grid>
                       <Grid item xs={12} lg={4}>
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Level"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Grade"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Lexile"
                         />
                       </Grid>
                       <Grid item xs={12} lg={4}>
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Page"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
-                            <TextField
-                              size="small"
-                              sx={{ p: "8px" }}
-                              id="outlined-basic"
-                              variant="outlined"
-                            />
+                            <TextBox id="outlined-basic" variant="outlined" />
                           }
                           text="Vocabulary"
                         />
-                        <TextForm
+                        <TextFilter
                           children={
                             <Autocomplete
                               size="small"
                               // inputValue={inputValue}
                               id="controllable-states-demo"
-                              sx={{ p: "8px", width: "240px" }}
                               options={[1, 2]}
                               renderInput={(params) => (
                                 <TextField {...params} />
@@ -163,7 +123,7 @@ function Book() {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
           <AccountListTable />

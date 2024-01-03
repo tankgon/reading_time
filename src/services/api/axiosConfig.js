@@ -2,13 +2,10 @@ import axios from "axios";
 // import blockChainStorage from '~/utils/storage';
 
 const instance = axios.create({
-  baseURL: `http://192.168.1.16:8080/api`,
+  baseURL: `http://192.168.1.12:8080`,
 
   headers: {
     "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-Requested-With": "XMLHttpRequest",
-    withCredentials: true,
   },
 });
 
