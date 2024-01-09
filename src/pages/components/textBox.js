@@ -1,17 +1,8 @@
 import TextField from "@mui/material/TextField";
 
-const TextBox = ({
-  value,
-  onChange,
-  defaultValue,
-  mr,
-  ml,
-  disabled,
-  onSubmit,
-}) => {
+const TextBox = ({ value, onChange, defaultValue, mr, ml, disabled }) => {
   return (
     <TextField
-      onSubmit={onSubmit}
       disabled={disabled}
       fullWidth
       defaultValue={defaultValue}
@@ -22,6 +13,7 @@ const TextBox = ({
       value={value}
       onChange={onChange}
     />
+    
   );
 };
 
