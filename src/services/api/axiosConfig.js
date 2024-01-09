@@ -2,7 +2,7 @@ import axios from "axios";
 // import blockChainStorage from '~/utils/storage';
 
 const instance = axios.create({
-  baseURL: `http://localhost:8080`,
+  baseURL: process.env.REACT_APP_CLOUDINARY_SEVER_NAME,
 
   headers: {
     "Content-Type": "application/json",
