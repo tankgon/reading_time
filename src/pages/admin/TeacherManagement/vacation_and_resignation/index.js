@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import TextBox from "../../../components/TextBox";
+
 import TextFilter from "../../../components/TextFilter";
 import AccountListTable from "./AccountList/Data/AccountListTable";
 // import TextForm from "./components/TextForm";
@@ -24,7 +24,7 @@ function AccountList() {
       <Grid item xs={12} lg={9}>
         <Grid container>
           <Grid item xs={12} lg={7}>
-            <TextFilter children={<TextBox />} text="Start Date" />
+            {/* <TextFilter children={<TextBox />} text="Start Date" /> */}
           </Grid>
         </Grid>
         <Grid container>
