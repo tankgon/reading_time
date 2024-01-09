@@ -17,7 +17,6 @@ import Storage from "../../../../services/storage";
 import DotText from "../../../components/DotText";
 import FilePick from "../../../components/FilePick";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
-import TextBox from "../../../components/TextBox";
 import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
@@ -249,7 +248,7 @@ function AddNewAccount() {
               <Grid container spacing={2}>
                 <Grid item xs={12} lg={8}>
                   <strong>GENERAL</strong>
-                  <DotText
+                  {/* <DotText
                     classColor={"red"}
                     children={
                       <TextBox
@@ -292,7 +291,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Password"
-                  />
+                  /> */}
                   {/* <DotText
                     classColor={"red"}
                     children={
@@ -366,7 +365,7 @@ function AddNewAccount() {
                     }
                     text="Timezone"
                   />
-                  <DotText
+                  {/* <DotText
                     children={
                       <TextBox
                         size="small"
@@ -385,7 +384,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Contract"
-                  />
+                  /> */}
                   <DotText
                     children={
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -416,7 +415,7 @@ function AddNewAccount() {
                     }
                     text="Resignation Day"
                   />
-                  <DotText
+                  {/* <DotText
                     children={
                       <TextBox
                         size="small"
@@ -425,7 +424,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Career"
-                  />
+                  /> */}
                   <Box sx={{ m: "20px 0" }}>
                     <TextareaComment
                       value={using_The_Editor}
