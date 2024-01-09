@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 
-export default function TextBox({
+const TextBox = ({
   value,
   onChange,
   defaultValue,
@@ -8,7 +8,7 @@ export default function TextBox({
   ml,
   disabled,
   onSubmit,
-}) {
+}) => {
   return (
     <TextField
       onSubmit={onSubmit}
@@ -23,6 +23,6 @@ export default function TextBox({
       onChange={onChange}
     />
   );
-}
+};
 
-
+export default TextBox;
