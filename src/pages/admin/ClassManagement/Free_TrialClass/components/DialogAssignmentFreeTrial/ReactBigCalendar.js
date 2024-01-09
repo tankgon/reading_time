@@ -4,17 +4,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import Rating from "@mui/material/Rating";
 import { Box } from "@mui/system";
 import moment from "moment";
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Image from "~/components/Image";
-import logo from "~/components/Image/login-banner.jpg";
+import BoxRating from "../BoxRating";
 import ButtonDialog from "../ButtonDialog";
 import events from "./events";
-import BoxRating from "../BoxRating";
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
@@ -156,13 +153,10 @@ export default function ReactBigCalendar() {
                 </Button>
 
                 <Grid container spacing={4}>
-                 <BoxRating />
-                 <BoxRating />
-                 <BoxRating />
-                 <BoxRating />
-
-
-
+                  <BoxRating />
+                  <BoxRating />
+                  <BoxRating />
+                  <BoxRating />
                 </Grid>
               </Grid>
             </Grid>

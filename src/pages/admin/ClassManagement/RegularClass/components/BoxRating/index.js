@@ -3,8 +3,6 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/system";
 import React from "react";
-import Image from "~/components/Image";
-import logo from "~/components/Image/login-banner.jpg";
 const BoxRating = ({ text, color, border, background }) => {
   console.log(color);
   return (
@@ -12,8 +10,8 @@ const BoxRating = ({ text, color, border, background }) => {
       <Box sx={{ border: "2px solid blue", p: "8px", m: "8px 0" }}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={12} lg={4}>
-            <div >
-              <Image src={logo} alt="description_of_your_image" />
+            <div>
+              {/* <Image src={logo} alt="description_of_your_image" /> */}
             </div>
 
             <Box sx={{ fontSize: "16px", p: "0 8px" }}>Instructor's name</Box>
