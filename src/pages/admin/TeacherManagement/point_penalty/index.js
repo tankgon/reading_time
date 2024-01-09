@@ -5,11 +5,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 import DateCalendarViews from "./components/DateCalendarView";
 import DialogAddPoint from "./components/DialogAddPoint";
 import Spreadheet from "./components/Spreadsheet";
+import TextFilter from "../../../components/TextFilter";
+import TextBox from "../../../components/TextBox";
 
 function PointPenalty() {
   return (
@@ -39,7 +40,7 @@ function PointPenalty() {
               <Grid item xs={12} lg={7}>
                 <Grid container>
                   <Grid item xs={12} lg={12}>
-                    {/* <TextFilter
+                    <TextFilter
                       children={
                           <TextBox
                             size="small"
@@ -49,7 +50,7 @@ function PointPenalty() {
                           />
                       }
                       text="Start Date"
-                    /> */}
+                    />
                     <TextFilter
                       children={
                         <Box>

@@ -13,6 +13,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { toast } from "react-toastify";
 import DotText from "../../../components/DotText";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
+import TextBox from "../../../components/TextBox";
 import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
@@ -180,7 +181,7 @@ function AddNewAccount() {
               <Grid container spacing={4}>
                 <Grid item xs={12} lg={8}>
                   <strong>GENERAL</strong>
-                  {/* <DotText
+                  <DotText
                     classColor={"red"}
                     children={
                       <TextBox
@@ -233,7 +234,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Password"
-                  /> */}
+                  />
                   {/* <DotText
                     classColor={"red"}
                     children={
@@ -432,7 +433,7 @@ function AddNewAccount() {
                     }
                     text="Englishwing Member"
                   />
-                  {/* <TextCheckBox
+                  <TextCheckBox
                     children={
                       <TextBox
                         size="small"
@@ -455,7 +456,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Signup path"
-                  /> */}
+                  />
 
                   <div className="w-full hidden">
                     <Grid item xs={12} lg={12}>

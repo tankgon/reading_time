@@ -1,12 +1,14 @@
 import { Grid } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import MDBox from "@mui/material/Box";
+import Pagination from "@mui/material/Pagination";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TextBox from "../../../components/TextBox";
 import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 import AccountListTable from "./AccountList/Data/AccountListTable";
@@ -42,8 +44,12 @@ function AccountList() {
                       children={
                         <Box>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker format="DD-MM-YYYY" />
-                            <DatePicker format="DD-MM-YYYY" />
+                            <DatePicker
+                              format="DD-MM-YYYY"
+                            />
+                            <DatePicker
+                              format="DD-MM-YYYY"
+                            />
                           </LocalizationProvider>
                         </Box>
                       }
@@ -114,7 +120,7 @@ function AccountList() {
                   </Grid>
                   <Grid item xs={12} lg={6}>
                     <TextFilter
-                      // children={<TextBox />}
+                      children={<TextBox />}
                       text="Student Name(email)"
                     />
                   </Grid>
@@ -127,6 +133,7 @@ function AccountList() {
           </Box>
 
           <AccountListTable />
+
         </Grid>
       </Grid>
     </MDBox>

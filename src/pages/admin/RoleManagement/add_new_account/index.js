@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DotText from "../../../components/DotText";
 import FilePick from "../../../components/FilePick";
+import TextBox from "../../../components/TextBox";
 import ButtonComponent from "../../../components/buttonComponent";
 import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 //data
@@ -189,7 +190,7 @@ function AddNewAccount() {
                   }
                   text="Name"
                 />
-                {/* <DotText
+                <DotText
                   children={
                     <TextBox
                       value={nickname}
@@ -217,7 +218,7 @@ function AddNewAccount() {
                     />
                   }
                   text="Password"
-                /> */}
+                />
                 <DotText
                   children={
                     <SelectBox
@@ -270,7 +271,7 @@ function AddNewAccount() {
                   }
                   text="Select a country"
                 />
-                {/* <DotText
+                <DotText
                   children={
                     <TextBox
                       value={type}
@@ -278,7 +279,7 @@ function AddNewAccount() {
                     />
                   }
                   text="Contract Type"
-                /> */}
+                />
                 <DotText
                   children={
                     <FilePick
