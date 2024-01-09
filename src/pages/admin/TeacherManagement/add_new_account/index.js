@@ -1,6 +1,6 @@
 import ImageIcon from "@mui/icons-material/Image";
 import AspectRatio from "@mui/joy/AspectRatio";
-import { Card, Grid, MenuItem, Typography } from "@mui/material";
+import { Card, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -17,7 +17,6 @@ import Storage from "../../../../services/storage";
 import DotText from "../../../components/DotText.js";
 import FilePick from "../../../components/FilePick";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
-import TextBox from "../../../components/TextBox";
 import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
@@ -252,7 +251,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={teacherName}
                         onChange={(e) => setTeacherName(e.target.value)}
@@ -263,7 +263,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
@@ -274,7 +275,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -285,7 +287,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -296,7 +299,8 @@ function AddNewAccount() {
                   {/* <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                          <TextField
+                        fullWidth
                         size="small"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -368,7 +372,8 @@ function AddNewAccount() {
                   />
                   <DotText
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={contractType}
                         onChange={(e) => setContractType(e.target.value)}
@@ -418,7 +423,8 @@ function AddNewAccount() {
                   />
                   <DotText
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         value={career}
                         onChange={(e) => setCareer(e.target.value)}

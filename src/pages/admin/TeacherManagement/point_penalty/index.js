@@ -1,16 +1,15 @@
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 import DateCalendarViews from "./components/DateCalendarView";
 import DialogAddPoint from "./components/DialogAddPoint";
 import Spreadheet from "./components/Spreadsheet";
-import TextFilter from "../../../components/TextFilter";
-import TextBox from "../../../components/TextBox";
 
 function PointPenalty() {
   return (
@@ -42,12 +41,13 @@ function PointPenalty() {
                   <Grid item xs={12} lg={12}>
                     <TextFilter
                       children={
-                          <TextBox
-                            size="small"
-                            sx={{ p: "8px" }}
-                            id="outlined-basic"
-                            variant="outlined"
-                          />
+                        <TextField
+                          fullWidth
+                          size="small"
+                          sx={{ p: "8px" }}
+                          id="outlined-basic"
+                          variant="outlined"
+                        />
                       }
                       text="Start Date"
                     />

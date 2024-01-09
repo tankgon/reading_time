@@ -1,4 +1,4 @@
-import { Checkbox, Grid, MenuItem, Select } from "@mui/material";
+import { Checkbox, Grid, MenuItem, Select, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/system/Box";
@@ -7,7 +7,6 @@ import React from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import TextBox from "../../../../components/TextBox";
 //data
 import { useState } from "react";
 import web from "../../../../../services/api/admin/settings/web";
@@ -370,7 +369,9 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         ZOOM API KEY
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setZoom_Api_Key(e.target.value)}
                           value={
                             zoomapikey
@@ -384,7 +385,9 @@ function AdminSetting() {
 
                       <Grid item xs={12} lg={12}>
                         ZOOM API SECRET
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setZoom_Api_Secret(e.target.value)}
                           value={
                             zoomapisecret
@@ -399,7 +402,9 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Publishable key
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setPublishable_Key(e.target.value)}
                           value={
                             publishablekey
@@ -410,7 +415,9 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Secret Key
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setSecret_Key(e.target.value)}
                           value={
                             secretkey
@@ -422,7 +429,9 @@ function AdminSetting() {
 
                       <Grid item xs={12} lg={12}>
                         <strong>WEBHOOK URL</strong>
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setWebHook_Url(e.target.value)}
                           value={
                             webHookurl
@@ -441,7 +450,9 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Account
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setAccount(e.target.value)}
                           value={
                             account ? account : listAdminSetting.Paypal_Account
@@ -451,7 +462,9 @@ function AdminSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Client ID
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setClient_Id(e.target.value)}
                           value={
                             client_Id
@@ -463,7 +476,9 @@ function AdminSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Secret
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setSecret(e.target.value)}
                           value={
                             secret ? secret : listAdminSetting.Paypal_Secret
@@ -476,7 +491,9 @@ function AdminSetting() {
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         Free-Trial Product
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) =>
                             setFree_Trial_Product(e.target.value)
                           }
@@ -496,7 +513,9 @@ function AdminSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Maximum Points/Month
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) =>
                             setMax_Point_On_Month(e.target.value)
                           }

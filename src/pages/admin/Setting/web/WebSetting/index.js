@@ -1,9 +1,8 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import { Link } from "react-router-dom";
-import TextBox from "../../../../components/TextBox";
 import ButtonContainer from "../../../../components/buttonComponent";
 //data
 import { useState } from "react";
@@ -166,7 +165,9 @@ function SellQuickly() {
                     }}>
                     <Box sx={{ mb: "40px" }}>
                       Title
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           title == undefined ? listWebSetting.Title : title
                         }
@@ -175,7 +176,9 @@ function SellQuickly() {
                     </Box>
                     <Box sx={{ mb: "40px" }}>
                       Tagline
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           tagline == undefined
                             ? listWebSetting.Tagline

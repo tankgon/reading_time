@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -6,7 +6,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import TextBox from "../../../../../components/TextBox";
 import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
 
@@ -180,7 +179,7 @@ export default function DialogVacation() {
             <TextFilter
               children={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <TextBox />
+                  <TextField fullWidth size="small" />
                   Day(s)
                 </Box>
               }
@@ -189,9 +188,9 @@ export default function DialogVacation() {
             <TextFilter
               children={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <TextBox />
+                  <TextField fullWidth size="small" />
                   ~
-                  <TextBox />
+                  <TextField fullWidth size="small" />
                 </Box>
               }
               text="Period"
@@ -199,9 +198,9 @@ export default function DialogVacation() {
             <TextFilter
               children={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <TextBox />
+                  <TextField fullWidth size="small" />
                   {">"}
-                  <TextBox />
+                  <TextField fullWidth size="small" />
                   <ButtonComponent title={"Attach"} />
                 </Box>
               }

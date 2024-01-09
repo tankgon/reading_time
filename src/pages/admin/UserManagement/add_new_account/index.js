@@ -1,6 +1,6 @@
 import ImageIcon from "@mui/icons-material/Image";
 import AspectRatio from "@mui/joy/AspectRatio";
-import { Card, Grid, MenuItem, Typography } from "@mui/material";
+import { Card, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -13,7 +13,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { toast } from "react-toastify";
 import DotText from "../../../components/DotText";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
-import TextBox from "../../../components/TextBox";
 import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
@@ -184,7 +183,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -197,7 +197,8 @@ function AddNewAccount() {
                   <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -211,7 +212,8 @@ function AddNewAccount() {
                     classColor={"red"}
                     // itemButton={<ButtonComponent title={"Check"} />}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -225,7 +227,8 @@ function AddNewAccount() {
                     classColor={"red"}
                     itemButton={<ButtonComponent title={"Reset"} />}
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -238,7 +241,8 @@ function AddNewAccount() {
                   {/* <DotText
                     classColor={"red"}
                     children={
-                      <TextBox
+                                     <TextField
+                        fullWidth
                         size="small"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -435,7 +439,8 @@ function AddNewAccount() {
                   />
                   <TextCheckBox
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -447,7 +452,8 @@ function AddNewAccount() {
                   />
                   <TextCheckBox
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
                         size="small"
                         id="outlined-basic"
                         variant="outlined"

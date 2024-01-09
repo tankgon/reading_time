@@ -1,6 +1,6 @@
 import ImageIcon from "@mui/icons-material/Image";
 import { AspectRatio } from "@mui/joy";
-import { Card, Grid, MenuItem, Typography } from "@mui/material";
+import { Card, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DotText from "../../../components/DotText";
 import FilePick from "../../../components/FilePick";
-import TextBox from "../../../components/TextBox";
 import ButtonComponent from "../../../components/buttonComponent";
 import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 //data
@@ -192,7 +191,9 @@ function AddNewAccount() {
                 />
                 <DotText
                   children={
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={nickname}
                       onChange={(e) => setNickname(e.target.value)}
                     />
@@ -202,7 +203,9 @@ function AddNewAccount() {
                 <DotText
                   // itemButton={<ButtonComponent title={"Check"} />}
                   children={
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -212,7 +215,9 @@ function AddNewAccount() {
                 <DotText
                   itemButton={<ButtonComponent title={"Reset"} />}
                   children={
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -273,7 +278,9 @@ function AddNewAccount() {
                 />
                 <DotText
                   children={
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={type}
                       onChange={(e) => setType(e.target.value)}
                     />

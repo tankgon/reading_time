@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,7 +8,6 @@ import Slide from "@mui/material/Slide";
 import React, { useState } from "react";
 import FilePick from "../../../../../components/FilePick";
 import MinHeightTextarea from "../../../../../components/MinHeightTextarea";
-import TextBox from "../../../../../components/TextBox";
 import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
 import CheckBox2Opstion from "../../../../../components/checkBox";
@@ -93,7 +92,9 @@ export default function DialogBook() {
           <DialogContentText id="alert-dialog-slide-description">
             <TextFilter
               children={
-                <TextBox
+                <TextField
+                  fullWidth
+                  size="small"
                   value={book}
                   onChange={(e) => setBook(e.target.value)}
                 />
@@ -103,7 +104,9 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <TextBox
+                <TextField
+                  fullWidth
+                  size="small"
                   value={subtitle}
                   onChange={(e) => setSubtitle(e.target.value)}
                 />
@@ -113,7 +116,9 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <TextBox
+                <TextField
+                  fullWidth
+                  size="small"
                   value={brief}
                   onChange={(e) => setBrief(e.target.value)}
                 />
@@ -145,7 +150,9 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <TextBox
+                <TextField
+                  fullWidth
+                  size="small"
                   value={genre}
                   onChange={(e) => setGenre(e.target.value)}
                 />
@@ -154,7 +161,9 @@ export default function DialogBook() {
             />
             <TextFilter
               children={
-                <TextBox
+                <TextField
+                  fullWidth
+                  size="small"
                   value={level}
                   onChange={(e) => setLevel(e.target.value)}
                 />
@@ -166,14 +175,18 @@ export default function DialogBook() {
               children={
                 <Grid container spacing={4}>
                   <Grid item xs={12} lg={6}>
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={page}
                       onChange={(e) => setPage(e.target.value)}
                     />
                   </Grid>
 
                   <Grid item xs={12} lg={6}>
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={vocabulary}
                       onChange={(e) => setVocabulary(e.target.value)}
                     />
@@ -187,14 +200,18 @@ export default function DialogBook() {
               children={
                 <Grid container spacing={4}>
                   <Grid item xs={12} lg={6}>
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={grade}
                       onChange={(e) => setGrade(e.target.value)}
                     />
                   </Grid>
 
                   <Grid item xs={12} lg={6}>
-                    <TextBox
+                    <TextField
+                      fullWidth
+                      size="small"
                       value={Lexile}
                       onChange={(e) => setLexile(e.target.value)}
                     />

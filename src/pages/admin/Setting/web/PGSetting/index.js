@@ -1,4 +1,4 @@
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
@@ -6,7 +6,6 @@ import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import TextBox from "../../../../components/TextBox";
 import SelectBox from "../../../../components/selectsBox";
 //data
 import web from "../../../../../services/api/admin/settings/web";
@@ -176,21 +175,23 @@ function PGSetting() {
                     <Grid item xs={12} lg={12}>
                       Country
                       <SelectBox
-                          sx={{ m: "8px 0" }}
-                          fullWidth={"fullWidth"}
-                          size={"small"}
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
-                          children={listCountry.map((item, index) => {
-                            return (
-                              <MenuItem key={index} value={item.name}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })}
-                        />
+                        sx={{ m: "8px 0" }}
+                        fullWidth={"fullWidth"}
+                        size={"small"}
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                        children={listCountry.map((item, index) => {
+                          return (
+                            <MenuItem key={index} value={item.name}>
+                              {item.name}
+                            </MenuItem>
+                          );
+                        })}
+                      />
                       Merchant Identification Code
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         onChange={(e) => setMerchant(e.target.value)}
                         value={
                           merchant
@@ -202,17 +203,23 @@ function PGSetting() {
                     <Grid container spacing={4}>
                       <Grid item xs={12} lg={12}>
                         <strong>API KEY</strong>
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setKey(e.target.value)}
                           value={key ? key : listPGSetting.API_Key}
                         />
                         <strong>API SECRET</strong>
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setSecret(e.target.value)}
                           value={secret ? secret : listPGSetting.API_Secret}
                         />
                         Regular Payment Merchant ID
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setID(e.target.value)}
                           value={
                             id ? id : listPGSetting.Regular_Payment_Merchant_Id
@@ -237,7 +244,9 @@ function PGSetting() {
                           })}
                         />
                         Webhook URL
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setURL(e.target.value)}
                           value={url ? url : listPGSetting.Webhook_Url}
                         />

@@ -1,5 +1,5 @@
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,7 +12,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Slide from "@mui/material/Slide";
 import React, { useState } from "react";
-import TextBox from "../../../../../components/TextBox";
 import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -54,9 +53,15 @@ export default function DialogCurri() {
         <DialogTitle>{"Curriculum add"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <TextFilter children={<TextBox />} text="Curriculum  Title" />
+            <TextFilter
+              children={<TextField fullWidth size="small" />}
+              text="Curriculum  Title"
+            />
 
-            <TextFilter children={<TextBox />} text="Subtitle" />
+            <TextFilter
+              children={<TextField fullWidth size="small" />}
+              text="Subtitle"
+            />
 
             <TextFilter
               children={

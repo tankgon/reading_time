@@ -14,7 +14,6 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import MinHeightTextarea from "../../../../components/MinHeightTextarea";
 import OverlayCheckbox from "../../../../components/OverlayCheckbox";
-import TextBox from "../../../../components/TextBox";
 import TextFilter from "../../../../components/TextFilter";
 import TextareaComment from "../../../../components/TextareaComment";
 import ButtonComponent from "../../../../components/buttonComponent";
@@ -172,7 +171,9 @@ export default function DialogRegular() {
                 <Grid item xs={12} lg={9}>
                   <TextFilter
                     children={
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={productName}
                         onChange={(e) => setProductName(e.target.value)}
                       />
@@ -280,7 +281,7 @@ export default function DialogRegular() {
                 <Grid item xs={12} lg={6}>
                   <TextFilter
                     children={
-                      <TextBox
+                      <TextField
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                       />

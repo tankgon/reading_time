@@ -1,4 +1,4 @@
-import { MenuItem } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,7 +12,6 @@ import TextFilter from "../../../../WebsiteManagement/Coupon/components/TextFilt
 
 //data
 import menu from "../../../../../../services/api/admin/settings/menu";
-import TextBox from "../../../../../components/TextBox";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -77,7 +76,7 @@ export default function AddRoleDialog() {
           <DialogContentText id="alert-dialog-slide-description">
             <TextFilter
               children={
-                <TextBox
+                <TextField
                   size="small"
                   sx={{ p: "8px" }}
                   value={role}
@@ -88,7 +87,7 @@ export default function AddRoleDialog() {
             />
             <TextFilter
               children={
-                <TextBox
+                <TextField
                   size="small"
                   sx={{ p: "8px" }}
                   value={slug}

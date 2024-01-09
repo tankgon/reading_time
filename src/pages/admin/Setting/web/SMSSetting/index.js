@@ -1,11 +1,10 @@
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
-import TextBox from "../../../../components/TextBox";
 import SelectsBox from "../../../../components/selectsBox";
 //data
 import { toast } from "react-toastify";
@@ -167,7 +166,9 @@ function SMSSetting() {
                     <Grid container spacing={4}>
                       <Grid item xs={12} lg={12}>
                         <strong>API KEY</strong>
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setKey(e.target.value)}
                           value={key ? key : listSMSSetting.API_Key}
                         />
@@ -175,7 +176,9 @@ function SMSSetting() {
 
                       <Grid item xs={12} lg={12}>
                         <strong>API SECRET</strong>
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setSecret(e.target.value)}
                           value={secret ? secret : listSMSSetting.API_Secret}
                         />
@@ -183,7 +186,9 @@ function SMSSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Sender Number
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setNumber(e.target.value)}
                           value={number ? number : listSMSSetting.Sender_Number}
                         />
@@ -195,7 +200,9 @@ function SMSSetting() {
 
                       <Grid item xs={12} lg={12}>
                         Sender ID
-                        <TextBox
+                        <TextField
+                          fullWidth
+                          size="small"
                           onChange={(e) => setId(e.target.value)}
                           value={id ? id : listSMSSetting.Sender_Id}
                         />

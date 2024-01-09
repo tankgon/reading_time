@@ -1,5 +1,5 @@
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,9 +9,9 @@ import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import {
   ContentState,
+  EditorState,
   convertFromHTML,
   convertToRaw,
-  EditorState,
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
@@ -19,7 +19,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ButtonComponent from "../../../../components/buttonComponent";
-import TextBox from "../../../../components/TextBox";
 //data
 import { useEffect, useState } from "react";
 import web from "../../../../../services/api/admin/settings/web";
@@ -207,7 +206,9 @@ function MailSetting() {
                   <Grid container spacing={4}>
                     <Grid item xs={12} lg={6}>
                       Email Sending Address
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           sending == undefined
                             ? listMailSetting.Email_Sending_Address
@@ -218,7 +219,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={6}>
                       Email Receiving Address
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           receiving == undefined
                             ? listMailSetting.Email_Receiving_Address
@@ -229,7 +232,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={7}>
                       SMTP Host
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           host == undefined ? listMailSetting.SMTP_Host : host
                         }
@@ -238,7 +243,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={5}>
                       SMTP Port
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           port == undefined ? listMailSetting.SMTP_Port : port
                         }
@@ -247,7 +254,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={12}>
                       SMTP Security
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           security == undefined
                             ? listMailSetting.SMTP_Security
@@ -287,7 +296,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={6}>
                       SMTP User ID
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           userId == undefined
                             ? listMailSetting.SMTP_User_Id
@@ -298,7 +309,9 @@ function MailSetting() {
                     </Grid>
                     <Grid item xs={12} lg={6}>
                       SMTP User Password
-                      <TextBox
+                      <TextField
+                        fullWidth
+                        size="small"
                         value={
                           password == undefined
                             ? listMailSetting.SMTP_User_Password
