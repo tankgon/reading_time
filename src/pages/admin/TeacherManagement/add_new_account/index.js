@@ -9,7 +9,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import TimezoneSelect from "react-timezone-select";
 import { toast } from "react-toastify";
 import teachers from "../../../../services/api/admin/teachers";
 import Clound from "../../../../services/clound/index.js";
@@ -361,7 +360,7 @@ function AddNewAccount() {
                     }
                     text="Select a country"
                   />
-                  <DotText
+                  {/* <DotText
                     children={
                       <TimezoneSelect
                         value={selectedTimezone}
@@ -369,7 +368,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Timezone"
-                  />
+                  /> */}
                   <DotText
                     children={
                       <TextField
