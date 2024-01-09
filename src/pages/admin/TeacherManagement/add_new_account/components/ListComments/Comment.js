@@ -24,7 +24,7 @@ function Todo({ todo, index, removeTodo }) {
 }
 
 function TodoForm({ addTodo }) {
-  const [value, setValue] = React.useState(Storage.getDATADETAIL().Comment);
+  const [value, setValue] = React.useState(Storage.getDATADETAIL()?.Comment);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -131,9 +131,7 @@ function AddNewAccount() {
   };
   const { Lower, Higher, Middle } = recommendedstudent;
 
-  const [Recommendedlevel, setRecommendedlevel] = useState(
-    Storage.getDATADETAIL()?.Recommended_Level
-  );
+  const [Recommendedlevel, setRecommendedlevel] = useState({});
   const handleChange4 = (event) => {
     setRecommendedlevel((e) => ({
       ...e,
@@ -183,8 +181,8 @@ function AddNewAccount() {
         Self_Introduction: selfintroduction,
         Recommended_Student: "asd",
         Recommended_Level: "asd",
-        Character: character.character,
-        Lesson_Style: lesson.lesson,
+        Character: character?.character,
+        Lesson_Style: lesson?.lesson,
         Video: videoURL,
         Student_Review: student_review.student_review,
         Comment: comment.comment,

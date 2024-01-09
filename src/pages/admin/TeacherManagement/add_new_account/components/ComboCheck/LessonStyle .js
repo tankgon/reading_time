@@ -8,9 +8,7 @@ import React, { useEffect, useState } from "react";
 import Storage from "../../../../../../services/storage";
 
 export default function LessonStyle() {
-  const [checkedValues, setCheckedValues] = useState(
-    Storage.getDATADETAIL()?.Lession_Style
-  );
+  const [checkedValues, setCheckedValues] = useState({});
 
   const handleCheckboxChange = (event) => {
     setCheckedValues((prevValues) => ({

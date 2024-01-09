@@ -8,9 +8,7 @@ import React, { useEffect, useState } from "react";
 import Storage from "../../../../../../services/storage";
 
 export default function Character() {
-  const [checkedValues, setCheckedValues] = useState(
-    Storage.getDATADETAIL().Character
-  );
+  const [checkedValues, setCheckedValues] = useState({});
 
   const handleCheckboxChange = (event) => {
     setCheckedValues((prevValues) => ({
