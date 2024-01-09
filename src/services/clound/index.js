@@ -1,14 +1,17 @@
 const Clound = async (file) => {
   const data = new FormData();
   data.append("file", file);
-  data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_CLOUD_FOLDER);
-  data.append("cloud_name", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
-  data.append("folder", process.env.REACT_APP_CLOUDINARY_CLOUD_FOLDER);
+  data.append("upload_preset", "reading-time-storyboard");
+  data.append("cloud_name", "df2s6srdu");
+  data.append("folder", "reading-time-storyboard");
 
-  const cloudinaryResponse = await fetch(process.env.CLOUDINARY, {
-    method: "post",
-    body: data,
-  });
+  const cloudinaryResponse = await fetch(
+    `https://api.cloudinary.com/v1_1/df2s6srdu/upload`,
+    {
+      method: "post",
+      body: data,
+    }
+  );
   const cloudinaryData = await cloudinaryResponse.json();
   const imageUrl = await cloudinaryData.url;
 
