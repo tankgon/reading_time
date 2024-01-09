@@ -17,7 +17,7 @@ import Storage from "../../../../services/storage";
 import DotText from "../../../components/DotText";
 import FilePick from "../../../components/FilePick";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
-import TextBox from "../../../components/TextBox";
+import TextBox from "../../../components/TextBox.js";
 import TextCheckBox from "../../../components/TextCheckBox";
 import TextareaComment from "../../../components/TextareaComment";
 import ButtonComponent from "../../../components/buttonComponent";
