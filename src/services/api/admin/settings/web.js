@@ -3,13 +3,22 @@ import axios from "../../axiosConfig";
 const actionWebSetting = () => {
   return axios.get(`/web-settings`);
 };
+const putWebSetting = (body) => {
+  return axios.put(`/web-settings`, body);
+};
 //mail
 const actionMailSetting = () => {
   return axios.get(`/mail-settings`);
 };
+const putMailSetting = (body) => {
+  return axios.put(`/mail-settings`, body);
+};
 //admin
 const actionAdminSetting = () => {
   return axios.get(`/admin-settings`);
+};
+const putAdminSetting = (body) => {
+  return axios.put(`/admin-settings`, body);
 };
 const actionMenuPC = () => {
   return axios.get(`/main-menu-pc`);
@@ -37,4 +46,7 @@ export default {
   actionService,
   actionSMSSetting,
   actionPGSetting,
+  putAdminSetting,
+  putMailSetting,
+  putWebSetting,
 };

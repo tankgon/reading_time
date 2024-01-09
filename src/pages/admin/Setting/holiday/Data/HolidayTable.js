@@ -16,7 +16,6 @@ function GridExample() {
     () => ({
       height: "100%",
       width: "100%",
-      borderRadius: "80px", // Rounded corners for the container
     }),
     []
   );
@@ -24,14 +23,16 @@ function GridExample() {
     return {
       flex: 1,
       resizable: true,
+      floatingFilter: true,
     };
   }, []);
 
   const [columnDefs, setColumnDefs] = useState([
-    { headerName: "", field: "Id", width: 850 },
+    // { headerName: "", field: "_id", width: 80 },
     {
       headerName: "Name",
       field: "_Name",
+      filter: "agTextColumnFilter",
     },
     {
       headerName: "Start Date",
@@ -50,7 +51,6 @@ function GridExample() {
       field: "Registration_Date",
       valueFormatter: (params) => formatDate(params.value),
     },
-    // { headerName: "", field: "" },
   ]);
 
   const formatDate = (date) => {
@@ -63,7 +63,8 @@ function GridExample() {
         rowData={listHoliday}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
-        getRowId={(value) => value.data.Id}
+        paginationAutoPageSize={true}
+        pagination={true}
       />
     </div>
   );

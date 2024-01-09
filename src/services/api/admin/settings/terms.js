@@ -1,24 +1,40 @@
 import axios from "../../axiosConfig";
-
-const actionTerms = (body) => {
-  return axios.post(`/settings/termsOfUse`, body);
+//terms
+const actionTerms = () => {
+  return axios.get(`/terms-of-use`);
 };
-
-const actionPrivacyPolicy = (body) => {
-  return axios.post(`/settings/privacyPolicy`, body);
+const putTerms = (body) => {
+  return axios.put(`/terms-of-use`, body);
 };
-
-const actionPaymentAndRefundPolicy = (body) => {
-  return axios.post(`/settings/paymentAndRefundPolicy`, body);
+//privacy
+const actionPrivacyPolicy = () => {
+  return axios.get(`/privacy-policy`);
 };
-
-const actionPromotionTermsAndConditions = (body) => {
-  return axios.post(`/settings/promotionTermsAndConditions`, body);
+const putPrivacyPolicy = (body) => {
+  return axios.put(`/privacy-policy`, body);
+};
+//payment
+const actionPaymentAndRefundPolicy = () => {
+  return axios.get(`/payment-and-refund-policy`);
+};
+const putPaymentAndRefundPolicy = (body) => {
+  return axios.put(`/payment-and-refund-policy`, body);
+};
+//promotion
+const actionPromotionTermsAndConditions = () => {
+  return axios.get(`/promotion-terms-and-conditions`);
+};
+const putPromotionTermsAndConditions = (body) => {
+  return axios.put(`/promotion-terms-and-conditions`, body);
 };
 
 export default {
   actionTerms,
+  putTerms,
   actionPrivacyPolicy,
+  putPrivacyPolicy,
   actionPaymentAndRefundPolicy,
+  putPaymentAndRefundPolicy,
   actionPromotionTermsAndConditions,
+  putPromotionTermsAndConditions,
 };

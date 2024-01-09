@@ -14,7 +14,6 @@ import {
   EditorState,
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-import React from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
@@ -22,7 +21,7 @@ import { toast } from "react-toastify";
 import ButtonComponent from "../../../../components/buttonComponent";
 import TextBox from "../../../../components/TextBox";
 //data
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import web from "../../../../../services/api/admin/settings/web";
 import data from "./data";
 
@@ -34,17 +33,11 @@ const Item = styled("div")(({ theme }) => ({
   color: "black",
 }));
 
-const editorStyle = {
-  height: "300px",
-  border: "1px solid #C0C0C0",
-  padding: "0 20px",
-};
-
 function MailSetting() {
   const { DatalistMailSetting: listMailSetting } = data();
   const [file, setFile] = useState("");
 
-  console.log(file);
+  // console.log(listMailSetting);
 
   const [sending, setSending] = useState();
   const [receiving, setReceiving] = useState();
@@ -58,26 +51,25 @@ function MailSetting() {
 
   const Update = async () => {
     try {
-      // setLoading(true);
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", "reading-time-storyboard");
-      data.append("cloud_name", "df2s6srdu");
-      data.append("folder", "reading-time-storyboard");
+      // // setLoading(true);
+      // const data = new FormData();
+      // data.append("file", file);
+      // data.append("upload_preset", "reading-time-storyboard");
+      // data.append("cloud_name", "df2s6srdu");
+      // data.append("folder", "reading-time-storyboard");
 
-      const cloudinaryResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/df2s6srdu/upload`,
-        {
-          method: "post",
-          body: data,
-        }
-      );
-      const cloudinaryData = await cloudinaryResponse.json();
-      const imageUrl = await cloudinaryData.url;
-      console.log(imageUrl);
+      // const cloudinaryResponse = await fetch(
+      //   `https://api.cloudinary.com/v1_1/df2s6srdu/upload`,
+      //   {
+      //     method: "post",
+      //     body: data,
+      //   }
+      // );
+      // const cloudinaryData = await cloudinaryResponse.json();
+      // const imageUrl = await cloudinaryData.url;
+      // console.log(imageUrl);
 
-      await web.actionMailSetting({
-        Action: "PUT",
+      const res = await web.putMailSetting({
         Id: 1,
         Email_Sending_Address: sending
           ? sending
@@ -95,27 +87,29 @@ function MailSetting() {
         SMTP_User_Password: password
           ? password
           : listMailSetting.SMTP_User_Password,
-        _Content: editer ? editer : listMailSetting._Content,
-        Upload_Email_Template: imageUrl
-          ? imageUrl
-          : listMailSetting.Upload_Email_Template,
+        Email_Template: editer ? editer : listMailSetting.Email_Template,
+        // Upload_Email_Template: imageUrl
+        //   ? imageUrl
+        //   : listMailSetting.Upload_Email_Template,
       });
-      toast.success(`Successful update!`);
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const initialContent = convertFromHTML(`<p>asdasd</P>`);
-  const contentState = ContentState.createFromBlockArray(
-    initialContent.contentBlocks,
-    initialContent.entityMap
-  );
-
-  // Chuyển đổi ContentState thành raw content
-  const initialContentState = convertToRaw(contentState);
-
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  useEffect(() => {
+    const htmlContent = `${listMailSetting.Email_Template}`;
+    const blocksFromHTML = convertFromHTML(htmlContent);
+    const initialContentState = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    setEditorState(EditorState.createWithContent(initialContentState));
+  }, [listMailSetting.Email_Template]);
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
     setEditer(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -354,16 +348,17 @@ function MailSetting() {
                     border: "1px solid #C0C0C0",
                     p: "20px",
                   }}>
-                  <Box sx={{ height: "400px" }}>
-                    <Editor
-                      wrapperClassName="demo-wrapper"
-                      editorClassName="demo-editor"
-                      editorStyle={editorStyle}
-                      initialContentState={initialContentState}
-                      editorState={editorState}
-                      onEditorStateChange={onEditorStateChange}
-                    />
-                  </Box>
+                  <Editor
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    editorStyle={{
+                      height: "400px",
+                      border: "1px solid #C0C0C0",
+                      padding: "0 20px",
+                    }}
+                    editorState={editorState}
+                    onEditorStateChange={onEditorStateChange}
+                  />
                   Upload Email Template
                   <Box
                     component="section"
@@ -375,7 +370,7 @@ function MailSetting() {
                       border: "1px dashed grey",
                       mt: "20px",
                       width: "50px",
-                      height: "50px", // Tùy chỉnh chiều cao nếu cần thiết
+                      height: "50px",
                     }}>
                     <label
                       htmlFor="file_input"

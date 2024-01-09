@@ -5,10 +5,12 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import React, { useEffect, useState } from "react";
-import Storage from "../../../../../../services/local";
+import Storage from "../../../../../../services/storage";
 
 export default function LessonStyle() {
-  const [checkedValues, setCheckedValues] = useState({});
+  const [checkedValues, setCheckedValues] = useState(
+    Storage.getDATADETAIL()?.Lession_Style
+  );
 
   const handleCheckboxChange = (event) => {
     setCheckedValues((prevValues) => ({
@@ -24,7 +26,7 @@ export default function LessonStyle() {
 
   useEffect(() => {
     Storage.setLESSON({
-      lesson: selectedcheckedValues.join(";"),
+      lesson: selectedcheckedValues.join(", "),
     });
   }, [checkedValues]);
 

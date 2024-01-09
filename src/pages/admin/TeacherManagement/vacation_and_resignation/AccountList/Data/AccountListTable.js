@@ -55,7 +55,7 @@ const AccountListTable = () => {
     <div className="example-wrapper">
       <div style={gridStyle} className="ag-theme-quartz">
         <AgGridReact
-          rowData={listMenu}
+          rowData={[1,2]}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           suppressRowClickSelection={true}

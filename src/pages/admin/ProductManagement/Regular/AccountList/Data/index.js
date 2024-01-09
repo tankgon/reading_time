@@ -10,7 +10,7 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await products.actionRegularProduct({ Action: "GET" });
+      const res = await products.actionRegularProduct();
       setListMenu(res);
     } catch (err) {
       console.log(err);

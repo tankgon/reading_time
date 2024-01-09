@@ -5,10 +5,12 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import React, { useEffect, useState } from "react";
-import Storage from "../../../../../../services/local";
+import Storage from "../../../../../../services/storage";
 
 export default function Character() {
-  const [checkedValues, setCheckedValues] = useState({});
+  const [checkedValues, setCheckedValues] = useState(
+    Storage.getDATADETAIL().Character
+  );
 
   const handleCheckboxChange = (event) => {
     setCheckedValues((prevValues) => ({
@@ -22,11 +24,11 @@ export default function Character() {
     (key) => checkedValues[key]
   );
   // console.log(selectedcheckedValues);
-  // console.log(selectedcheckedValues.join(";"));
+  // console.log(selectedcheckedValues.join(", "));
 
   useEffect(() => {
     Storage.setCHARACTER({
-      character: selectedcheckedValues.join(";"),
+      character: selectedcheckedValues.join(", "),
     });
   }, [checkedValues]);
 

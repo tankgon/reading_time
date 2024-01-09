@@ -7,7 +7,7 @@ import React, { useMemo, useRef, useState } from "react";
 //data
 import moment from "moment";
 import data from "../Data";
-
+import BtnCellRenderer from "./BtnCellRenderer";
 const AccountListTable = () => {
   const { DatalistMenu: listMenu } = data();
   const gridRef = useRef();
@@ -16,7 +16,7 @@ const AccountListTable = () => {
   const [columnDefs, setColumnDefs] = useState([
     {
       headerName: "No",
-      field: "Id",
+      field: "_id",
       headerCheckboxSelection: true,
       checkboxSelection: true,
     },
@@ -38,13 +38,8 @@ const AccountListTable = () => {
     },
     {
       headerName: "Start Date /Resignation Day",
-      valueGetter: (params) => {
-        return (
-          formatDate(params.data.Start_Date) +
-          " / " +
-          formatDate(params.data.Start_Date)
-        );
-      },
+      field: "createdAt",
+      valueFormatter: (params) => formatDate(params.value),
       filter: "agDateColumnFilter",
       minWidth: 200,
     },
@@ -57,7 +52,10 @@ const AccountListTable = () => {
     },
     { field: "Point", headerName: "Point", filter: "agNumberColumnFilter" },
     { field: "Penalty", headerName: "Penalty", filter: "agNumberColumnFilter" },
-    { headerName: "Edit" },
+    {
+      headerName: "Edit",
+      cellRenderer: BtnCellRenderer,
+    },
   ]);
 
   const formatDate = (date) => {

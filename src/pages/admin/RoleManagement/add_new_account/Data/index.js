@@ -13,14 +13,14 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await roles.actionRoleManagement({ Action: "GET" });
-      const res1 = await roles.actionRoleManagement({ Action: "DETAIL" });
-      const res2 = await roles.actionCountry({ Action: "GET" });
-      const res3 = await roles.actionAuthority({ Action: "GET" });
+      const res = await roles.actionRoleManagement();
+      // const res1 = await roles.actionRoleManagement({ Action: "DETAIL" });
+      const res2 = await roles.actionCountry();
+      // const res3 = await roles.actionAuthority();
       setListRole(res);
-      setListTeacher(res1);
+      // setListTeacher(res1);
       setListCountry(res2);
-      setListAuthority(res3);
+      // setListAuthority(res3);
     } catch (err) {
       console.log(err);
     }

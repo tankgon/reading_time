@@ -160,8 +160,6 @@ function Nav({ children }) {
   const location = useLocation();
   var result = location.pathname.split("/")[1];
 
-  console.log(location.pathname.split("/")[2]);
-
   useEffect(() => {
     if (result == "setting") setPathNameState(setting);
     if (result == "role") setPathNameState(role);
@@ -189,7 +187,6 @@ function Nav({ children }) {
       <Grid xs={12}>
         <ButtonGroup variant="text">
           {pathNameState.map((item, index) => {
-            console.log(item.url?.split("/")[2]);
             return (
               <Link
                 key={index}

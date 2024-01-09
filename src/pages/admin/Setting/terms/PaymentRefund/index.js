@@ -1,16 +1,24 @@
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import {
+  ContentState,
+  EditorState,
+  convertFromHTML,
+  convertToRaw,
+} from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Link } from "react-router-dom";
 import SelectBox from "../../../../components/selectsBox";
 //data
+import { toast } from "react-toastify";
+import terms from "../../../../../services/api/admin/settings/terms";
+import ButtonComponent from "../../../../components/buttonComponent";
 import data from "./data";
-
 const Item = styled("div")(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
@@ -20,11 +28,41 @@ const Item = styled("div")(({ theme }) => ({
 }));
 
 function PaymentRefund() {
-  const { DatalistPayment: listPayment } = data();
-  const [age, setAge] = useState("");
+  const { DatalistPayment: listPayment, DatalistCountry: listCountry } = data();
+  const [country, setCountry] = useState();
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const [editer, setEditer] = useState();
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  useEffect(() => {
+    const htmlContent = `${listPayment.Text_Field}`;
+    const blocksFromHTML = convertFromHTML(htmlContent);
+    const initialContentState = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    setEditorState(EditorState.createWithContent(initialContentState));
+  }, [listPayment.Text_Field]);
+  const onEditorStateChange = (newEditorState) => {
+    setEditorState(newEditorState);
+    setEditer(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  };
+
+  console.log(editer);
+
+  const Update = async () => {
+    try {
+      const res = await terms.putPaymentAndRefundPolicy({
+        Id: 1,
+        Text_Field: editer,
+        Country: country,
+      });
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
+    } catch (err) {
+      console.log(err);
+      toast.error(`Unstable transmission line!`);
+    }
   };
   return (
     <MDBox>
@@ -123,17 +161,34 @@ function PaymentRefund() {
               alignItems: "center",
             }}>
             <Grid item xs={12} lg={8}>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid
-                  container
-                  sx={{
-                    justifyContent: "flex-end",
-                  }}>
-                  <Grid xs={2}>
-                    <SelectBox />
-                  </Grid>
+              <Grid
+                container
+                sx={{
+                  justifyContent: "flex-end",
+                }}>
+                <Grid xs={12} lg={3}>
+                  <SelectBox
+                    sx={{ m: "8px 0" }}
+                    fullWidth={"fullWidth"}
+                    size={"small"}
+                    value={
+                      country
+                        ? country
+                        : listPayment.Country
+                        ? listPayment.Country
+                        : null
+                    }
+                    onChange={(e) => setCountry(e.target.value)}
+                    children={listCountry.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item.name}>
+                          {item.name}
+                        </MenuItem>
+                      );
+                    })}
+                  />
                 </Grid>
-              </Box>
+              </Grid>
             </Grid>
           </Grid>
 
@@ -145,10 +200,11 @@ function PaymentRefund() {
             }}>
             <Grid item xs={12} lg={8}>
               <Box sx={{ flexGrow: 1 }}>
-                <Grid container sx={{ marginTop: "52px" }}>
+                <Grid container>
                   <Grid
                     xs={2}
                     sx={{
+                      borderRadius: "8px 0 0 8px",
                       borderTop: "1px solid #C0C0C0",
                       borderLeft: "1px solid #C0C0C0",
                       borderBottom: "1px solid #C0C0C0",
@@ -160,37 +216,51 @@ function PaymentRefund() {
                         p: "20px",
                         textAlign: "center",
                       }}>
-                      {listPayment.Title}
+                      Title
                     </Box>
                     <Box sx={{ p: "20px", textAlign: "center" }}>
-                      {listPayment.Text_Field}
+                      Text Field
                     </Box>
                   </Grid>
 
                   <Grid xs={10}>
                     <Box
                       sx={{
+                        borderRadius: "0 8px 0 0",
                         borderTop: "1px solid #C0C0C0",
                         borderLeft: "1px solid #C0C0C0",
                         borderRight: "1px solid #C0C0C0",
-                        p: "32px",
-                      }}
-                    />
-                    <Box
-                      sx={{
-                        border: "1px solid #C0C0C0",
                         p: "20px",
                       }}>
-                      <Box sx={{ height: "500px" }}>
-                        <Editor
-                          wrapperClassName="demo-wrapper"
-                          editorClassName="demo-editor"
-                          style={{ lineHeight: "2" }} // Đổi giá trị này theo ý muốn của cậu
-                        />
-                      </Box>
+                      {listPayment.Title}
+                      da
+                    </Box>
+                    <Box
+                      sx={{
+                        borderRadius: "0 0 8px 0",
+                        border: "1px solid #C0C0C0",
+                      }}>
+                      <Editor
+                        wrapperClassName="demo-wrapper"
+                        editorClassName="demo-editor"
+                        editorStyle={{
+                          height: "400px",
+                          border: "1px solid #C0C0C0",
+                          padding: "0 20px",
+                        }}
+                        editorState={editorState}
+                        onEditorStateChange={onEditorStateChange}
+                      />
                     </Box>
                   </Grid>
                 </Grid>
+                <Box sx={{ m: "20px 0" }}>
+                  <ButtonComponent
+                    title={"Save"}
+                    pading={"8px 40px"}
+                    onClick={Update}
+                  />
+                </Box>
               </Box>
             </Grid>
           </Grid>

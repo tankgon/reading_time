@@ -2,8 +2,6 @@ import ImageIcon from "@mui/icons-material/Image";
 import { AspectRatio } from "@mui/joy";
 import { Card, Grid, MenuItem, Typography } from "@mui/material";
 import MDBox from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/system/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,26 +11,17 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DotText from "../../../components/DotText";
+import FilePick from "../../../components/FilePick";
 import TextBox from "../../../components/TextBox";
 import ButtonComponent from "../../../components/buttonComponent";
 import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 //data
 import { toast } from "react-toastify";
 import roles from "../../../../services/api/admin/roles";
+import Clound from "../../../../services/clound";
 import AutocompleteComponent from "../../../components/AutocompleteComponent";
 import SelectBox from "../../../components/selectsBox";
 import data from "./Data";
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
 
 const genderA = [
   {
@@ -53,20 +42,20 @@ function AddNewAccount() {
   } = data();
   const [listDetail, setListDetail] = useState();
 
-  console.log(listDetail);
+  // console.log(listDetail);
 
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
-  const [birth, setBirth] = useState("");
-  const [country, setCountry] = useState("");
-  const [type, setType] = useState("");
-  const [contract, setContract] = useState("");
-  const [start, setStart] = useState("");
-  const [resignation, setResignation] = useState("");
-  const [authority, setAuthority] = useState("");
+  const [name, setName] = useState();
+  const [nickname, setNickname] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [gender, setGender] = useState();
+  const [birth, setBirth] = useState();
+  const [country, setCountry] = useState();
+  const [type, setType] = useState();
+  const [contract, setContract] = useState();
+  const [start, setStart] = useState();
+  const [resignation, setResignation] = useState();
+  const [authority, setAuthority] = useState();
 
   const [imageSrc, setImageSrc] = useState(null);
   const [imageURL, setImageURL] = useState(null);
@@ -80,6 +69,8 @@ function AddNewAccount() {
       reader.readAsDataURL(file);
     }
   };
+
+  console.log(imageURL);
 
   const Detail = async (idName) => {
     try {
@@ -103,27 +94,24 @@ function AddNewAccount() {
     }
   };
 
+  console.log(name);
+
   const Approve = async () => {
-    // const imageCloundURL = await Clound(imageURL);
+    const contractURL = await Clound(contract);
+    const imageCloundURL = await Clound(imageURL);
     try {
-      await roles.actionRoleManagement({
-        Action: "POST",
-        Approval: "123",
-        _Role: "123",
-        Country: country,
+      await roles.postRoleManagement({
         _Name: name,
+        Nickname: nickname,
         Email: email,
         Password: password,
-        Phone: "123",
-        Registration_Date: dayjs(resignation.$d).format("YYYY-MM-DD"),
-        Recent_Login: dayjs(birth.$d).format("YYYY-MM-DD"),
         Gender: gender,
-        Nickname: nickname,
         Birth: dayjs(birth.$d).format("YYYY-MM-DD"),
+        Country: country,
         Contract_Type: type,
-        _Contract: contract,
-        _Start_Date: dayjs(start.$d).format("YYYY-MM-DD"),
-        Authority_Type: authority,
+        _Contract: contractURL,
+        Authority_Type: "authority",
+        _Image: imageCloundURL,
       });
       toast.success(`Successful update!`);
     } catch (err) {
@@ -274,8 +262,8 @@ function AddNewAccount() {
                       onChange={(e) => setCountry(e.target.value)}
                       children={listCountry.map((item, index) => {
                         return (
-                          <MenuItem key={index} value={item.Name}>
-                            {item.Name}
+                          <MenuItem key={index} value={item.name}>
+                            {item.name}
                           </MenuItem>
                         );
                       })}
@@ -293,18 +281,11 @@ function AddNewAccount() {
                   text="Contract Type"
                 />
                 <DotText
-                  itemButton={
-                    <Button
-                      variant="contained"
-                      color="success"
-                      sx={{ textTransform: "capitalize" }}>
-                      <strong>File</strong>
-                    </Button>
-                  }
                   children={
-                    <TextBox
+                    <FilePick
+                      inputProps={{ accept: "audio/*, .pdf" }}
+                      onChange={(e) => setContract(e)}
                       value={contract}
-                      onChange={(e) => setContract(e.target.value)}
                     />
                   }
                   text="Contract"

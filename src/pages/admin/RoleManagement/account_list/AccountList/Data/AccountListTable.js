@@ -4,16 +4,15 @@ import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import React, { useMemo, useRef, useState } from "react";
+import BtnCellRenderer from "./BtnCellRenderer";
 //data
 import moment from "moment";
-import BtnCellRenderer from "./BtnCellRenderer";
 import data from "./index";
 // DatalistRole
 
-const AccountListTable = ({ newRowData }) => {
-  const { DatalistRole: datalistRole } = data();
+const AccountListTable = () => {
+  const { DatalistRole: listRole } = data();
 
-  const gridRef = useRef();
   const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [columnDefs, setColumnDefs] = useState([
     {
@@ -22,24 +21,26 @@ const AccountListTable = ({ newRowData }) => {
       headerCheckboxSelection: true,
       checkboxSelection: true,
     },
-    { headerName: "Approval", field: "Approval" },
-    { headerName: "Role", field: "_Role" },
+    // { headerName: "Approval", field: "Approval" },
+    { headerName: "Role", field: "Authority_Type" },
     { headerName: "Country", field: "Country" },
-    { headerName: "ID", field: "Id" },
-    { headerName: "Name", field: "_Name" },
+    { headerName: "ID", field: "_id" },
+    { headerName: "Name", field: "_Name", filter: "agTextColumnFilter" },
     { headerName: "Email", field: "Email" },
     {
       headerName: "Registration",
       field: "Registration_Date",
       valueFormatter: (params) => formatDate(params.value),
     },
-    // {
-    //   headerName: "Management",
-    //   cellRenderer: BtnCellRenderer,
-    //   cellRendererParams: (rowData) => {
-    //     console.log(`Button clicked for row with ID: ${rowData.Id}`);
-    //   },
-    // },
+    {
+      headerName: "Management",
+      cellRenderer: BtnCellRenderer,
+      cellRendererParams: (params) => {
+        return {
+          rowData: params.data,
+        };
+      },
+    },
   ]);
 
   const formatDate = (date) => {
@@ -51,14 +52,14 @@ const AccountListTable = ({ newRowData }) => {
       flex: 1,
       minWidth: 100,
       resizable: true,
+      floatingFilter: true,
     };
   }, []);
-
+  // console.log(listRole);
   return (
     <div style={gridStyle} className="ag-theme-quartz">
       <AgGridReact
-        ref={gridRef}
-        rowData={newRowData.length != 0 ? newRowData : datalistRole}
+        rowDatas={listRole}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         suppressRowClickSelection={true}

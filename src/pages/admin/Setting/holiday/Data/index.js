@@ -10,10 +10,8 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await holiday.actionHoliday({
-        Action: "GET",
-      });
-      setListHoliday(res);
+      const res = await holiday.actionHoliday();
+      setListHoliday(res.data);
     } catch (err) {
       console.log(err);
     }

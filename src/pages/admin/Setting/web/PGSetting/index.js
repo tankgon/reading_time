@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
@@ -7,6 +7,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import TextBox from "../../../../components/TextBox";
+import SelectBox from "../../../../components/selectsBox";
 //data
 import web from "../../../../../services/api/admin/settings/web";
 import ButtonComponent from "../../../../components/buttonComponent";
@@ -19,8 +20,22 @@ const Item = styled("div")(({ theme }) => ({
   paddingTop: "40px",
 }));
 
+const discountA = [
+  { title: "Danal Pay" },
+  { title: "Kakao Pay" },
+  { title: "INICIS" },
+  { title: "INICIS (Web standard payment)" },
+  { title: "NICE" },
+  { title: "KCP (Regular payment)" },
+  { title: "JTNet" },
+  { title: "LG U+" },
+];
+
 function PGSetting() {
-  const { DatalistPGSetting: listPGSetting } = data();
+  const { DatalistPGSetting: listPGSetting, DatalistCountry: listCountry } =
+    data();
+
+  console.log(listCountry);
 
   const [merchant, setMerchant] = useState("");
   const [key, setKey] = useState("");
@@ -28,7 +43,7 @@ function PGSetting() {
   const [id, setID] = useState("");
   const [pg, setPG] = useState("");
   const [url, setURL] = useState("");
-
+  const [country, setCountry] = useState();
   const Update = async () => {
     try {
       await web.actionPGSetting({
@@ -159,6 +174,21 @@ function PGSetting() {
                       p: "20px",
                     }}>
                     <Grid item xs={12} lg={12}>
+                      Country
+                      <SelectBox
+                          sx={{ m: "8px 0" }}
+                          fullWidth={"fullWidth"}
+                          size={"small"}
+                          value={country}
+                          onChange={(e) => setCountry(e.target.value)}
+                          children={listCountry.map((item, index) => {
+                            return (
+                              <MenuItem key={index} value={item.name}>
+                                {item.name}
+                              </MenuItem>
+                            );
+                          })}
+                        />
                       Merchant Identification Code
                       <TextBox
                         onChange={(e) => setMerchant(e.target.value)}
@@ -176,17 +206,11 @@ function PGSetting() {
                           onChange={(e) => setKey(e.target.value)}
                           value={key ? key : listPGSetting.API_Key}
                         />
-                      </Grid>
-
-                      <Grid item xs={12} lg={12}>
                         <strong>API SECRET</strong>
                         <TextBox
                           onChange={(e) => setSecret(e.target.value)}
                           value={secret ? secret : listPGSetting.API_Secret}
                         />
-                      </Grid>
-
-                      <Grid item xs={12} lg={12}>
                         Regular Payment Merchant ID
                         <TextBox
                           onChange={(e) => setID(e.target.value)}
@@ -198,13 +222,20 @@ function PGSetting() {
 
                       <Grid item xs={12} lg={12}>
                         PG Provider
-                        <TextBox
-                          onChange={(e) => setPG(e.target.value)}
+                        <SelectBox
+                          sx={{ m: "8px 0" }}
+                          fullWidth={"fullWidth"}
+                          size={"small"}
                           value={pg ? pg : listPGSetting.PG_Provider}
+                          onChange={(e) => setPG(e.target.value)}
+                          children={discountA.map((item) => {
+                            return (
+                              <MenuItem key={item.title} value={item.title}>
+                                {item.title}
+                              </MenuItem>
+                            );
+                          })}
                         />
-                      </Grid>
-
-                      <Grid item xs={12} lg={12}>
                         Webhook URL
                         <TextBox
                           onChange={(e) => setURL(e.target.value)}

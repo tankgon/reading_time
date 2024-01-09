@@ -1,21 +1,27 @@
 import axios from "../../axiosConfig";
 
-const actionRoleManagement = (body) => {
-  return axios.post(`/roleManagement`, body);
+const actionCountry = () => {
+  return axios.get(`/countries`);
 };
-const actionTeacher = (body) => {
-  return axios.post(`/account/teacher`, body);
+const actionRoleManagement = () => {
+  return axios.get(`/role-management`);
 };
-const actionCountry = (body) => {
-  return axios.post(`/country`, body);
+const postRoleManagement = (body) => {
+  return axios.post(`/role-management`, body);
 };
-const actionAuthority = (body) => {
-  return axios.post(`/admin/authority`, body);
-};
+
+// const actionTeacher = () => {
+//   return axios.get(`/account/teacher`);
+// };
+
+// const actionAuthority = (body) => {
+//   return axios.post(`/admin/authority`, body);
+// };
 
 export default {
   actionRoleManagement,
-  actionTeacher,
+  // actionTeacher,
   actionCountry,
-  actionAuthority,
+  postRoleManagement,
+  // actionAuthority,
 };

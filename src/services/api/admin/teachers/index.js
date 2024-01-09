@@ -1,7 +1,10 @@
 import axios from "../../axiosConfig";
 
-const actionTeacher = (body) => {
-  return axios.post(`/account/teacher`, body);
+const actionTeacher = () => {
+  return axios.get(`/account-teacher`);
+};
+const postTeacher = (body) => {
+  return axios.post(`/account-teacher`, body);
 };
 
 const actionVacationAndResignationManagement = (body) => {
@@ -26,6 +29,7 @@ const actionFeedback = (body) => {
 
 export default {
   actionTeacher,
+  postTeacher,
   actionVacationAndResignationManagement,
   actionWorkingHours,
   actionPointAndPenaltyManagement,

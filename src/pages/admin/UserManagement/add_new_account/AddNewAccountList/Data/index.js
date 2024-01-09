@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import roles from "../../../../../../services/api/admin/roles"
+import roles from "../../../../../../services/api/admin/roles";
 
 export default function useData() {
   const [listCountry, setListCountry] = useState([]);
@@ -10,7 +10,7 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res2 = await roles.actionCountry({ Action: "GET" });
+      const res2 = await roles.actionCountry();
       setListCountry(res2);
     } catch (err) {
       console.log(err);

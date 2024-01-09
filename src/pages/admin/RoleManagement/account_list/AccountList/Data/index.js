@@ -3,7 +3,6 @@ import roles from "../../../../../../services/api/admin/roles";
 
 export default function useData() {
   const [listRole, setListRole] = useState([]);
-  const [listTeacher, setListTeacher] = useState([]);
 
   useEffect(() => {
     getList();
@@ -11,10 +10,8 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await roles.actionRoleManagement({ Action: "GET" });
-      const res1 = await roles.actionTeacher({ Action: "GET" });
-      setListRole(res);
-      setListTeacher(res1);
+      const res = await roles.actionRoleManagement();
+      setListRole(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -22,6 +19,5 @@ export default function useData() {
 
   return {
     DatalistRole: listRole,
-    DatalistTeacher: listTeacher,
   };
 }

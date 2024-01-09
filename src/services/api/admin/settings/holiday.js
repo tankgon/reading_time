@@ -1,9 +1,13 @@
 import axios from "../../axiosConfig";
 
-const actionHoliday = (body) => {
-  return axios.post(`/settings/holidayManagement`, body);
+const actionHoliday = () => {
+  return axios.get(`/holiday-management`);
+};
+const postHoliday = (body) => {
+  return axios.post(`/holiday-management`, body);
 };
 
 export default {
   actionHoliday,
+  postHoliday,
 };

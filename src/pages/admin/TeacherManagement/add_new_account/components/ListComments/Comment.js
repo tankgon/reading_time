@@ -1,7 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect } from "react";
-import Storage from "../../../../../../services/local";
+import Storage from "../../../../../../services/storage";
 
 function Todo({ todo, index, removeTodo }) {
   return (
@@ -24,7 +24,7 @@ function Todo({ todo, index, removeTodo }) {
 }
 
 function TodoForm({ addTodo }) {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(Storage.getDATADETAIL().Comment);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +75,7 @@ function Comment() {
 
   useEffect(() => {
     Storage.setCOMMENT({
-      comment: todos.join(";"),
+      comment: todos.join(", "),
     });
   }, [todos]);
 

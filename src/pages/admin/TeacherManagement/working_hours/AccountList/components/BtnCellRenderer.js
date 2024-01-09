@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 class BtnCellRenderer extends Component {
   constructor(props) {
     super(props);
@@ -19,17 +20,19 @@ class BtnCellRenderer extends Component {
           alignItems: "center",
         }}>
         <Grid item xs={12} lg={12}>
-          <Button
-            onClick={this.btnClickedHandler}
-            sx={{
-              backgroundColor: "#6495ED",
-              textAlign: "center",
-              color: "white",
-              textTransform: "capitalize",
-            }}
-            variant="contained">
-            <strong>edit</strong>
-          </Button>
+          <Link to="/teacher/workinghours/detailworking">
+            <Button
+              onClick={this.btnClickedHandler}
+              sx={{
+                backgroundColor: "#6495ED",
+                textAlign: "center",
+                color: "white",
+                textTransform: "capitalize",
+              }}
+              variant="contained">
+              <strong>edit</strong>
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     );

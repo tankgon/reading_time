@@ -7,15 +7,11 @@ import React, { useMemo, useState } from "react";
 //data
 import moment from "moment";
 import data from "../Data";
-const AccountListTable = ({ newRowData }) => {
+import BtnCellRenderer from "./BtnCellRenderer";
+const AccountListTable = () => {
   const { DatalistMenu: listMenu } = data();
   const gridStyle = useMemo(() => ({ height: "500px", width: "100%" }), []);
   const [columnDefs, setColumnDefs] = useState([
-    {
-      headerName: "No",
-      field: "Id",
-      maxWidth: 80,
-    },
     {
       field: "_Status",
       headerName: "Status",
@@ -27,21 +23,21 @@ const AccountListTable = ({ newRowData }) => {
       filter: "agTextColumnFilter",
     },
     {
-      field: "_Member",
+      field: "User_English_Name",
       headerName: "English wing Member",
       filter: "agTextColumnFilter",
     },
     { field: "Email", headerName: "E-mail" },
     {
-      field: "_User_Name",
+      field: "User_Name",
       headerName: "User Name (English Name)",
       filter: "agTextColumnFilter",
     },
-    {
-      field: "Phone",
-      headerName: "Mobile Phone",
-      filter: "agNumberColumnFilter",
-    },
+    // {
+    //   field: "Phone",
+    //   headerName: "Mobile Phone",
+    //   filter: "agNumberColumnFilter",
+    // },
     {
       field: "Registration_Date",
       headerName: "Registration Date",
@@ -56,11 +52,14 @@ const AccountListTable = ({ newRowData }) => {
       filter: "agDateColumnFilter",
       minWidth: 200,
     },
-    { headerName: "Edit" },
+    {
+      headerName: "Edit",
+      cellRenderer: BtnCellRenderer,
+    },
   ]);
 
   const formatDate = (date) => {
-    return moment(date).format("DD-MM-YYYY");
+    return moment(date).format("DD/MM/YYYY");
   };
   const defaultColDef = useMemo(() => {
     return {
@@ -75,11 +74,15 @@ const AccountListTable = ({ newRowData }) => {
     <div className="example-wrapper">
       <div style={gridStyle} className="ag-theme-quartz">
         <AgGridReact
-          rowData={newRowData.length != 0 ? newRowData : listMenu}
+          rowData={listMenu}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           suppressRowClickSelection={true}
           rowSelection={"multiple"}
+          // onCellClicked={(params) => {
+          //   console.log(params.data);
+          //   Storage.setDATADETAIL(params.data);
+          // }}
           paginationAutoPageSize={true}
           pagination={true}
         />

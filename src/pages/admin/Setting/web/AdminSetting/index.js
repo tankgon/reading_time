@@ -58,43 +58,52 @@ function AdminSetting() {
     setMain_Menu_PC(typeof value == "string" ? value.split(",") : value);
   };
 
+  console.log(mainmenupC);
+
   const Update = async () => {
     try {
-      await web.actionAdminSetting({
-        Action: "PUT",
-        Id: 2,
-        Main_Menu_PC: mainmenupC ? mainmenupC : listAdminSetting.Main_Menu_PC,
-        Main_Menu_Mobile: mainmenumobile
+      const res = await web.putAdminSetting({
+        Id: 1,
+        MainMenu_PC_Name: mainmenupC
+          ? mainmenupC
+          : listAdminSetting.MainMenu_PC_Name,
+        MainMenu_Mobile_Name: mainmenumobile
           ? mainmenumobile
-          : listAdminSetting.Main_Menu_Mobile,
-        Main_Page_Product: mainpageproduct
+          : listAdminSetting.MainMenu_Mobile_Name,
+        MainPage_Name: mainpageproduct
           ? mainpageproduct
-          : listAdminSetting.Main_Page_Product,
-        Account: account ? account : listAdminSetting.Account,
-        Client_Id: client_Id ? client_Id : listAdminSetting.Client_Id,
+          : listAdminSetting.MainPage_Name,
+        Paypal_Account: account ? account : listAdminSetting.Paypal_Account,
+        Paypal_Client_Id: client_Id
+          ? client_Id
+          : listAdminSetting.Paypal_Client_Id,
         Free_Trial_Product: freetrialproduct
           ? freetrialproduct
           : listAdminSetting.Free_Trial_Product,
         Max_Point_On_Month: maxpointonmonth
           ? maxpointonmonth
           : listAdminSetting.Max_Point_On_Month,
-        Publishable_Key: publishablekey
+        Stripe_Publishable_Key: publishablekey
           ? publishablekey
-          : listAdminSetting.Publishable_Key,
-        //dư 1 cai
-        Secret: secret ? secret : listAdminSetting.Secret,
-        Secret_Key: secretkey ? secretkey : listAdminSetting.Secret_Key,
-        WebHook_Url: webHookurl ? webHookurl : listAdminSetting.WebHook_Url,
-
+          : listAdminSetting.Stripe_Publishable_Key,
+        Paypal_Secret: secret ? secret : listAdminSetting.Paypal_Secret,
+        Stripe_Secret_Key: secretkey
+          ? secretkey
+          : listAdminSetting.Stripe_Secret_Key,
+        Stripe_Webhook_Url: webHookurl
+          ? webHookurl
+          : listAdminSetting.Stripe_Webhook_Url,
         Zoom_Api_Key: zoomapikey ? zoomapikey : listAdminSetting.Zoom_Api_Key,
-
         Zoom_Api_Secret: zoomapisecret
           ? zoomapisecret
           : listAdminSetting.Zoom_Api_Secret,
       });
-      toast.success(`Successful update!`);
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
     } catch (err) {
       console.log(err);
+      toast.error(`Unstable transmission line!`);
     }
   };
 

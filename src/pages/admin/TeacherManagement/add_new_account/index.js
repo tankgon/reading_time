@@ -9,11 +9,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import TimezoneSelect from "react-timezone-select";
+import { toast } from "react-toastify";
 import teachers from "../../../../services/api/admin/teachers";
 import Clound from "../../../../services/clound/index.js";
-import Storage from "../../../../services/local";
+import Storage from "../../../../services/storage";
 import DotText from "../../../components/DotText";
-import FilePickVideo from "../../../components/FilePickVideo";
+import FilePick from "../../../components/FilePick";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
 import TextBox from "../../../components/TextBox";
 import TextCheckBox from "../../../components/TextCheckBox";
@@ -45,7 +47,11 @@ function AddNewAccount() {
 
   const { DatalistCountry: listCountry } = data();
 
-  const [imageSrc, setImageSrc] = useState(null);
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+
+  const [imageSrc, setImageSrc] = useState(Storage.getDATADETAIL()?.Image);
   const [imageURL, setImageURL] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -58,45 +64,31 @@ function AddNewAccount() {
     }
   };
 
-  const [teacherName, setTeacherName] = useState();
-  const [nickname, setNickname] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [phone, setPhone] = useState();
-  const [gender, setGender] = useState();
+  const [teacherName, setTeacherName] = useState(
+    Storage.getDATADETAIL()?.Teacher_Name
+  );
+  const [nickname, setNickname] = useState(Storage.getDATADETAIL()?.Nick_Name);
+  const [email, setEmail] = useState(Storage.getDATADETAIL()?.Email);
+  const [password, setPassword] = useState(Storage.getDATADETAIL()?.Password);
+  // const [phone, setPhone] = useState(Storage.getDATADETAIL()?.);
+  const [gender, setGender] = useState(Storage.getDATADETAIL()?.Gender);
   const [birth, setBirth] = useState();
-  const [country, setCountry] = useState();
-  const [timezone, setTimezone] = useState();
-  const [contractType, setContractType] = useState();
-  const [contract, setContract] = useState();
+  const [country, setCountry] = useState(Storage.getDATADETAIL()?.Country);
+  // const [timezone, setTimezone] = useState(Storage.getDATADETAIL()?.);
+  const [contractType, setContractType] = useState(
+    Storage.getDATADETAIL()?.Contract_Type
+  );
+  const [contract, setContract] = useState(Storage.getDATADETAIL()?.Contract);
   const [startDate, setStartDate] = useState();
   const [resignationDay, setResignationDay] = useState();
-  const [career, setCareer] = useState();
-  const [using_The_Editor, setUsing_The_Editor] = useState();
+  const [career, setCareer] = useState(Storage.getDATADETAIL()?.Career);
+  const [using_The_Editor, setUsing_The_Editor] = useState(
+    Storage.getDATADETAIL()?.Description_Career
+  );
 
-  const [certificateFile, setCertificateFile] = useState([]);
-  const addCertificateFile = (newCertificate) => {
-    const newCertificateName = newCertificate.target.files[0];
-    if (!certificateFile.includes(newCertificateName)) {
-      setCertificateFile((prevCertificates) => [
-        ...prevCertificates,
-        newCertificateName,
-      ]);
-    }
-  };
-
-  const [certificate, setCertificate] = useState([]);
-  const addCertificate = (newCertificate) => {
-    const newCertificateName = newCertificate.target.files[0].name;
-    if (!certificate.includes(newCertificateName)) {
-      setCertificate((prevCertificates) => [
-        ...prevCertificates,
-        newCertificateName,
-      ]);
-    } else {
-      console.log(`Certificate "${newCertificateName}" already exists.`);
-    }
-  };
+  const [certificate, setCertificate] = useState(
+    Storage.getDATADETAIL()?.Certificate
+  );
 
   const [resume, setResume] = useState();
 
@@ -110,7 +102,7 @@ function AddNewAccount() {
   const { Employed, Resigned, Absence } = status;
   const selectedStatus = Object.keys(status).filter((key) => status[key]);
 
-  const [level, setLevel] = useState({});
+  const [level, setLevel] = useState({ Best: true, Good: true, New: true });
   const handleChange1 = (event) => {
     setLevel((e) => ({
       ...e,
@@ -118,7 +110,6 @@ function AddNewAccount() {
     }));
   };
   const { Best, Good, New } = level;
-  const selectedLevel = Object.keys(level).filter((key) => level[key]);
 
   const [specialfeature, setSpecialfeature] = useState({});
   const handleChange2 = (event) => {
@@ -128,9 +119,6 @@ function AddNewAccount() {
     }));
   };
   const { a, b, c } = specialfeature;
-  const selectedSpecialfeature = Object.keys(specialfeature).filter(
-    (key) => specialfeature[key]
-  );
 
   const [selfintroduction, setSelfintroduction] = useState();
 
@@ -142,11 +130,10 @@ function AddNewAccount() {
     }));
   };
   const { Lower, Higher, Middle } = recommendedstudent;
-  const selectedrecommendedstudent = Object.keys(recommendedstudent).filter(
-    (key) => recommendedstudent[key]
-  );
 
-  const [Recommendedlevel, setRecommendedlevel] = useState({});
+  const [Recommendedlevel, setRecommendedlevel] = useState(
+    Storage.getDATADETAIL()?.Recommended_Level
+  );
   const handleChange4 = (event) => {
     setRecommendedlevel((e) => ({
       ...e,
@@ -154,23 +141,22 @@ function AddNewAccount() {
     }));
   };
   const { Beginner, Basic, Intermediate, Advanced } = Recommendedlevel;
-  const selectedRecommendedlevel = Object.keys(Recommendedlevel).filter(
-    (key) => Recommendedlevel[key]
-  );
+
   const [video, setVideo] = useState();
 
   const CreateTeacher = async () => {
-    const certificateFileURLPromises = certificateFile.map(async (item) => {
-      return await Clound(item);
-    });
-    const certificateFileURLs = await Promise.all(certificateFileURLPromises);
-    const formattedUrls = certificateFileURLs.map((url) => `${url}`).join(";");
+    // const certificateFileURLPromises = certificateFile.map(async (item) => {
+    //   return await Clound(item);
+    // });
+    // const certificateFileURLs = await Promise.all(certificateFileURLPromises);
+    // const formattedUrls = certificateFileURLs.map((url) => `${url}`).join(";");
+
     const contractURL = await Clound(contract);
     const resumeURL = await Clound(resume);
     const videoURL = await Clound(video);
+    const imageCloundURL = await Clound(imageURL);
     try {
-      await teachers.actionTeacher({
-        Action: "POST",
+      await teachers.postTeacher({
         Teacher_Name: teacherName,
         Nick_Name: nickname,
         Email: email,
@@ -178,33 +164,35 @@ function AddNewAccount() {
         Gender: gender,
         Birth: birth,
         Country: country,
-        Timezone: "UTC-5",
+        Time_Zone: selectedTimezone?.label,
         Contract_Type: contractType,
         Contract: contractURL,
         Start_Date: startDate,
         Resignation_Day: resignationDay,
         Career: career,
-        Using_The_Editor: using_The_Editor,
-        Certificate: formattedUrls,
+        Description_Career: using_The_Editor,
+
+        Certificate: certificate,
+
         Resume: resumeURL,
-        Status: selectedStatus.join(";"),
-        Level: selectedLevel.join(";"),
-        Special_Feature: selectedSpecialfeature.join(";"),
+        Image: imageCloundURL,
+        Team_Name: "Team A",
+        Status: selectedStatus,
+        Level: "sd",
+        Special_Feature: "sd",
         Self_Introduction: selfintroduction,
-        Recommended_Student: selectedrecommendedstudent.join(";"),
-        Recommended_Level: selectedRecommendedlevel.join(";"),
+        Recommended_Student: "asd",
+        Recommended_Level: "asd",
         Character: character.character,
         Lesson_Style: lesson.lesson,
         Video: videoURL,
-
         Student_Review: student_review.student_review,
         Comment: comment.comment,
 
-        Phone: phone,
-        Image: "link_to_image",
-        Team: "Team A",
-        Working_Hours: "Monday-Friday, 9 AM - 5 PM",
+        // Phone: phone,
+        // Working_Hours: "Monday-Friday, 9 AM - 5 PM",
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
     }
@@ -307,7 +295,7 @@ function AddNewAccount() {
                     }
                     text="Password"
                   />
-                  <DotText
+                  {/* <DotText
                     classColor={"red"}
                     children={
                       <TextBox
@@ -317,7 +305,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Phone"
-                  />
+                  /> */}
                   <DotText
                     children={
                       <SelectBox
@@ -362,8 +350,8 @@ function AddNewAccount() {
                         onChange={(e) => setCountry(e.target.value)}
                         children={listCountry.map((item, index) => {
                           return (
-                            <MenuItem key={index} value={item.Name}>
-                              {item.Name}
+                            <MenuItem key={index} value={item.name}>
+                              {item.name}
                             </MenuItem>
                           );
                         })}
@@ -373,19 +361,9 @@ function AddNewAccount() {
                   />
                   <DotText
                     children={
-                      <SelectBox
-                        fullWidth={"fullWidth"}
-                        sx={{ m: " 8px 0" }}
-                        size={"small"}
-                        value={timezone}
-                        onChange={(e) => setTimezone(e.target.value)}
-                        children={genderA.map((item, index) => {
-                          return (
-                            <MenuItem key={index} value={item.value}>
-                              {item.title}
-                            </MenuItem>
-                          );
-                        })}
+                      <TimezoneSelect
+                        value={selectedTimezone}
+                        onChange={setSelectedTimezone}
                       />
                     }
                     text="Timezone"
@@ -402,7 +380,7 @@ function AddNewAccount() {
                   />
                   <DotText
                     children={
-                      <FilePickVideo
+                      <FilePick
                         inputProps={{ accept: "audio/*, .pdf" }}
                         onChange={(e) => setContract(e)}
                         value={contract}
@@ -452,49 +430,26 @@ function AddNewAccount() {
                   />
                   <Box sx={{ m: "20px 0" }}>
                     <TextareaComment
+                      value={using_The_Editor}
                       onChange={(e) => setUsing_The_Editor(e.target.value)}
                     />
                   </Box>
-                  <DotText
-                    itemButton={
-                      <ButtonUpLoadFile
-                        title={"File"}
-                        accept={".txt, .pdf"}
-                        id={"input1"}
-                        onChange={(e) => {
-                          addCertificateFile(e);
-                          addCertificate(e);
-                        }}
-                      />
-                    }
+                  {/* <DotText
                     children={
-                      <Grid container>
-                        {certificate.length > 0 ? (
-                          certificate.map((item, index) => (
-                            <Grid key={index} item xs={12} lg={12}>
-                              <TextBox
-                                disabled={true}
-                                value={item}
-                                size="small"
-                              />
-                            </Grid>
-                          ))
-                        ) : (
-                          <Grid item xs={12} lg={12}>
-                            <TextBox
-                              disabled={true}
-                              value={"thêm file"}
-                              size="small"
-                            />
-                          </Grid>
-                        )}
-                      </Grid>
+                      <Box sx={{ m: "20px 0" }}>
+                        <FilePick
+                          inputProps={{ accept: ".txt, .pdf" }}
+                          onChange={(e) => setCertificate(e)}
+                          value={certificate}
+                        />
+                      </Box>
                     }
                     text="Certificate"
-                  />
+                  /> */}
+
                   <DotText
                     children={
-                      <FilePickVideo
+                      <FilePick
                         inputProps={{ accept: "audio/*, .pdf" }}
                         onChange={(e) => setResume(e)}
                         value={resume}
@@ -604,6 +559,7 @@ function AddNewAccount() {
                     children={
                       <Box sx={{ m: "20px 0" }}>
                         <TextareaComment
+                          value={selfintroduction}
                           onChange={(e) => setSelfintroduction(e.target.value)}
                         />
                       </Box>
@@ -698,7 +654,7 @@ function AddNewAccount() {
 
                   <TextCheckBox
                     children={
-                      <FilePickVideo
+                      <FilePick
                         inputProps={{ accept: "video/*" }}
                         onChange={(e) => setVideo(e)}
                         value={video}
@@ -708,7 +664,7 @@ function AddNewAccount() {
                   />
 
                   <TextCheckBox children={<Todo />} text="Student Review" />
-                  <TextCheckBox children={<Comment />} text="Student Review" />
+                  <TextCheckBox children={<Comment />} text="Comment" />
                 </Grid>
 
                 <ButtonComponent

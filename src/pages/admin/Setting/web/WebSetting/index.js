@@ -27,13 +27,14 @@ function SellQuickly() {
 
   const Update = async () => {
     try {
-      await web.actionWebSetting({
-        Action: "PUT",
+      const res = await web.putWebSetting({
         Id: 1,
         Title: title ? title : listWebSetting.Title,
         Tagline: tagline ? tagline : listWebSetting.Tagline,
       });
-      toast.success(`Successful update!`);
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
     } catch (err) {
       console.log(err);
     }
@@ -41,13 +42,16 @@ function SellQuickly() {
 
   const Delete = async () => {
     try {
-      await web.actionWebSetting({
-        Action: "DELETE",
+      const res = await web.putWebSetting({
         Id: 1,
+        Title: null,
+        Tagline: null,
       });
-      setTitle("");
-      setTagline("");
-      toast.success(`Successful update!`);
+      if (res.statusCode == 200) {
+        setTitle("");
+        setTagline("");
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
     } catch (err) {
       console.log(err);
     }

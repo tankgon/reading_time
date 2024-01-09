@@ -12,14 +12,15 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res = await users.actionUser({ Action: "GET" });
-      const res2 = await roles.actionCountry({ Action: "GET" });
-      setListMenu(res);
+      const res = await users.actionUser();
+      const res2 = await roles.actionCountry();
+      setListMenu(res.data);
       setListCountry(res2);
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(listMenu);
 
   return {
     DatalistMenu: listMenu,

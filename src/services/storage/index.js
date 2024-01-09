@@ -22,6 +22,9 @@ const LESSON = "lesson";
 const STUDENTREVIEW = "student_review";
 const COMMENT = "comment";
 
+const DATADETAIL = "datadetail";
+
+
 const Storage = {
   setCHARACTER: (data) => storage.set(CHARACTER, data),
   getCHARACTER: () => storage.get(CHARACTER),
@@ -38,6 +41,10 @@ const Storage = {
   setCOMMENT: (data) => storage.set(COMMENT, data),
   getCOMMENT: () => storage.get(COMMENT),
   removeCOMMENT: () => storage.remove(COMMENT),
+
+  setDATADETAIL: (data) => storage.set(DATADETAIL, data),
+  getDATADETAIL: () => storage.get(DATADETAIL),
+  removeDATADETAIL: () => storage.remove(DATADETAIL),
 };
 
 export default Storage;

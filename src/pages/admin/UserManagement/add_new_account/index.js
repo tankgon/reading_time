@@ -10,6 +10,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { MuiChipsInput } from "mui-chips-input";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { toast } from "react-toastify";
 import DotText from "../../../components/DotText";
 import OverlayCheckbox from "../../../components/OverlayCheckbox";
 import TextBox from "../../../components/TextBox";
@@ -23,6 +24,7 @@ import Course from "./AddNewAccountList/Data/Course";
 //data
 import users from "../../../../services/api/admin/users";
 import Clound from "../../../../services/clound";
+import Storage from "../../../../services/storage";
 import data from "../add_new_account/AddNewAccountList/Data";
 const genderA = [
   {
@@ -38,17 +40,21 @@ const genderA = [
 function AddNewAccount() {
   const { DatalistCountry: listCountry } = data();
 
-  const [userName, setUserName] = useState();
-  const [userEngLishName, setUserEngLishName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [userName, setUserName] = useState(Storage.getDATADETAIL()?.User_Name);
+  const [userEngLishName, setUserEngLishName] = useState(
+    Storage.getDATADETAIL()?.User_English_Name
+  );
+  const [email, setEmail] = useState(Storage.getDATADETAIL()?.Email);
+  const [password, setPassword] = useState(Storage.getDATADETAIL()?.Password);
   const [phone, setPhone] = useState();
-  const [gender, setGender] = useState();
+  const [gender, setGender] = useState(Storage.getDATADETAIL()?.Gender);
   const [birth, setBirth] = useState();
-  const [country, setCountry] = useState();
-  const [using_The_Editor, setUsing_The_Editor] = useState();
+  const [country, setCountry] = useState(Storage.getDATADETAIL()?.Country);
+  const [using_The_Editor, setUsing_The_Editor] = useState(
+    Storage.getDATADETAIL()?.Description
+  );
 
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState(Storage.getDATADETAIL()?.Picture);
   const [imageURL, setImageURL] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -73,7 +79,7 @@ function AddNewAccount() {
     (key) => admission[key]
   );
   const [chips, setChips] = useState([]);
-  console.log(chips.join(";"));
+  console.log(chips.join(", "));
 
   const [englishwing, setEnglishwing] = useState({});
   const handleChange1 = (event) => {
@@ -87,32 +93,65 @@ function AddNewAccount() {
     (key) => englishwing[key]
   );
 
-  const [referral, setReferral] = useState();
-  const [signup, setSignup] = useState();
+  const [referral, setReferral] = useState(
+    Storage.getDATADETAIL()?.Referal_Code
+  );
+  const [signup, setSignup] = useState(Storage.getDATADETAIL()?.Signup_Path);
 
   const CreateUser = async () => {
     const imageCloundURL = await Clound(imageURL);
     try {
-      await users.actionUser({
-        Action: "POST",
-        _User_English_Name: userEngLishName,
-        _User_Name: userName,
+      await users.postUser({
+        User_English_Name: userEngLishName,
+        User_Name: userName,
         Email: email,
         Password: password,
-        _Member: selectedEnglishwing.join(";"),
-        Country: country,
         Birth: birth,
         Gender: gender,
-        Phone: phone,
-        _Description: using_The_Editor,
-        _Image: imageCloundURL,
-        Admission: selectedAdmission.join(";"),
-        Tags: chips.join(";"),
-        Referral_Code: referral,
-        Signup_path: signup,
+        Country: country,
+        Description: using_The_Editor,
+        Picture: imageCloundURL,
+        Admission: selectedAdmission.join(", "),
+        List_of_Tags: chips.join(", "),
+        English_Wing_Member: selectedEnglishwing.join(", "),
+        Referal_Code: referral,
+        Signup_Path: signup,
+
+        // Phone: phone,
       });
+      toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
+      toast.success(`Update failed!`);
+    }
+  };
+
+  const UpdateUser = async () => {
+    const imageCloundURL = await Clound(imageURL);
+    try {
+      await users.putUser({
+        _id: Storage.getDATADETAIL()._id,
+        User_English_Name: userEngLishName,
+        User_Name: userName,
+        Email: email,
+        Password: password,
+        Birth: birth,
+        Gender: gender,
+        Country: country,
+        Description: using_The_Editor,
+        Picture: imageCloundURL,
+        Admission: selectedAdmission.join(", "),
+        List_of_Tags: chips.join(", "),
+        English_Wing_Member: selectedEnglishwing.join(", "),
+        Referal_Code: referral,
+        Signup_Path: signup,
+
+        // Phone: phone,
+      });
+      toast.success(`Successful update!`);
+    } catch (err) {
+      console.log(err);
+      toast.success(`Update failed!`);
     }
   };
 
@@ -196,7 +235,7 @@ function AddNewAccount() {
                     }
                     text="Password"
                   />
-                  <DotText
+                  {/* <DotText
                     classColor={"red"}
                     children={
                       <TextBox
@@ -206,7 +245,7 @@ function AddNewAccount() {
                       />
                     }
                     text="Phone"
-                  />
+                  /> */}
                   <DotText
                     children={
                       <SelectBox
@@ -251,8 +290,8 @@ function AddNewAccount() {
                         onChange={(e) => setCountry(e.target.value)}
                         children={listCountry.map((item, index) => {
                           return (
-                            <MenuItem key={index} value={item.Name}>
-                              {item.Name}
+                            <MenuItem key={index} value={item.name}>
+                              {item.name}
                             </MenuItem>
                           );
                         })}
@@ -263,6 +302,7 @@ function AddNewAccount() {
                   <Grid item xs={12} lg={8}>
                     <Box sx={{ m: "20px 0" }}>
                       <TextareaComment
+                        value={using_The_Editor}
                         onChange={(e) => setUsing_The_Editor(e.target.value)}
                       />
                     </Box>
@@ -447,6 +487,14 @@ function AddNewAccount() {
                         onClick={CreateUser}
                         width={"100%"}
                         title={"Create User"}
+                      />
+                    </Grid>
+
+                    <Grid item xs={6} lg={2}>
+                      <ButtonComponent
+                        onClick={UpdateUser}
+                        width={"100%"}
+                        title={"Update User"}
                       />
                     </Grid>
 

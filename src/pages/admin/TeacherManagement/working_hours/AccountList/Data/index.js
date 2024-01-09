@@ -9,7 +9,7 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res2 = await teachers.actionWorkingHours({ Action: "GET" });
+      const res2 = await teachers.actionWorkingHours();
       setListMenu(res2);
     } catch (err) {
       console.log(err);
@@ -17,6 +17,6 @@ export default function useData() {
   };
 
   return {
-    DatalistMenu: listMenu,
+    DatalistMenu: listMenu ? [1, 2] : [1, 2],
   };
 }

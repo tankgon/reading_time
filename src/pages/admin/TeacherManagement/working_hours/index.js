@@ -74,15 +74,6 @@ function AccountList() {
           </Box>
 
           <AccountListTable newRowData={search == "" ? [] : listMenu} />
-
-          {/* <Box sx={{ margin: "40px 0" }}>
-            <Pagination
-              count={10}
-              showFirstButton
-              showLastButton
-              sx={{ justifyContent: "center", display: "flex" }}
-            />
-          </Box> */}
         </Grid>
       </Grid>
     </MDBox>

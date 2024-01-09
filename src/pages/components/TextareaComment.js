@@ -13,7 +13,7 @@ import Textarea from "@mui/joy/Textarea";
 import * as React from "react";
 import ButtonComponent from "./buttonComponent";
 
-export default function TextareaComment({ onChange }) {
+export default function TextareaComment({ onChange, value }) {
   const [italic, setItalic] = React.useState(false);
   const [fontWeight, setFontWeight] = React.useState("normal");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,6 +21,7 @@ export default function TextareaComment({ onChange }) {
     <FormControl>
       <FormLabel></FormLabel>
       <Textarea
+        value={value}
         onChange={onChange}
         placeholder="Type something here…"
         minRows={3}

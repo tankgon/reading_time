@@ -1,7 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useEffect } from "react";
-import Storage from "../../../../../../services/local";
+import Storage from "../../../../../../services/storage";
 
 function Todo({ todo, index, removeTodo }) {
   return (
@@ -75,7 +75,7 @@ function StudentReview() {
 
   useEffect(() => {
     Storage.setSTUDENTREVIEW({
-      student_review: todos.join(";"),
+      student_review: todos.join(", "),
     });
   }, [todos]);
 

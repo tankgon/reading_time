@@ -13,9 +13,7 @@ const ExportExcelButton = ({ data, filename }) => {
     <ButtonComponent
       onClick={handleDownload}
       title={"Excel Export"}
-      pading={"10px 0"}
-      margin={"8px 12px"}
-      width={"90%"}
+      pading={"10px"}
     />
   );
 };

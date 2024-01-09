@@ -10,7 +10,7 @@ export default function useData() {
 
   const getList = async () => {
     try {
-      const res2 = await roles.actionCountry({ Action: "GET" });
+      const res2 = await roles.actionCountry();
       setListCountry(res2);
     } catch (err) {
       console.log(err);

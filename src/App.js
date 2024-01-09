@@ -3,8 +3,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //Layout
 import AdminLayout from "./layouts/AdminLayout";
-//Setting
 import TeacherLayout from "./layouts/TeacherLayout";
+//admin
 import AssignmentFreeTrial from "./pages/admin/AssignmentManagement/Assignment/Free-Trial";
 import AssignmentRegular from "./pages/admin/AssignmentManagement/Assignment/Regular";
 import MonthlyDashboard from "./pages/admin/AssignmentManagement/Dashboard/MonthlyDashboard";
@@ -39,6 +39,7 @@ import Payment from "./pages/admin/TeacherManagement/payment";
 import PointPenalty from "./pages/admin/TeacherManagement/point_penalty";
 import TeacherVacationAndResignation from "./pages/admin/TeacherManagement/vacation_and_resignation";
 import TeacherWorkingHours from "./pages/admin/TeacherManagement/working_hours";
+import DetailWorking from "./pages/admin/TeacherManagement/working_hours/AccountList/DetailWorking";
 import UserAccountList from "./pages/admin/UserManagement/account_list";
 import UserAddNewAccount from "./pages/admin/UserManagement/add_new_account";
 import Banner from "./pages/admin/WebsiteManagement/Banner";
@@ -51,6 +52,12 @@ import Coupon from "./pages/admin/WebsiteManagement/Coupon";
 
 //authen
 import SignIn from "./pages/authentication/signin";
+//teacher
+import AssignmentStatus from "./pages/teacher/Assignment Status";
+import ClassFeedbackTeacher from "./pages/teacher/ClassFeedback";
+import ClassManagement from "./pages/teacher/ClassManagement";
+import TeacherDashboard from "./pages/teacher/Dashboard";
+import MyPage from "./pages/teacher/Mypage";
 
 const admin = [
   {
@@ -124,6 +131,10 @@ const admin = [
   {
     router: "/teacher/workinghours",
     content: <TeacherWorkingHours />,
+  },
+  {
+    router: "/teacher/workinghours/detailworking",
+    content: <DetailWorking />,
   },
   {
     router: "/teacher/vacationandresignation",
@@ -227,6 +238,28 @@ const admin = [
   },
 ];
 
+const teacher = [
+  {
+    router: "dashboard",
+    content: <TeacherDashboard />,
+  },
+  {
+    router: "assignment",
+    content: <AssignmentStatus />,
+  },
+  {
+    router: "classmanagement",
+    content: <ClassManagement />,
+  },
+  {
+    router: "classfeedbackteacher",
+    content: <ClassFeedbackTeacher />,
+  },
+  {
+    router: "mypage",
+    content: <MyPage />,
+  },
+];
 
 function App() {
   return (
@@ -246,7 +279,17 @@ function App() {
               );
             })}
           </Route>
-          <Route path="" element={<TeacherLayout />}></Route>
+          <Route path="" element={<TeacherLayout />}>
+            {teacher.map((item) => {
+              return (
+                <Route
+                  key={item.router}
+                  path={item.router}
+                  element={item.content}
+                />
+              );
+            })}
+          </Route>
         </Routes>
       </div>
     </Router>

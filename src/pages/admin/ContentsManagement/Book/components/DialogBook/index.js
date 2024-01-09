@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import React, { useState } from "react";
-import FilePickVideo from "../../../../../components/FilePickVideo";
+import FilePick from "../../../../../components/FilePick";
 import MinHeightTextarea from "../../../../../components/MinHeightTextarea";
 import TextBox from "../../../../../components/TextBox";
 import TextFilter from "../../../../../components/TextFilter";
@@ -206,7 +206,7 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <FilePickVideo
+                <FilePick
                   inputProps={{ accept: "image/*" }}
                   onChange={(e) => setImageCover(e)}
                   value={imageCover}
@@ -217,7 +217,7 @@ export default function DialogBook() {
 
             <TextFilter
               children={
-                <FilePickVideo
+                <FilePick
                   inputProps={{ accept: "audio/*, .pdf" }}
                   onChange={(e) => setAttachments(e)}
                   value={attachments}
