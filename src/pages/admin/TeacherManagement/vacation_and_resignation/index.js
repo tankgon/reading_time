@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import AccountListTable from "./AccountList/Data/AccountListTable";
+import AccountListTable from "./Data/AccountListTable";
 // import TextForm from "./components/TextForm";
 import ButtonComponent from "../../../components/buttonComponent";
 

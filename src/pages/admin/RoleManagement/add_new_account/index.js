@@ -18,7 +18,7 @@ import ButtonUpLoadFile from "../../../components/buttonUpLoadFile";
 import { toast } from "react-toastify";
 import roles from "../../../../services/api/admin/roles";
 import Clound from "../../../../services/clound";
-import AutocompleteComponent from "../../../components/AutocompleteComponent";
+import Storage from "../../../../services/storage";
 import SelectBox from "../../../components/selectsBox";
 import data from "./Data";
 
@@ -33,31 +33,36 @@ const genderA = [
   },
 ];
 
+const listAuthority = [
+  { title: "Teacher" },
+  { title: "Team Leader" },
+  { title: "CS" },
+  { title: "User" },
+];
+
 function AddNewAccount() {
-  const {
-    DatalistTeacher: listTeacher,
-    DatalistCountry: listCountry,
-    DatalistAuthority: listAuthority,
-  } = data();
-  const [listDetail, setListDetail] = useState();
+  const { DatalistTeacher: listTeacher, DatalistCountry: listCountry } = data();
 
-  // console.log(listDetail);
+  const [name, setName] = useState(Storage.getDATADETAIL()?._Name);
+  const [nickname, setNickname] = useState(Storage.getDATADETAIL()?.Nickname);
+  const [email, setEmail] = useState(Storage.getDATADETAIL()?.Email);
+  const [password, setPassword] = useState(Storage.getDATADETAIL()?.Password);
+  const [gender, setGender] = useState(Storage.getDATADETAIL()?.Gender);
+  const [birth, setBirth] = useState(dayjs(Storage.getDATADETAIL()?.Birth));
+  const [country, setCountry] = useState(Storage.getDATADETAIL()?.Country);
+  const [type, setType] = useState(Storage.getDATADETAIL()?.Contract_Type);
+  const [contract, setContract] = useState(Storage.getDATADETAIL()?._Contract);
+  const [start, setStart] = useState(dayjs(Storage.getDATADETAIL()?.createdAt));
+  const [resignation, setResignation] = useState(
+    dayjs(Storage.getDATADETAIL()?.createdAt)
+  );
+  const [authority, setAuthority] = useState(
+    Storage.getDATADETAIL()?.Authority_Type
+  );
 
-  const [name, setName] = useState();
-  const [nickname, setNickname] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [gender, setGender] = useState();
-  const [birth, setBirth] = useState();
-  const [country, setCountry] = useState();
-  const [type, setType] = useState();
-  const [contract, setContract] = useState();
-  const [start, setStart] = useState();
-  const [resignation, setResignation] = useState();
-  const [authority, setAuthority] = useState();
-
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState(Storage.getDATADETAIL()?._Image);
   const [imageURL, setImageURL] = useState(null);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -69,37 +74,11 @@ function AddNewAccount() {
     }
   };
 
-  console.log(imageURL);
-
-  const Detail = async (idName) => {
-    try {
-      const res = await roles.actionRoleManagement({
-        Action: "TEACHER",
-        _Name: idName,
-      });
-      setListDetail(res);
-      setNickname(res[0].Nick_Name);
-      setEmail(res[0].Email);
-      setPassword(res[0].Password);
-      setGender(res[0].Gender);
-      setBirth(dayjs(res[0].Birth));
-      setCountry(res[0].Country);
-      setType(res[0].Contract_Type);
-      setContract(res[0].Contract);
-      setStart(dayjs(res[0].Start_Date));
-      setResignation(dayjs(res[0].Registration_Date));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  console.log(name);
-
   const Approve = async () => {
     const contractURL = await Clound(contract);
     const imageCloundURL = await Clound(imageURL);
     try {
-      await roles.postRoleManagement({
+      const res = await roles.postRoleManagement({
         _Name: name,
         Nickname: nickname,
         Email: email,
@@ -109,10 +88,38 @@ function AddNewAccount() {
         Country: country,
         Contract_Type: type,
         _Contract: contractURL,
-        Authority_Type: "authority",
+        Authority_Type: authority,
         _Image: imageCloundURL,
       });
-      toast.success(`Successful update!`);
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const Update = async () => {
+    const contractURL = await Clound(contract);
+    const imageCloundURL = await Clound(imageURL);
+    try {
+      const res = await roles.putRoleManagement({
+        _id: Storage.getDATADETAIL()?._id,
+        _Name: name,
+        Nickname: nickname,
+        Email: email,
+        Password: password,
+        Gender: gender,
+        Birth: dayjs(birth.$d).format("YYYY-MM-DD"),
+        Country: country,
+        Contract_Type: type,
+        _Contract: contractURL,
+        Authority_Type: authority,
+        _Image: imageCloundURL,
+      });
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
     } catch (err) {
       console.log(err);
     }
@@ -175,16 +182,12 @@ function AddNewAccount() {
                 <strong>GENERAL</strong>
                 <DotText
                   children={
-                    <AutocompleteComponent
-                      sx={{ p: "8px 0" }}
-                      size={"small"}
-                      onChange={(event, value) => {
-                        Detail(value);
-                        setName(value);
-                      }}
-                      optionSelect={listTeacher.map(
-                        (option) => option.Teacher_Name
-                      )}
+                    <TextField
+                      sx={{ m: "8px 0" }}
+                      fullWidth
+                      size="small"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   }
                   text="Name"
@@ -204,6 +207,7 @@ function AddNewAccount() {
                   // itemButton={<ButtonComponent title={"Check"} />}
                   children={
                     <TextField
+                      sx={{ m: "8px 0" }}
                       fullWidth
                       size="small"
                       value={email}
@@ -227,7 +231,6 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <SelectBox
-                      sx={{ m: "8px 0" }}
                       fullWidth={"fullWidth"}
                       size={"small"}
                       value={gender}
@@ -251,6 +254,7 @@ function AddNewAccount() {
                           value={birth}
                           onChange={(day) => setBirth(day)}
                           format="DD-MM-YYYY"
+                          fullWidth
                         />
                       </DemoContainer>
                     </LocalizationProvider>
@@ -279,6 +283,7 @@ function AddNewAccount() {
                 <DotText
                   children={
                     <TextField
+                      sx={{ m: "8px 0" }}
                       fullWidth
                       size="small"
                       value={type}
@@ -335,8 +340,8 @@ function AddNewAccount() {
                       onChange={(e) => setAuthority(e.target.value)}
                       children={listAuthority.map((item, index) => {
                         return (
-                          <MenuItem key={index} value={item.Name}>
-                            {item.Name}
+                          <MenuItem key={index} value={item.title}>
+                            {item.title}
                           </MenuItem>
                         );
                       })}
@@ -344,11 +349,14 @@ function AddNewAccount() {
                   }
                   text="Authority Type"
                 />
-                <ButtonComponent
-                  onClick={Approve}
-                  title={"Approve"}
-                  pading={"16px 52px"}
-                />
+                <Box margin={"20px 0"}>
+                  <ButtonComponent onClick={Approve} title={"Approve"} />
+                  <ButtonComponent
+                    onClick={Update}
+                    title={"Update"}
+                    marginLeft={"20px"}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </Grid>

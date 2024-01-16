@@ -2,7 +2,7 @@ import React from "react";
 import * as XLSX from "xlsx";
 import ButtonComponent from "./buttonComponent";
 
-const ExportExcelButton = ({ data, filename }) => {
+const ExportExcelButton = ({ data, filename, fullWidth, margin }) => {
   const handleDownload = () => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
@@ -11,6 +11,8 @@ const ExportExcelButton = ({ data, filename }) => {
   };
   return (
     <ButtonComponent
+      margin={margin}
+      fullWidth={fullWidth}
       onClick={handleDownload}
       title={"Excel Export"}
       pading={"10px"}

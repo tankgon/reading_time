@@ -3,7 +3,7 @@
 import "@ag-grid-community/styles/ag-grid.css";
 import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import BtnCellRenderer from "./BtnCellRenderer";
 //data
 import moment from "moment";
@@ -35,11 +35,6 @@ const AccountListTable = () => {
     {
       headerName: "Management",
       cellRenderer: BtnCellRenderer,
-      cellRendererParams: (params) => {
-        return {
-          rowData: params.data,
-        };
-      },
     },
   ]);
 
@@ -55,17 +50,14 @@ const AccountListTable = () => {
       floatingFilter: true,
     };
   }, []);
-  // console.log(listRole);
+  console.log(listRole);
   return (
     <div style={gridStyle} className="ag-theme-quartz">
       <AgGridReact
-        rowDatas={listRole}
+        rowData={listRole}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         suppressRowClickSelection={true}
-        onCellClicked={(params) => {
-          console.log(params.data);
-        }}
         rowSelection={"multiple"}
         paginationAutoPageSize={true}
         pagination={true}

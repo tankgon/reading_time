@@ -2,11 +2,6 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import React from "react";
 
-const CustomButton = styled(Button)`
-  &:hover {
-    background-color: #eb5f9b;
-  }
-`;
 function ButtonComponent({
   title,
   pading,
@@ -20,6 +15,12 @@ function ButtonComponent({
   fullWidth,
   type,
 }) {
+  const CustomButton = styled(Button)`
+    &:hover {
+      background-color: #eb5f9b;
+    }
+  `;
+
   return (
     <CustomButton
       type={type}

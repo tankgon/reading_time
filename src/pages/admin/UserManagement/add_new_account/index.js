@@ -7,6 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import dayjs from "dayjs";
 import { MuiChipsInput } from "mui-chips-input";
 import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -47,7 +48,7 @@ function AddNewAccount() {
   const [password, setPassword] = useState(Storage.getDATADETAIL()?.Password);
   const [phone, setPhone] = useState();
   const [gender, setGender] = useState(Storage.getDATADETAIL()?.Gender);
-  const [birth, setBirth] = useState();
+  const [birth, setBirth] = useState(dayjs(Storage.getDATADETAIL()?.Birth));
   const [country, setCountry] = useState(Storage.getDATADETAIL()?.Country);
   const [using_The_Editor, setUsing_The_Editor] = useState(
     Storage.getDATADETAIL()?.Description
@@ -77,8 +78,8 @@ function AddNewAccount() {
   const selectedAdmission = Object.keys(admission).filter(
     (key) => admission[key]
   );
-  const [chips, setChips] = useState([]);
-  console.log(chips.join(", "));
+
+  const [chips, setChips] = useState(Storage.getDATADETAIL()?.List_of_Tags);
 
   const [englishwing, setEnglishwing] = useState({});
   const handleChange1 = (event) => {
@@ -111,7 +112,7 @@ function AddNewAccount() {
         Description: using_The_Editor,
         Picture: imageCloundURL,
         Admission: selectedAdmission.join(", "),
-        List_of_Tags: chips.join(", "),
+        List_of_Tags: chips,
         English_Wing_Member: selectedEnglishwing.join(", "),
         Referal_Code: referral,
         Signup_Path: signup,
@@ -140,7 +141,7 @@ function AddNewAccount() {
         Description: using_The_Editor,
         Picture: imageCloundURL,
         Admission: selectedAdmission.join(", "),
-        List_of_Tags: chips.join(", "),
+        List_of_Tags: chips,
         English_Wing_Member: selectedEnglishwing.join(", "),
         Referal_Code: referral,
         Signup_Path: signup,
@@ -164,17 +165,7 @@ function AddNewAccount() {
         }}>
         <Grid item xs={12} lg={12}>
           <Grid container spacing={4}>
-            <Grid item xs={12} lg={3} sx={{ textAlign: "center" }}>
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  p: "20px",
-                  mb: "20px",
-                  color: "#7F7F7F",
-                }}>
-                <strong>Add New User</strong>
-              </Box>
-            </Grid>
+            <Grid item xs={12} lg={3} sx={{ textAlign: "center" }}></Grid>
 
             <Grid item xs={12} lg={9}>
               <Grid container spacing={4}>
@@ -184,6 +175,7 @@ function AddNewAccount() {
                     classColor={"red"}
                     children={
                       <TextField
+                        sx={{ m: " 4px 0" }}
                         fullWidth
                         size="small"
                         id="outlined-basic"
@@ -199,6 +191,7 @@ function AddNewAccount() {
                     children={
                       <TextField
                         fullWidth
+                        sx={{ m: " 4px 0" }}
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
@@ -213,6 +206,7 @@ function AddNewAccount() {
                     // itemButton={<ButtonComponent title={"Check"} />}
                     children={
                       <TextField
+                        sx={{ m: " 4px 0" }}
                         fullWidth
                         size="small"
                         id="outlined-basic"
@@ -228,6 +222,7 @@ function AddNewAccount() {
                     itemButton={<ButtonComponent title={"Reset"} />}
                     children={
                       <TextField
+                        sx={{ m: " 4px 0" }}
                         fullWidth
                         size="small"
                         id="outlined-basic"
@@ -254,7 +249,6 @@ function AddNewAccount() {
                     children={
                       <SelectBox
                         fullWidth={"fullWidth"}
-                        sx={{ m: " 8px 0" }}
                         size={"small"}
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}

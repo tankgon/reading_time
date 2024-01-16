@@ -13,7 +13,7 @@ const assignment = [];
 const classmanagement = [
   {
     title: "Regular Class",
-    url: "/classmanagement/classregular",
+    url: "classmanagement/classregular",
   },
   {
     title: "Free-Trial Class",
@@ -26,15 +26,15 @@ const classfeedbackteacher = [];
 const mypage = [
   {
     title: "My Info",
-    url: "/mypage/accountlist",
+    url: "mypage/myinfo",
   },
   {
     title: "Vacation and Resignation Management",
-    url: "/mypage/vacationandresignation",
+    url: "mypage/vacationandresignation",
   },
   {
     title: "Point, Penalty Management",
-    url: "/mypage/pointpenalty",
+    url: "mypage/pointpenalty",
   },
   {
     title: "Status",
@@ -55,7 +55,8 @@ function Nav() {
     if (result == "dashboard") setPathNameState(dashboard);
     if (result == "assignment") setPathNameState(assignment);
     if (result == "classmanagement") setPathNameState(classmanagement);
-    if (result == "classfeedbackteacher") setPathNameState(classfeedbackteacher);
+    if (result == "classfeedbackteacher")
+      setPathNameState(classfeedbackteacher);
     if (result == "mypage") setPathNameState(mypage);
   }, [location]);
 

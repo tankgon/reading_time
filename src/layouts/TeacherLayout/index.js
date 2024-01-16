@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Nav from "./components/Header/nav";
 import Logo from "./components/Logo";
 
-function AdminLayout() {
+function TeamLeadLayout() {
   return (
     <Box sx={{ fontSize: "16px", fontFamily: "Calibri" }}>
       <div className="hidden lg:block">
@@ -18,4 +18,4 @@ function AdminLayout() {
   );
 }
 
-export default AdminLayout;
+export default TeamLeadLayout;

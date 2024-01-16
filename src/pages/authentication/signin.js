@@ -14,16 +14,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Logo from "../../layouts/AdminLayout/components/Logo";
 //data
+import { useCookies } from "react-cookie";
 import auth from "../../services/api/auth";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [cookies, setCookie] = useCookies(["user"]);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
+
     try {
       setLoading(true);
       const res = await auth.actionAuth({
@@ -32,6 +37,13 @@ export default function SignIn() {
       });
       if (res.statusCode == 200) {
         toast.success(`Successful login!`);
+        // if (rememberMe) {
+        //   setCookie(
+        //     "user",
+        //     { Email: data.get("email"), Password: data.get("password") },
+        //     { path: "/setting/webSetting" }
+        //   );
+        // }
         switch (res.data.userRole) {
           case "admin":
             navigate("/setting/webSetting");
@@ -66,7 +78,7 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: "16vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -101,6 +113,7 @@ export default function SignIn() {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
+              onChange={() => setRememberMe(!rememberMe)}
             />
             <Button
               type="submit"
@@ -111,7 +124,7 @@ export default function SignIn() {
                 mb: 2,
                 background: "#f4a5c7",
                 "&:hover": {
-                  background: "#ff66a2", // Đặt màu hồng khi hover
+                  background: "#ff66a2",
                 },
               }}>
               {loading ? (

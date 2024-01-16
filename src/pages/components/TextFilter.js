@@ -13,7 +13,7 @@ const TextFilter = ({ text, children, itemButton }) => {
       <Grid item xs={12} lg={3}>
         <div style={{ color: "#7F7F7F" }}>{text}</div>
       </Grid>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={9} >
         {children}
       </Grid>
     </Grid>

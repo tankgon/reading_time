@@ -7,13 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 import ButtonComponent from "../../../../pages/components/buttonComponent";
 import NavItem from "./NavItem";
 
-import DraftsIcon from "@mui/icons-material/Drafts";
 import Divider from "@mui/material/Divider";
 import ListSubheader from "@mui/material/ListSubheader";
 import { styled } from "@mui/material/styles";
 import Logo from "../Logo";
-
-import ListNav from "../ListNav";
 
 const Item = styled("div")(({ theme }) => ({
   backgroundColor: "#50456a",
@@ -30,191 +27,6 @@ const Item = styled("div")(({ theme }) => ({
   paddingBottom: "8px",
   borderRadius: "8px 8px 0 0", // Thêm dòng này để bo góc bên trên
 }));
-
-const listRouter = [
-  {
-    title: "Settings",
-    url: "/setting/webSetting",
-    list: [
-      {
-        title: "Web setting Management",
-        url: "/setting/webSetting",
-      },
-      {
-        title: "Terms Management",
-        url: "/setting/terms",
-      },
-      {
-        title: "Holiday Management",
-        url: "/setting/holiday",
-      },
-      {
-        title: "Menu Permission Management",
-        url: "/setting/menu",
-      },
-    ],
-  },
-  {
-    title: "Role Management",
-    url: "/role/accountlist",
-    list: [
-      {
-        title: "Account List",
-        url: "/role/accountlist",
-      },
-      {
-        title: "Add New Account",
-        url: "/role/addnewaccount",
-      },
-    ],
-  },
-  {
-    title: "User Management",
-    url: "/user/accountlist",
-    list: [
-      {
-        title: "Account List",
-        url: "/user/accountlist",
-      },
-      {
-        title: "Add New Account",
-        url: "/user/addnewaccount",
-      },
-    ],
-  },
-  {
-    title: "Teacher Management",
-    url: "/teacher/accountlist",
-    list: [
-      {
-        title: "Account List",
-        url: "/teacher/accountlist",
-      },
-      {
-        title: "Add New Account",
-        url: "/teacher/addnewaccount",
-      },
-      {
-        title: "Working Hours",
-        url: "/teacher/workinghours",
-      },
-      {
-        title: "Vacation and Resignation Management",
-        url: "/teacher/vacationandresignation",
-      },
-      {
-        title: "Point, Penalty Management",
-        url: "/teacher/pointpenalty",
-      },
-      {
-        title: "Class Feedback",
-        url: "/teacher/classfeedback",
-      },
-      {
-        title: "Payment",
-        url: "/teacher/payment",
-      },
-    ],
-  },
-  {
-    title: "Contents Management",
-    url: "/contents/book",
-    list: [
-      {
-        title: "Book",
-        url: "/contents/book",
-      },
-      {
-        title: "Curriculum",
-        url: "/contents/curriculum",
-      },
-    ],
-  },
-  {
-    title: "Product Management",
-    url: "/product/regular",
-    list: [
-      {
-        title: "Regular",
-        url: "/product/regular",
-      },
-      {
-        title: "Free-Trial",
-        url: "/product/freetrial",
-      },
-    ],
-  },
-  {
-    title: "Payment Management",
-    url: "/payment/paymentmanagement",
-    list: [
-      {
-        title: "Payment Management",
-        url: "/payment/paymentmanagement",
-      },
-    ],
-  },
-  {
-    title: "Assignment Management",
-    url: "/assignment/dashboard/monthlydashboard",
-    list: [
-      {
-        title: "Dashboard",
-        url: "/assignment/dashboard/monthlydashboard",
-      },
-      {
-        title: "Assignment",
-        url: "/assignment/assignment/assignmentregular",
-      },
-    ],
-  },
-  {
-    title: "Class Management",
-    url: "/class/classregular",
-    list: [
-      {
-        title: "Regular Class",
-        url: "/class/classregular",
-      },
-      {
-        title: "Free-Trial Class",
-        url: "/class/classfreetrial",
-      },
-    ],
-  },
-  {
-    title: "Website Management",
-    url: "/website/coupon",
-    list: [
-      {
-        title: "Coupon",
-        url: "/website/coupon",
-      },
-      {
-        title: "Banner",
-        url: "/website/banner",
-      },
-      {
-        title: "Board",
-        url: "/website/board/notice",
-      },
-    ],
-  },
-  {
-    title: "Reports",
-    url: "/report/usereport",
-    list: [
-      {
-        title: "User",
-        url: "/report/usereport",
-      },
-      {
-        title: "Teacher  ",
-        url: "/report/teacherreport",
-      },
-    ],
-  },
-];
 
 function Nav() {
   const location = useLocation();
@@ -248,7 +60,7 @@ function Nav() {
             <Divider />
           </ListSubheader>
         }>
-        {listRouter.map((item, index) => (
+        {/* {listRouter.map((item, index) => (
           <ListNav
             key={index}
             title={item.title}
@@ -256,7 +68,7 @@ function Nav() {
             list={item.list}
             url={item.url}
           />
-        ))}
+        ))} */}
       </List>
     </Box>
   );
@@ -347,7 +159,9 @@ function Nav() {
                 </Link>
               </Grid>
               <Grid xs={3}>
-                <Link to={"classmanagement"} style={{ textDecoration: "none" }}>
+                <Link
+                  to={"classmanagement/classregular"}
+                  style={{ textDecoration: "none" }}>
                   <Item
                     sx={{
                       borderBottom:
@@ -366,7 +180,7 @@ function Nav() {
                   <Item
                     sx={{
                       borderBottom:
-                        result == "classFeedbackteacher"
+                        result == "classfeedbackteacher"
                           ? `8px solid #f4a5c7`
                           : null,
                     }}>
@@ -375,7 +189,7 @@ function Nav() {
                 </Link>
               </Grid>
               <Grid xs={2}>
-                <Link to={"mypage"} style={{ textDecoration: "none" }}>
+                <Link to={"mypage/myinfo"} style={{ textDecoration: "none" }}>
                   <Item
                     sx={{
                       borderBottom:
