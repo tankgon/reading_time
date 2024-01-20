@@ -10,7 +10,7 @@ import data from "../Data";
 const AccountListTable = () => {
   const { DatalistMenu: listMenu } = data();
   const gridRef = useRef();
-  const gridStyle = useMemo(() => ({ height: "250px", width: "100%" }), []);
+  const gridStyle = useMemo(() => ({ height: "330px", width: "100%" }), []);
 
   const [columnDefs, setColumnDefs] = useState([
     {

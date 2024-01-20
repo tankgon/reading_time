@@ -174,7 +174,7 @@ export default function Dashboard() {
   return (
     <div style={{ position: "relative" }}>
       <div style={{ textAlign: "center", margin: "auto" }}>
-        <div className="menu-bar" style={menuBarStyle}>
+        <div className="menu-bar fixed" style={menuBarStyle}>
           <div
             style={{
               display: "flex",
@@ -195,7 +195,7 @@ export default function Dashboard() {
                 <li>
                   <a
                     href="#"
-                    class="block py-2 px-3 text-black rounded md:bg-transparent md:p-0 md:hover:text-blue-700"
+                    class="block py-2 px-3 text-black rounded md:bg-transparent md:p-0 md:hover:border-b-4 md:border-indigo-500"
                     aria-current="page">
                     READINGTIME
                   </a>
@@ -203,28 +203,28 @@ export default function Dashboard() {
                 <li>
                   <a
                     href="#"
-                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700">
+                    class="block py-2 px-3 text-black rounded md:bg-transparent md:p-0 md:hover:border-b-4 border-indigo-500">
                     REVIEW LỚP HỌC
                   </a>
                 </li>
                 <li>
                   <a
                     href="#"
-                    class="font-bold block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700">
+                    class="block py-2 px-3 text-black rounded md:bg-transparent md:p-0 border-b-4 border-indigo-500">
                     ĐĂNG KÝ HỌC MIỄN PHÍ
                   </a>
                 </li>
                 <li>
                   <a
                     href="#"
-                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700">
+                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:border-b-4 border-indigo-500 md:p-0  ">
                     GIỎ HÀNG
                   </a>
                 </li>
                 <li>
                   <a
                     href="#"
-                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-black md:dark:hover:bg-transparent dark:border-gray-700">
+                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:border-b-4 border-indigo-500 md:p-0  ">
                     TRUNG TÂM KHÁCH HÀNG
                   </a>
                 </li>
@@ -266,7 +266,8 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="slide-container">
+
+        <div className="mt-[112px]">
           <div
             style={playButtonStyle}
             className="top-[8.4%] md:top-[14.5%] h-12 w-12"
@@ -332,65 +333,67 @@ export default function Dashboard() {
         </div>
 
         <div className="mx-[12px] md:mx-[100px] text-center">
-          <div className="slide-container flex">
-            <div
-              style={{
-                alignItems: "center",
-                display: "flex",
-                justifyContent: "flex-start",
-              }}>
-              <div style={{ width: "1200px" }}>
-                <img
-                  src="https://reading-time.co.kr/resources/img/main/why1.png"
-                  alt="Your Image"
-                  style={{
-                    borderRadius: "50px 0px 50px 0px",
-                    height: "200%",
-                    width: "100%",
-                  }}
-                />
-              </div>
-              <div class="flex justify-end w-full">
-                <p class="w-100">
-                  Đọc sách là điều cần thiết để học ngoại ngữ Đặc biệt, trẻ càng
-                  nhỏ thì càng tiếp thu nhanh ngoại ngữ Dù không thạo toàn bộ,
-                  bạn vẫn có thể phát triển kĩ năng Đọc Hiểu bằng suy đoán nội
-                  dung qua hình ảnh Đọc, giúp bạn học thêm nhiều cách diễn đạt
-                  và cấu trúc câu hơn là đàm thoại đơn giản, là một trong những
-                  cách tốt nhất để học Anh văn. (Moeller & Meyer, 1995)
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="slide-container">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}>
-              <div class="flex justify-end w-full">
-                <p class="w-100">
-                  Đọc sách là điều cần thiết để học ngoại ngữ Đặc biệt, trẻ càng
-                  nhỏ thì càng tiếp thu nhanh ngoại ngữ Dù không thạo toàn bộ,
-                  bạn vẫn có thể phát triển kĩ năng Đọc Hiểu bằng suy đoán nội
-                  dung qua hình ảnh Đọc, giúp bạn học thêm nhiều cách diễn đạt
-                  và cấu trúc câu hơn là đàm thoại đơn giản, là một trong những
-                  cách tốt nhất để học Anh văn. (Moeller & Meyer, 1995)
-                </p>
-              </div>
+          <Grid container spacing={4}>
+            <Grid item xs={12} lg={4}>
               <img
-                src="https://reading-time.co.kr/resources/img/main/why2.png"
+                src="https://reading-time.co.kr/resources/img/main/why1.png"
                 alt="Your Image"
                 style={{
                   borderRadius: "50px 0px 50px 0px",
                   height: "200px",
-                  width: "400px",
+                  width: "100%",
                 }}
               />
-            </div>
-          </div>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <div class="text-left">
+                Đọc sách là điều cần thiết để học ngoại ngữ Đặc biệt, trẻ càng
+                nhỏ thì càng tiếp thu nhanh ngoại ngữ Dù không thạo toàn bộ, bạn
+                vẫn có thể phát triển kĩ năng Đọc Hiểu bằng suy đoán nội dung
+                qua hình ảnh Đọc, giúp bạn học thêm nhiều cách diễn đạt và cấu
+                trúc câu hơn là đàm thoại đơn giản, là một trong những cách tốt
+                nhất để học Anh văn.<br></br> (Moeller & Meyer, 1995)
+              </div>
+            </Grid>
+            <Grid item xs={12} lg={2}></Grid>
+          </Grid>
+
+          <Grid container spacing={4}>
+            <Grid item xs={12} lg={2}></Grid>
+
+            <Grid item xs={12} lg={6}>
+              <div class="text-right hidden md:block">
+                Đọc sách là điều cần thiết để học ngoại ngữ Đặc biệt, trẻ càng
+                nhỏ thì càng tiếp thu nhanh ngoại ngữ Dù không thạo toàn bộ, bạn
+                vẫn có thể phát triển kĩ năng Đọc Hiểu bằng suy đoán nội dung
+                qua hình ảnh Đọc, giúp bạn học thêm nhiều cách diễn đạt và cấu
+                trúc câu hơn là đàm thoại đơn giản, là một trong những cách tốt
+                nhất để học Anh văn.<br></br> (Moeller & Meyer, 1995)
+              </div>
+            </Grid>
+
+            <Grid item xs={12} lg={4}>
+              <img
+                src="https://reading-time.co.kr/resources/img/main/why1.png"
+                alt="Your Image"
+                style={{
+                  borderRadius: "50px 0px 50px 0px",
+                  height: "200px",
+                  width: "100%",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <div class="text-left block md:hidden">
+                Đọc sách là điều cần thiết để học ngoại ngữ Đặc biệt, trẻ càng
+                nhỏ thì càng tiếp thu nhanh ngoại ngữ Dù không thạo toàn bộ, bạn
+                vẫn có thể phát triển kĩ năng Đọc Hiểu bằng suy đoán nội dung
+                qua hình ảnh Đọc, giúp bạn học thêm nhiều cách diễn đạt và cấu
+                trúc câu hơn là đàm thoại đơn giản, là một trong những cách tốt
+                nhất để học Anh văn.<br></br> (Moeller & Meyer, 1995)
+              </div>
+            </Grid>
+          </Grid>
 
           <div className="my-[8rem]">
             <div className="mb-[20px] left-0 right-0 bottom-0 items-center font-bold">
@@ -467,13 +470,13 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-[#e0e0f0] py-20  md:px-[100px]">
+        <div className="bg-[#e0e0f0] py-20 px-3 md:px-[100px]">
           <p className="text-[33px] text-[#5353ac] font-bold">
             Thông báo Reading Time
           </p>
           <div className="mt-[60px]">
             <Grid container>
-              <Grid xs={12} lg={8}>
+              <Grid item xs={12} lg={8}>
                 <div className="flex justify-between">
                   <span className="font-bold text-[20px] text-[#5353ac]">
                     NOTICE
@@ -520,15 +523,15 @@ export default function Dashboard() {
                   </div>
                 </Card>
               </Grid>
-              <Grid xs={12} lg={4} sx={{ alignItems: "center" }}>
+
+              <Grid item xs={12} lg={4} sx={{ alignItems: "center" }}>
                 <img
                   src="https://reading-time.co.kr/resources/img/main/why1.png"
                   alt="Your Image"
                   style={{
-                    borderRadius: "50px 0px 50px 0px",
-                    height: "200px",
-                    width: "400px",
-                    margin: "40px 20px",
+                    borderRadius: "100px 0px 100px 0px",
+                    width: "100%",
+                    padding: "20px",
                   }}
                 />
 
@@ -536,10 +539,9 @@ export default function Dashboard() {
                   src="https://reading-time.co.kr/resources/img/main/why1.png"
                   alt="Your Image"
                   style={{
-                    borderRadius: "50px 0px 50px 0px",
-                    height: "200px",
-                    width: "400px",
-                    margin: "40px 20px",
+                    borderRadius: "100px 0px 100px 0px",
+                    width: "100%",
+                    padding: "20px",
                   }}
                 />
               </Grid>
@@ -548,7 +550,7 @@ export default function Dashboard() {
         </div>
 
         <div className="bg-[url('https://readingtime.today/resources/img/main/sec3_bg.png')] bg-cover bg-center">
-          <div className="py-20 px-[100px]">
+          <div className="py-20 px-[12px] md:px-[100px]">
             <p className="text-[33px] text-[#5353ac] font-bold">
               Sản phẩm Reading Time
             </p>
@@ -634,7 +636,7 @@ export default function Dashboard() {
               background:
                 "linear-gradient(0deg, rgba(83,83,172,1) 0%, rgba(83,83,172,0) 95%)",
             }}
-            className="py-20 px-[100px] ">
+            className="py-20 px-[12px] md:px-[100px] ">
             <p className="text-[33px] text-[#5353ac] font-bold">
               Hãy để đọc Anh văn thành thói quen!
             </p>
@@ -689,8 +691,31 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-[#333] py-20 px-[100px]">
-          <div>dsa</div>
+        <div className="bg-[#333] py-8 px-[12px] md:px-[100px]">
+          <Grid
+            container
+            spacing={4}
+            sx={{ color: "white", textAlign: "left" }}>
+            <Grid item xs={12} lg={2}>
+              Chính sách dịch vụ
+            </Grid>
+            <Grid item xs={12} lg={2}>
+              Chính sách bảo mật
+            </Grid>
+            <Grid item xs={12} lg={8}>
+              Chính sách thanh toán và hoán phí
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              <div className="bg-[url('https://readingtime.today/resources/img/main/logo.png')] bg-no-repeat h-14"></div>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              713-1004, 133, Magokseo-ro, Gangseo-gu, Seoul, Hàn Quốc
+            </Grid>
+            <Grid item xs={12} lg={12}>
+              <Divider sx={{ color: "white", background: "white" }} />
+              <p className="my-3"> Công ty EnglishWing </p>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </div>

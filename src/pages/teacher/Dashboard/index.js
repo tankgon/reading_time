@@ -3,7 +3,7 @@ import { Box, Button, Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { List, Progress, Skeleton } from "antd";
+import { Descriptions, List, Progress, Skeleton } from "antd";
 import React, { useState } from "react";
 import MinHeightTextarea from "../../components/MinHeightTextarea";
 import TextFilter from "../../components/TextFilter";
@@ -23,6 +23,29 @@ function TeacherDashboard() {
     { title: "Did the student enter class on time?:" },
     { title: "Did the student pay attention during class?:" },
     { title: "Was the student＇s class attitude good?:" },
+  ];
+
+  const items = [
+    {
+      label: "Total",
+      children: "14,195",
+      span: 2,
+    },
+    {
+      label: "Per Class",
+      children: "55",
+      span: 2,
+    },
+    {
+      label: "Monthly(2022-09)",
+      children: "57",
+      span: 2,
+    },
+    {
+      label: "Average",
+      children: "13",
+      span: 2,
+    },
   ];
   return (
     <>
@@ -82,112 +105,7 @@ function TeacherDashboard() {
                 </Typography>
               </Box>
 
-              <Box sx={{ border: "2px solid #C0C0C0" }}>
-                <Grid container>
-                  <Grid item xs={6} lg={6}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          background: "#F2F2F2",
-                          p: "8px",
-                          textAlign: "center",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        Total
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          p: "8px",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        14,195
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6} lg={6}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          background: "#F2F2F2",
-                          p: "8px",
-                          textAlign: "center",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        Per Class
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          p: "8px",
-                        }}>
-                        55
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6} lg={6}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          background: "#F2F2F2",
-                          p: "8px",
-                          textAlign: "center",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        Monthly (2022-09)
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          p: "8px",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        57
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6} lg={6}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          background: "#F2F2F2",
-                          p: "8px",
-                          textAlign: "center",
-                          borderRight: "2px solid #C0C0C0",
-                        }}>
-                        Average
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        lg={6}
-                        sx={{
-                          p: "8px",
-                        }}>
-                        13
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
+              <Descriptions title="User Info" bordered items={items} />
             </CardContent>
           </Card>
         </Grid>

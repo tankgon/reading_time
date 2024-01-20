@@ -1,15 +1,14 @@
-import { Grid, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker, Input } from "antd";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
 import DateCalendarViews from "./components/DateCalendarView";
 import DialogAddPoint from "./components/DialogAddPoint";
 import Spreadheet from "./components/Spreadsheet";
+const { RangePicker } = DatePicker;
 
 function PointPenalty() {
   return (
@@ -40,35 +39,13 @@ function PointPenalty() {
                 <Grid container>
                   <Grid item xs={12} lg={12}>
                     <TextFilter
-                      children={
-                        <TextField
-                          fullWidth
-                          size="small"
-                          sx={{ p: "8px" }}
-                          id="outlined-basic"
-                          variant="outlined"
-                        />
-                      }
-                      text="Start Date"
+                      children={<Input placeholder="Basic usage" />}
+                      text="Division"
                     />
                     <TextFilter
-                      children={
-                        <Box>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                              format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
-                            />
-                            <DatePicker
-                              format="DD-MM-YYYY"
-                              sx={{ p: "8px", width: "240px" }}
-                            />
-                          </LocalizationProvider>
-                        </Box>
-                      }
+                      children={<RangePicker size={"Large"} />}
                       text="Start Date"
                     />
-                    <ButtonComponent title={"Add Filter"} />
                   </Grid>
                 </Grid>
               </Grid>
@@ -79,8 +56,9 @@ function PointPenalty() {
           </Box>
 
           <DateCalendarViews />
-
-          <Spreadheet />
+          <div className="bg-[white] px-5 relative z-10">
+            <Spreadheet />
+          </div>
         </Grid>
       </Grid>
     </MDBox>

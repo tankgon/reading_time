@@ -52,7 +52,7 @@ export default function SignIn() {
             navigate("asdf");
             break;
           case "teacher":
-            navigate("dashboard");
+            navigate("/dashboard");
             break;
           case "teamleder":
             navigate("asd");
