@@ -50,7 +50,6 @@ import TitleNotice from "./pages/admin/WebsiteManagement/Board/Notice/title";
 import Support from "./pages/admin/WebsiteManagement/Board/Support";
 import Coupon from "./pages/admin/WebsiteManagement/Coupon";
 //authen
-import Dashboard from "./pages/authentication/dashboard";
 import SignIn from "./pages/authentication/signin";
 
 //teacher
@@ -71,6 +70,19 @@ import AccountListTeacher from "./pages/team_lead/TeacherManagement/account_list
 import PointPenaltyTeamLead from "./pages/team_lead/TeacherManagement/point_penalty";
 import VacationAndResignationTeamLead from "./pages/team_lead/TeacherManagement/vacation_and_resignation";
 import WorkingHours from "./pages/team_lead/TeacherManagement/working_hours";
+//CustomerSevice
+import CustomerSeviceLayout from "./layouts/CustomerService";
+import RegularCS from "./pages/customer_sevice/AssignmentManagement/Assignment/Regular";
+import MonthlyCS from "./pages/customer_sevice/AssignmentManagement/Dashboard/MonthlyDashboard";
+import ClassFreeTrialClassCS from "./pages/customer_sevice/ClassManagement/Free_TrialClass";
+import ClassRegularCS from "./pages/customer_sevice/ClassManagement/RegularClass";
+import CustomerSeviceDashboard from "./pages/customer_sevice/Dashboard";
+import MypageCustomerSevice from "./pages/customer_sevice/Mypage";
+//studen
+import StudentLayout from "./layouts/student";
+import Home from "./pages/student/home";
+import Room from "./pages/student/reading_room";
+import MyInfoUser from "./pages/student/reading_room/my_info";
 const admin = [
   {
     router: "/setting/webSetting",
@@ -255,7 +267,6 @@ const teamlead = [
     router: "dashboardTeamLead",
     content: <TeamLeadDashboard />,
   },
-  //
   {
     router: "assignmentTeamLead/monthly",
     content: <AssignmentStatus />,
@@ -264,7 +275,6 @@ const teamlead = [
     router: "assignmentTeamLead/today",
     content: <AssignmentStatus />,
   },
-  //
   {
     router: "classmanagementTeamLead/classregular",
     content: <ClassRegularTeacher />,
@@ -273,7 +283,6 @@ const teamlead = [
     router: "classmanagementTeamLead/classfreetrial",
     content: <ClassFreeTrialClass />,
   },
-  //
   {
     router: "teachermanagement/account",
     content: <AccountListTeacher />,
@@ -290,12 +299,10 @@ const teamlead = [
     router: "teachermanagement/workinghours",
     content: <WorkingHours />,
   },
-  //'
   {
     router: "classfeedbackteamlead",
     content: <ClassFeedbackTeacher />,
   },
-  //
   {
     router: "mypage",
     content: <MypageTeamLead />,
@@ -341,14 +348,66 @@ const teacher = [
   },
 ];
 
+const customersevice = [
+  {
+    router: "dashboardcs",
+    content: <CustomerSeviceDashboard />,
+  },
+  {
+    router: "assignmentcs/monthlycs",
+    content: <MonthlyCS />,
+  },
+  {
+    router: "assignmentcs/regularcs",
+    content: <RegularCS />,
+  },
+  {
+    router: "classmanagementcs/regularcs",
+    content: <ClassRegularCS />,
+  },
+  {
+    router: "classmanagementcs/freetrial",
+    content: <ClassFreeTrialClassCS />,
+  },
+
+  {
+    router: "mypagecs",
+    content: <MypageCustomerSevice />,
+  },
+];
+
+const student = [
+  {
+    router: "/",
+    content: <Home />,
+  },
+  {
+    router: "mypage/dashboard",
+    content: <Room />,
+  },
+  {
+    router: "mypage/myinfo",
+    content: <MyInfoUser />,
+  },
+];
 function App() {
   return (
     <Router>
       <div className="App">
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Dashboard />} />
           <Route path="/signIn" element={<SignIn />} />
+          <Route path="/" element={<StudentLayout />}>
+            {student.map((item) => {
+              return (
+                <Route
+                  key={item.router}
+                  path={item.router}
+                  element={item.content}
+                />
+              );
+            })}
+          </Route>
           <Route path="" element={<AdminLayout />}>
             {admin.map((item) => {
               return (
@@ -373,6 +432,17 @@ function App() {
           </Route>
           <Route path="" element={<TeamLeadLayout />}>
             {teamlead.map((item) => {
+              return (
+                <Route
+                  key={item.router}
+                  path={item.router}
+                  element={item.content}
+                />
+              );
+            })}
+          </Route>
+          <Route path="" element={<CustomerSeviceLayout />}>
+            {customersevice.map((item) => {
               return (
                 <Route
                   key={item.router}

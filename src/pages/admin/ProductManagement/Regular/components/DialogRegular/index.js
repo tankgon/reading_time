@@ -2,7 +2,6 @@ import ImageIcon from "@mui/icons-material/Image";
 import { AspectRatio } from "@mui/joy";
 import { Card, Grid, MenuItem, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -73,8 +72,6 @@ export default function DialogRegular() {
     setOpen(false);
   };
 
-  console.log(listCurriculum);
-
   const [productName, setProductName] = useState();
   const [description, setDescription] = useState();
   const [curriculum, setCurriculum] = useState();
@@ -101,16 +98,16 @@ export default function DialogRegular() {
       [event.target.name]: event.target.checked,
     }));
   };
-  const { Lucete, Select, ESL, IELTS } = studyTime;
   const selectedEnglishwing = Object.keys(studyTime).filter(
     (key) => studyTime[key]
   );
+  console.log(selectedEnglishwing);
+
+  
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState("");
 
   const [aboutProduct, setAboutProduct] = useState("");
-
-  console.log(listCountry);
 
   return (
     <React.Fragment>
@@ -259,7 +256,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"2days (8/month)"}
-                            checked={Lucete}
                             onChange={handleChange1}
                             name="2days (8/month)"
                           />
@@ -267,7 +263,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"3days (12/month)"}
-                            checked={Select}
                             onChange={handleChange1}
                             name="3days (12/month)"
                           />
@@ -275,7 +270,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"4days (16/month)"}
-                            checked={ESL}
                             onChange={handleChange1}
                             name="4days (16/month)"
                           />
@@ -283,7 +277,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"5days (20/month)"}
-                            checked={IELTS}
                             onChange={handleChange1}
                             name="5days (20/month)"
                           />
@@ -337,7 +330,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"Lucete"}
-                            checked={Lucete}
                             onChange={handleChange1}
                             name="Lucete"
                           />
@@ -345,7 +337,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"Select the campus"}
-                            checked={Select}
                             onChange={handleChange1}
                             name="Select"
                           />
@@ -353,7 +344,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"ESL"}
-                            checked={ESL}
                             onChange={handleChange1}
                             name="ESL"
                           />
@@ -361,7 +351,6 @@ export default function DialogRegular() {
                         <Grid item xs={12} lg={3}>
                           <OverlayCheckbox
                             label={"IELTS"}
-                            checked={IELTS}
                             onChange={handleChange1}
                             name="IELTS"
                           />
@@ -396,23 +385,8 @@ export default function DialogRegular() {
             }}></Box>
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="contained"
-            sx={{
-              textTransform: "capitalize",
-              color: "White",
-            }}>
-            Save
-          </Button>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            sx={{
-              textTransform: "capitalize",
-              // color: "black",
-            }}>
-            Cancel
-          </Button>
+          <ButtonComponent title={"Save"}></ButtonComponent>
+          <ButtonComponent title={"Cancel"}></ButtonComponent>
         </DialogActions>
       </Dialog>
     </React.Fragment>

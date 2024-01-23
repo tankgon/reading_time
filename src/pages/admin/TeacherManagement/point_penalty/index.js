@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import MDBox from "@mui/material/Box";
 import Box from "@mui/system/Box";
 import { DatePicker, Input } from "antd";
+import React, { useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import TextFilter from "../../../components/TextFilter";
 import ButtonComponent from "../../../components/buttonComponent";
@@ -11,6 +12,8 @@ import Spreadheet from "./components/Spreadsheet";
 const { RangePicker } = DatePicker;
 
 function PointPenalty() {
+  const [isStatePoint, setStatePoint] = useState({ text: "sdaf", date: [] });
+  console.log(isStatePoint);
   return (
     <MDBox>
       <Grid
@@ -39,11 +42,29 @@ function PointPenalty() {
                 <Grid container>
                   <Grid item xs={12} lg={12}>
                     <TextFilter
-                      children={<Input placeholder="Basic usage" />}
+                      children={
+                        <Input
+                          placeholder="Basic usage"
+                          value={isStatePoint.text}
+                          onChange={(e) =>
+                            setStatePoint({
+                              ...isStatePoint,
+                              text: e.target.value,
+                            })
+                          }
+                        />
+                      }
                       text="Division"
                     />
                     <TextFilter
-                      children={<RangePicker size={"Large"} />}
+                      children={
+                        <RangePicker
+                          size={"Large"}
+                          onChange={(e, eS) =>
+                            setStatePoint({ ...isStatePoint, date: eS })
+                          }
+                        />
+                      }
                       text="Start Date"
                     />
                   </Grid>
