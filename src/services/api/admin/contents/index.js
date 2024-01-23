@@ -1,17 +1,30 @@
 import axios from "../../axiosConfig";
 
-const actionBook = (body) => {
-  return axios.post(`/curriculumBookRelationships`, body);
+const actionBook = () => {
+  return axios.get(`/book`);
 };
-const actionContents = (body) => {
-  return axios.post(`/curriculumContents`, body);
+const postBook = (body) => {
+  return axios.post(`/book`, body);
 };
-const actionBookContents = (body) => {
-  return axios.post(`/bookContents`, body);
+const putBook = (body) => {
+  return axios.put(`/book`, body);
+};
+
+const actionCurriculum = () => {
+  return axios.get(`/curriculum`);
+};
+const postCurriculum = (body) => {
+  return axios.post(`/curriculum`, body);
+};
+const putCurriculum = (body) => {
+  return axios.put(`/curriculum`, body);
 };
 
 export default {
   actionBook,
-  actionContents,
-  actionBookContents,
+  postBook,
+  putBook,
+  actionCurriculum,
+  postCurriculum,
+  putCurriculum,
 };

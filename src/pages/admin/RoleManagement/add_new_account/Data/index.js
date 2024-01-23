@@ -5,7 +5,6 @@ export default function useData() {
   const [listRole, setListRole] = useState([]);
   const [listTeacher, setListTeacher] = useState([]);
   const [listCountry, setListCountry] = useState([]);
-  const [listAuthority, setListAuthority] = useState([]);
 
   useEffect(() => {
     getList();
@@ -16,11 +15,9 @@ export default function useData() {
       const res = await roles.actionRoleManagement();
       // const res1 = await roles.actionRoleManagement({ Action: "DETAIL" });
       const res2 = await roles.actionCountry();
-      // const res3 = await roles.actionAuthority();
       setListRole(res);
       // setListTeacher(res1);
       setListCountry(res2);
-      // setListAuthority(res3);
     } catch (err) {
       console.log(err);
     }
@@ -30,6 +27,5 @@ export default function useData() {
     DatalistRole: listRole,
     DatalistTeacher: listTeacher,
     DatalistCountry: listCountry,
-    DatalistAuthority: listAuthority,
   };
 }

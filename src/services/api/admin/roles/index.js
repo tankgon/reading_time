@@ -9,19 +9,13 @@ const actionRoleManagement = () => {
 const postRoleManagement = (body) => {
   return axios.post(`/role-management`, body);
 };
-
-// const actionTeacher = () => {
-//   return axios.get(`/account/teacher`);
-// };
-
-// const actionAuthority = (body) => {
-//   return axios.post(`/admin/authority`, body);
-// };
+const putRoleManagement = (body) => {
+  return axios.put(`/role-management`, body);
+};
 
 export default {
   actionRoleManagement,
-  // actionTeacher,
+  putRoleManagement,
   actionCountry,
   postRoleManagement,
-  // actionAuthority,
 };

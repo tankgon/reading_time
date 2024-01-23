@@ -1,13 +1,14 @@
 import Box from "@mui/system/Box";
 import { Link } from "react-router-dom";
+import Storage from "../../../../../../services/storage";
 
 const BtnCellRenderer = ({ value, data }) => {
   const handleButtonClick = () => {
-    console.log("Button clicked for row with ID:", data);
+    Storage.setDATADETAIL(data);
   };
 
   return (
-    <Link to={{ pathname: "/user/addnewaccount" }}>
+    <Link to={{ pathname: "/role/addnewaccount" }}>
       <Box
         onClick={handleButtonClick}
         sx={{

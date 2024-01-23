@@ -10,7 +10,7 @@ function Todo({ todo, index, removeTodo }) {
         type="search"
         value={todo}
         id="search-dropdown"
-        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        class="block p-2.5 w-full z-20 text-sm  bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
         required
       />
       <button
@@ -37,14 +37,14 @@ function TodoForm({ addTodo }) {
     <form onSubmit={handleSubmit}>
       <label
         for="search"
-        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+        class="mb-2 text-sm font-medium  sr-only dark:text-white">
         Search
       </label>
       <div class="relative">
         <input
           type="search"
           id="search"
-          class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="block w-full p-4 ps-10 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -74,9 +74,7 @@ function StudentReview() {
   };
 
   useEffect(() => {
-    Storage.setSTUDENTREVIEW({
-      student_review: todos.join(", "),
-    });
+    Storage.setSTUDENTREVIEW(todos);
   }, [todos]);
 
   return (

@@ -1,24 +1,23 @@
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import { Grid, TextField } from "@mui/material";
-import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import Slide from "@mui/material/Slide";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import MinHeightTextarea from "../../../../../components/MinHeightTextarea";
 import TextFilter from "../../../../../components/TextFilter";
 import ButtonComponent from "../../../../../components/buttonComponent";
+import CheckBox2Opstion from "../../../../../components/checkBox";
+//data
+import contents from "../../../../../../services/api/admin/contents";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogCurri() {
+export default function DialogCurri({ title, value }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -29,19 +28,56 @@ export default function DialogCurri() {
     setOpen(false);
   };
 
-  const options = ["Search teacher name", "Option 2"];
+  const [curriculum, setCurriculum] = useState(value?.Curriculum_Title);
+  const [subtitle, setSubtitle] = useState(value?.Subtitle);
+  const [description, setDescription] = useState(value?._Description);
+  const [division, setDivision] = useState(value?.Division);
+  const [toUse, setToUse] = useState(value?.Whether_To_Use);
 
-  const [value, setValue] = useState(options[0]);
-  const [inputValue, setInputValue] = useState("");
+  const CreateCurriculum = async () => {
+    try {
+      const res = await contents.postCurriculum({
+        Curriculum_Title: curriculum,
+        Subtitle: subtitle,
+        _Description: description,
+        Division: division,
+        Whether_To_Use: toUse,
+      });
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
+    } catch (err) {
+      console.log(err);
+      toast.error(`Update failed!`);
+    }
+  };
+
+  const UpdateCurriculum = async () => {
+    console.log("hahah");
+    try {
+      const res = await contents.putCurriculum({
+        _id: value?._id,
+        Curriculum_Title: curriculum,
+        Subtitle: subtitle,
+        _Description: description,
+        Division: division,
+        Whether_To_Use: toUse,
+      });
+      if (res.statusCode == 200) {
+        toast.success(`Successful update!`);
+      } else toast.error(`Can't update!`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <React.Fragment>
       <ButtonComponent
         onClick={handleClickOpen}
-        title={"Curriculum"}
+        title={title}
         pading={"10px 0"}
-        margin={"8px 12px"}
-        width={"90%"}
+        width={"100%"}
       />
       <Dialog
         fullWidth
@@ -54,48 +90,47 @@ export default function DialogCurri() {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <TextFilter
-              children={<TextField fullWidth size="small" />}
+              children={
+                <TextField
+                  fullWidth
+                  size="small"
+                  value={curriculum}
+                  onChange={(e) => setCurriculum(e.target.value)}
+                />
+              }
               text="Curriculum  Title"
             />
 
             <TextFilter
-              children={<TextField fullWidth size="small" />}
+              children={
+                <TextField
+                  fullWidth
+                  size="small"
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                />
+              }
               text="Subtitle"
             />
 
             <TextFilter
               children={
-                <Grid container spacing={4}>
-                  <Grid item xs={6} lg={12}>
-                    <FormControl>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group">
-                        <FormControlLabel
-                          value="female"
-                          control={<Radio />}
-                          label="Regular"
-                        />
-                        <FormControlLabel
-                          value="male"
-                          control={<Radio />}
-                          label="Free-Trial"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                </Grid>
+                <CheckBox2Opstion
+                  onChange={(e) => setDivision(e.target.value)}
+                  title1={"Regular"}
+                  title2={"Free-Trial"}
+                  value={division}
+                />
               }
               text="Division"
             />
 
             <TextFilter
               children={
-                <TextareaAutosize
-                  maxRows="8"
-                  minRows="8"
-                  style={{ width: "100%" }}
+                <MinHeightTextarea
+                  minRows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               }
               text="Description"
@@ -103,36 +138,21 @@ export default function DialogCurri() {
 
             <TextFilter
               children={
-                <Grid container spacing={4}>
-                  <Grid item xs={6} lg={12}>
-                    <FormControl>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group">
-                        <FormControlLabel
-                          value="female"
-                          control={<Radio />}
-                          label="Yes"
-                        />
-                        <FormControlLabel
-                          value="male"
-                          control={<Radio />}
-                          label="No"
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                </Grid>
+                <CheckBox2Opstion
+                  onChange={(e) => setToUse(e.target.value)}
+                  title1={"Yes"}
+                  title2={"No"}
+                  value={toUse}
+                />
               }
               text="Whether to use"
             />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button sx={{ textTransform: "capitalize" }} variant="contained">
-            Add
-          </Button>
+          <ButtonComponent onClick={CreateCurriculum} title={"Save"} />
+          <ButtonComponent onClick={UpdateCurriculum} title={"Update"} />
+          <ButtonComponent onClick={handleClose} title={"Cancel"} />
         </DialogActions>
       </Dialog>
     </React.Fragment>

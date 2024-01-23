@@ -6,16 +6,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-// import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import TextareaComment from "../../../../../components/TextareaComment";
 import ButtonComponent from "../../../../../components/buttonComponent";
-import TextareaComment from "../TextareaComment";
-import TextFilter from "../../../../../components/TextFilter";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
