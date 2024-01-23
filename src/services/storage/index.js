@@ -21,7 +21,6 @@ const CHARACTER = "character";
 const LESSON = "lesson";
 const STUDENTREVIEW = "student_review";
 const COMMENT = "comment";
-
 const DATADETAIL = "datadetail";
 const STATUSLOGIN = "statuslogin";
 
