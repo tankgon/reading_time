@@ -2,17 +2,17 @@ import ZommSDK from "../../components/ZoomSdk";
 //data
 
 let payload = {
-  meetingNumber: 89188088628,
-  role: 0,
+  meetingNumber: 88132629505,
+  role: 1,
   sdkKey: "GZLhBaaAQg60WnNF4NNBtg",
   sdkSecret: "53SSP06QcWxOa4ZrxodhhFkxC35vsv6B",
-  passWord: "d0rM40",
+  passWord: "844n21",
   userName: "GONT",
   userEmail: "anhkhoaquachvo@gmail.com",
   leaveUrl: "http://localhost:3000",
 };
 
-function LeanStudent() {
+function ZommSDKUser() {
   return (
     <>
       <div>asdfsadfasdf</div>
@@ -21,4 +21,4 @@ function LeanStudent() {
   );
 }
 
-export default LeanStudent;
+export default ZommSDKUser;

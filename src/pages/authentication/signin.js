@@ -16,6 +16,7 @@ import Logo from "../../layouts/AdminLayout/components/Logo";
 //data
 import { useCookies } from "react-cookie";
 import auth from "../../services/api/auth";
+import Storage from "../../services/storage";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -47,18 +48,23 @@ export default function SignIn() {
         switch (res.data.userRole) {
           case "admin":
             navigate("/setting/webSetting");
+            Storage.setSTATUSLOGIN("admin");
             break;
           case "user":
-            navigate("asdf");
+            navigate("/");
+            Storage.setSTATUSLOGIN("user");
             break;
           case "teacher":
             navigate("/dashboard");
+            Storage.setSTATUSLOGIN("teacher");
             break;
           case "teamleder":
-            navigate("asd");
+            navigate("/dashboardTeamLead");
+            Storage.setSTATUSLOGIN("teamleder");
             break;
-          case "customer":
-            navigate("asd");
+          case "cs":
+            navigate("/dashboardcs");
+            Storage.setSTATUSLOGIN("cs");
             break;
           default:
             navigate("/");
@@ -66,7 +72,7 @@ export default function SignIn() {
       } else toast.error(`Account and password don't match!`);
     } catch (err) {
       console.log(err);
-      toast.error(`Unstable transmission line!`);
+      // toast.error(`Unstable transmission line!`);
     } finally {
       setLoading(false);
     }
