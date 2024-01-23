@@ -23,7 +23,7 @@ const STUDENTREVIEW = "student_review";
 const COMMENT = "comment";
 
 const DATADETAIL = "datadetail";
-
+const STATUSLOGIN = "statuslogin";
 
 const Storage = {
   setCHARACTER: (data) => storage.set(CHARACTER, data),
@@ -45,6 +45,10 @@ const Storage = {
   setDATADETAIL: (data) => storage.set(DATADETAIL, data),
   getDATADETAIL: () => storage.get(DATADETAIL),
   removeDATADETAIL: () => storage.remove(DATADETAIL),
+
+  setSTATUSLOGIN: (data) => storage.set(STATUSLOGIN, data),
+  getSTATUSLOGIN: () => storage.get(STATUSLOGIN),
+  removeSTATUSLOGIN: () => storage.remove(STATUSLOGIN),
 };
 
 export default Storage;

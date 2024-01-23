@@ -57,12 +57,12 @@ export default function Room() {
   return (
     <div>
       <div className="bg-[#756aad] text-white flex justify-between px-[100px] py-5">
-        <div className="font-bold text-[40px]"> READING ROOM</div>
+        <div className="font-bold text-[40px]">READING ROOM</div>
         <div className="font-bold text-[20px] flex justify-between w-[50%] items-center">
           <Link to={"/mypage/dashboard"}>
             <div className="text-[#ffeb00]">READING TIME</div>
           </Link>
-          <Link to={"/mypage/myinfo"}>
+          <Link to={"/mypage/myinfouser"}>
             <div>MyInfo</div>
           </Link>
           <Link to={"/mypage/dashboard"}>
@@ -217,20 +217,22 @@ export default function Room() {
             </Card>
             <Grid container spacing={4} sx={{ mt: "0px" }}>
               <Grid item xs={12} lg={7}>
-                <Card
-                  sx={{
-                    color: "white",
-                    background: "#312b4f",
-                    padding: "20px",
-                    fontWeight: "bold",
-                    fontSize: "24px",
-                    borderRadius: "28px",
+                <Link to={"/zoom"}>
+                  <Card
+                    sx={{
+                      color: "white",
+                      background: "#312b4f",
+                      padding: "20px",
+                      fontWeight: "bold",
+                      fontSize: "24px",
+                      borderRadius: "28px",
 
-                    opacity: 0.65,
-                    cursor: "pointer",
-                  }}>
-                  리딩룸 준비중입니다.
-                </Card>
+                      opacity: 0.65,
+                      cursor: "pointer",
+                    }}>
+                    리딩룸 준비중입니다.
+                  </Card>
+                </Link>
               </Grid>
               <Grid item xs={12} lg={5}>
                 <Card

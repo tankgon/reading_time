@@ -83,6 +83,7 @@ import StudentLayout from "./layouts/student";
 import Home from "./pages/student/home";
 import Room from "./pages/student/reading_room";
 import MyInfoUser from "./pages/student/reading_room/my_info";
+import ZommSDKUser from "./pages/student/zoomsdk";
 const admin = [
   {
     router: "/setting/webSetting",
@@ -378,7 +379,7 @@ const customersevice = [
 
 const student = [
   {
-    router: "/",
+    router: "",
     content: <Home />,
   },
   {
@@ -386,8 +387,12 @@ const student = [
     content: <Room />,
   },
   {
-    router: "mypage/myinfo",
+    router: "mypage/myinfouser",
     content: <MyInfoUser />,
+  },
+  {
+    router: "zoom",
+    content: <ZommSDKUser />,
   },
 ];
 function App() {

@@ -3,6 +3,7 @@ import { Button, Divider, Grid } from "@mui/material";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
+import Storage from "../../services/storage";
 
 const menuBarStyle = {
   position: "fix",
@@ -16,6 +17,8 @@ const menuBarStyle = {
   justifyContent: "center",
   zIndex: "100",
 };
+
+console.log(Storage.getSTATUSLOGIN());
 
 function StudentLayout() {
   return (
@@ -78,57 +81,61 @@ function StudentLayout() {
               </ul>
             </div>
 
-            {/* <div>
-              <Link to={"/signIn"}>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    color: "#50456a", // Màu của chữ
-                    borderColor: "#50456a", // Màu của viền
-                    borderRadius: "24px", // Độ cong của góc
-                    textTransform: "capitalize",
-                    "&:hover": {
+            {Storage.getSTATUSLOGIN() == "user" ? (
+              <div>
+                <Link to={"/signIn"}>
+                  <Button
+                    onClick={() => Storage.removeSTATUSLOGIN()}
+                    variant="outlined"
+                    sx={{
+                      color: "#50456a", // Màu của chữ
                       borderColor: "#50456a", // Màu của viền
-                    },
-                  }}>
-                  Login
-                </Button>
-              </Link>
+                      borderRadius: "24px", // Độ cong của góc
+                      textTransform: "capitalize",
+                      "&:hover": {
+                        borderColor: "#50456a", // Màu của viền
+                      },
+                    }}>
+                    Logout
+                  </Button>
+                </Link>
 
-              <Button
-                variant="contained"
-                sx={{
-                  margin: "0 8px",
-                  backgroundColor: "#50456a", // Màu của nền
-                  borderColor: "#50456a", // Màu của viền
-                  borderRadius: "24px", // Độ cong của góc
-                  textTransform: "capitalize",
-                  "&:hover": {
-                    backgroundColor: "#ad9fcd", // Màu khi hover
-                  },
-                }}>
-                Join Us
-              </Button>
-              <MenuIcon style={{ fontSize: 50 }} />
-            </div> */}
-            <div>
-              {/* <Link to={"/"}> */}
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#50456a", // Màu của chữ
-                  borderColor: "#50456a", // Màu của viền
-                  borderRadius: "24px", // Độ cong của góc
-                  textTransform: "capitalize",
-                  "&:hover": {
-                    borderColor: "#50456a", // Màu của viền
-                  },
-                }}>
-                Logout
-              </Button>
-              {/* </Link> */}
+                <Link to={"/mypage/dashboard"}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      margin: "0 8px",
+                      backgroundColor: "#50456a", // Màu của nền
+                      borderColor: "#50456a", // Màu của viền
+                      borderRadius: "24px", // Độ cong của góc
+                      textTransform: "capitalize",
+                      "&:hover": {
+                        backgroundColor: "#ad9fcd", // Màu khi hover
+                      },
+                    }}>
+                    Reading Room
+                  </Button>
+                </Link>
+                <MenuIcon style={{ fontSize: 50 }} />
+              </div>
+            ) : (
+              <div>
+                <Link to={"/signIn"}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      color: "#50456a", // Màu của chữ
+                      borderColor: "#50456a", // Màu của viền
+                      borderRadius: "24px", // Độ cong của góc
+                      textTransform: "capitalize",
+                      "&:hover": {
+                        borderColor: "#50456a", // Màu của viền
+                      },
+                    }}>
+                    Login
+                  </Button>
+                </Link>
 
-              <Link to={"/mypage/dashboard"}>
                 <Button
                   variant="contained"
                   sx={{
@@ -141,11 +148,11 @@ function StudentLayout() {
                       backgroundColor: "#ad9fcd", // Màu khi hover
                     },
                   }}>
-                  Reading Room
+                  Join Us
                 </Button>
-              </Link>
-              <MenuIcon style={{ fontSize: 50 }} />
-            </div>
+                <MenuIcon style={{ fontSize: 50 }} />
+              </div>
+            )}
           </div>
         </div>
         <div className="mt-[100px]">
