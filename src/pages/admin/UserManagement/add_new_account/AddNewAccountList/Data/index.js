@@ -11,7 +11,7 @@ export default function useData() {
   const getList = async () => {
     try {
       const res2 = await roles.actionCountry();
-      setListCountry(res2);
+      setListCountry(res2?.data);
     } catch (err) {
       console.log(err);
     }

@@ -13,7 +13,7 @@ export default function useData() {
       const res = await menu.actionMenu({
         Action: "GET",
       });
-      setListMenu(res);
+      setListMenu(res.data);
     } catch (err) {
       console.log(err);
     }

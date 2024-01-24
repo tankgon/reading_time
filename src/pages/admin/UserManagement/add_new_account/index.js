@@ -102,27 +102,27 @@ function AddNewAccount() {
     const imageCloundURL = await Clound(imageURL);
     try {
       await users.postUser({
-        User_English_Name: userEngLishName,
-        User_Name: userName,
-        Email: email,
-        Password: password,
-        Birth: birth,
-        Gender: gender,
-        Country: country,
-        Description: using_The_Editor,
-        Picture: imageCloundURL,
-        Admission: selectedAdmission.join(", "),
-        List_of_Tags: chips,
-        English_Wing_Member: selectedEnglishwing.join(", "),
-        Referal_Code: referral,
-        Signup_Path: signup,
-
-        // Phone: phone,
+        user: userName,
+        user_english_name: userEngLishName,
+        username: userName,
+        email: email,
+        password: password,
+        // Birth: birth,
+        // Gender: gender,
+        // Country: country,
+        // Description: using_The_Editor,
+        // Picture: imageCloundURL,
+        // Admission: selectedAdmission.join(", "),
+        // List_of_Tags: chips,
+        // English_Wing_Member: selectedEnglishwing.join(", "),
+        // Referal_Code: referral,
+        // Signup_Path: signup,
+        role: "1",
       });
       toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
-      toast.success(`Update failed!`);
+      toast.error(`Update failed!`);
     }
   };
 
@@ -145,13 +145,11 @@ function AddNewAccount() {
         English_Wing_Member: selectedEnglishwing.join(", "),
         Referal_Code: referral,
         Signup_Path: signup,
-
-        // Phone: phone,
       });
       toast.success(`Successful update!`);
     } catch (err) {
       console.log(err);
-      toast.success(`Update failed!`);
+      toast.error(`Update failed!`);
     }
   };
 
