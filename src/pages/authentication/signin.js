@@ -33,10 +33,12 @@ export default function SignIn() {
     try {
       setLoading(true);
       const res = await auth.actionAuth({
-        Email: data.get("email"),
-        Password: data.get("password"),
+        email: data.get("email"),
+        password: data.get("password"),
       });
-      if (res.statusCode == 200) {
+
+      console.log(res.data.role);
+      if (res.code == 200) {
         toast.success(`Successful login!`);
         // if (rememberMe) {
         //   setCookie(
@@ -45,26 +47,26 @@ export default function SignIn() {
         //     { path: "/setting/webSetting" }
         //   );
         // }
-        switch (res.data.userRole) {
-          case "admin":
+        switch (res.data.role) {
+          case 0:
             navigate("/setting/webSetting");
-            Storage.setSTATUSLOGIN("admin");
+            Storage.setSTATUSLOGIN(res.data);
             break;
-          case "user":
+          case 1:
             navigate("/");
-            Storage.setSTATUSLOGIN("user");
+            Storage.setSTATUSLOGIN(res.data);
             break;
-          case "teacher":
+          case 2:
             navigate("/dashboard");
-            Storage.setSTATUSLOGIN("teacher");
+            Storage.setSTATUSLOGIN(res.data);
             break;
-          case "teamleder":
+          case 4:
             navigate("/dashboardTeamLead");
-            Storage.setSTATUSLOGIN("teamleder");
+            Storage.setSTATUSLOGIN(res.data);
             break;
-          case "cs":
+          case 5:
             navigate("/dashboardcs");
-            Storage.setSTATUSLOGIN("cs");
+            Storage.setSTATUSLOGIN(res.data);
             break;
           default:
             navigate("/");
@@ -72,7 +74,6 @@ export default function SignIn() {
       } else toast.error(`Account and password don't match!`);
     } catch (err) {
       console.log(err);
-      // toast.error(`Unstable transmission line!`);
     } finally {
       setLoading(false);
     }

@@ -15,9 +15,9 @@ export default function useData() {
       const res = await roles.actionRoleManagement();
       // const res1 = await roles.actionRoleManagement({ Action: "DETAIL" });
       const res2 = await roles.actionCountry();
-      setListRole(res);
+      setListRole(res.data);
       // setListTeacher(res1);
-      setListCountry(res2);
+      setListCountry(res2.data);
     } catch (err) {
       console.log(err);
     }

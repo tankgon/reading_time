@@ -2,13 +2,33 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import TaskIcon from "@mui/icons-material/Task";
 import { Card, Divider, Grid } from "@mui/material";
-import { Avatar, List, message } from "antd";
+import { Avatar, List } from "antd";
 import VirtualList from "rc-virtual-list";
 import React, { useEffect, useState } from "react";
 import { Calendar, DateObject } from "react-multi-date-picker";
 import multiColors from "react-multi-date-picker/plugins/colors";
 import { Link } from "react-router-dom";
+import student from "../../../services/api/student";
+import Storage from "../../../services/storage";
+import DialogView from "./components/DialogAddPoint";
 export default function Room() {
+  const [listData, setListData] = useState([]);
+
+  useEffect(() => {
+    getList();
+  }, []);
+
+  const getList = async () => {
+    try {
+      const res = await student.actionReadingRoom(Storage.getSTATUSLOGIN()._id);
+      setListData(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(listData);
+
   const dateObject = new DateObject();
   const toDateObject = (day) => new DateObject(dateObject).setDay(day);
 
@@ -30,30 +50,6 @@ export default function Room() {
     value: [...colors.green, ...colors.blue, ...colors.red, ...colors.yellow],
   });
 
-  const fakeDataUrl =
-    "https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo";
-  const ContainerHeight = 300;
-
-  const [data, setData] = useState([]);
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((body) => {
-        setData(data.concat(body.results));
-        message.success(`${body.results.length} more items loaded!`);
-      });
-  };
-  useEffect(() => {
-    appendData();
-  }, []);
-  const onScroll = (e) => {
-    if (
-      e.currentTarget.scrollHeight - e.currentTarget.scrollTop ===
-      ContainerHeight
-    ) {
-      appendData();
-    }
-  };
   return (
     <div>
       <div className="bg-[#756aad] text-white flex justify-between px-[100px] py-5">
@@ -172,23 +168,26 @@ export default function Room() {
               <List>
                 <VirtualList
                   // className="px-12 pb-12"
-                  data={data}
-                  height={ContainerHeight}
+                  data={listData?.data?.completed_class_detail}
+                  height={"300px"}
                   itemHeight={35}
-                  itemKey="email"
-                  onScroll={onScroll}>
+                  itemKey="email">
                   {(item) => (
-                    <List.Item key={item.email}>
+                    <List.Item key={item._id}>
                       <div className="text-[#6458a2] text-[20px] font-bold">
-                        01.22Lv.
+                        {item?.level}
                       </div>
                       <div className="flex justify-between w-full md:w-[20%]">
                         <div className="text-[#6458a2] text-[20px] font-bold">
-                          01.22Lv.
+                          {item?.book_title}
                         </div>
-                        <div className="text-[#D9488D] text-[16px] font-bold underline decoration-1">
-                          VIEW
-                        </div>
+                        <DialogView
+                          Comprehension={
+                            listData?.data?.detail[0].comprehension
+                          }
+                          Aloud={listData?.data?.detail[0].readingAloud}
+                          Score={listData?.data?.detail[0].overallScore}
+                        />
                       </div>
                     </List.Item>
                   )}
@@ -210,13 +209,17 @@ export default function Room() {
                   오늘 읽을 책
                 </div>
               </div>
+              <div className="text-[#ffeb00] text-[20px] font-bold text-left">
+                {listData?.data?.book_title}
+              </div>
               <Divider sx={{ background: "white" }} />
               <div className="text-white text-[20px] font-bold mt-2 text-left">
-                TEACHER : NO TEACHER
+                TEACHER : {listData?.data?.teacher}
               </div>
             </Card>
             <Grid container spacing={4} sx={{ mt: "0px" }}>
               <Grid item xs={12} lg={7}>
+                
                 <Link to={"/zoom"}>
                   <Card
                     sx={{
@@ -233,6 +236,8 @@ export default function Room() {
                     리딩룸 준비중입니다.
                   </Card>
                 </Link>
+
+
               </Grid>
               <Grid item xs={12} lg={5}>
                 <Card
@@ -245,7 +250,7 @@ export default function Room() {
                     borderRadius: "28px",
                     cursor: "pointer",
                   }}>
-                  Raz-kids 열기
+                  {listData?.data?.product}
                 </Card>
               </Grid>
             </Grid>

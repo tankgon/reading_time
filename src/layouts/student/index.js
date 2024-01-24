@@ -81,7 +81,7 @@ function StudentLayout() {
               </ul>
             </div>
 
-            {Storage.getSTATUSLOGIN() == "user" ? (
+            {Storage.getSTATUSLOGIN()?.role == 1 ? (
               <div>
                 <Link to={"/signIn"}>
                   <Button
